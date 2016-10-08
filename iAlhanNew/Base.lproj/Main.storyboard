@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sv2-4Z-BKR">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Seasons-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SeasonViewController" customModule="iAlhanNew" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +17,279 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1o-rb-LOV">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5eE-xG-0gA">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="L1q-vf-bHp">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="17z-yS-wHw">
+                                            <frame key="frameInset" minX="8" minY="75" width="359" height="584"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="OmJ-Zc-YGw">
+                                                    <frame key="frameInset" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="RCY-sT-bu3" appends="YES" id="SwS-2R-IiU"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="mMC-af-cie">
+                                                    <frame key="frameInset" minX="132" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="s0T-Pr-YQ1" appends="YES" id="K7V-su-N6F"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="cfb-VN-wil">
+                                                    <frame key="frameInset" minX="265" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="rxR-OF-Mbl" appends="YES" id="wq5-Db-NRe"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="Eye-Vw-4SV">
+                                                    <frame key="frameInset" minY="136" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="797-gv-puT" appends="YES" id="la9-8q-pet"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="FMj-OJ-c7D">
+                                                    <frame key="frameInset" minX="132" minY="136" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="wbB-Kx-hOn" appends="YES" id="Sco-5e-piM"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="apz-bB-d9L">
+                                                    <frame key="frameInset" minX="265" minY="136" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="hDW-SZ-uQO" appends="YES" id="vkW-yG-PHH"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="8xZ-tW-NhE">
+                                                    <frame key="frameInset" minY="272" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="uAS-fU-1KV" appends="YES" id="lvM-Hd-tos"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="5b5-M9-lEG">
+                                                    <frame key="frameInset" minX="132" minY="272" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="D5P-MK-vEY" appends="YES" id="71g-8Q-Gge"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="Rwq-j4-PlD">
+                                                    <frame key="frameInset" minX="265" minY="272" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="J2J-68-jed" appends="YES" id="UBO-qR-YUF"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="SJf-kS-ZqG">
+                                                    <frame key="frameInset" minY="408" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="5cL-fE-sm2" appends="YES" id="LP3-ti-eMV"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="EFs-zh-0Qz">
+                                                    <frame key="frameInset" minX="132" minY="408" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="STA-X3-jJK" appends="YES" id="duG-0q-k9g"/>
+                                                    </connections>
+                                                </imageView>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="vOS-E2-843">
+                                                    <frame key="frameInset" minX="265" minY="408" width="94" height="94"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="GQJ-0n-fjK" appends="YES" id="VeY-xK-chH"/>
+                                                    </connections>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Seasons" id="J7H-b1-bM5"/>
+                    <connections>
+                        <outlet property="seasonImage0" destination="OmJ-Zc-YGw" id="tfP-EZ-1wW"/>
+                        <outlet property="seasonImage1" destination="mMC-af-cie" id="pp3-fI-7It"/>
+                        <outlet property="seasonImage10" destination="EFs-zh-0Qz" id="cBJ-lB-nkW"/>
+                        <outlet property="seasonImage11" destination="vOS-E2-843" id="0Zw-rc-0kh"/>
+                        <outlet property="seasonImage2" destination="cfb-VN-wil" id="hrC-cw-vZK"/>
+                        <outlet property="seasonImage3" destination="Eye-Vw-4SV" id="J95-y1-qzt"/>
+                        <outlet property="seasonImage4" destination="FMj-OJ-c7D" id="WWc-vV-QZ5"/>
+                        <outlet property="seasonImage5" destination="apz-bB-d9L" id="aNg-zQ-NrF"/>
+                        <outlet property="seasonImage6" destination="8xZ-tW-NhE" id="tq4-rC-UEc"/>
+                        <outlet property="seasonImage7" destination="5b5-M9-lEG" id="Zxj-Q1-HZ3"/>
+                        <outlet property="seasonImage8" destination="Rwq-j4-PlD" id="b4f-dh-lpR"/>
+                        <outlet property="seasonImage9" destination="SJf-kS-ZqG" id="yYb-QW-ABz"/>
+                        <segue destination="suT-MX-M3Z" kind="show" identifier="Show Season Detail" id="1HV-QI-Oid"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="RCY-sT-bu3">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="8Dc-Jr-6EO"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="s0T-Pr-YQ1">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="OyT-OP-JWs"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="rxR-OF-Mbl">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="qfl-6q-rAu"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="797-gv-puT">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="ALy-xF-oeP"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="wbB-Kx-hOn">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="RYm-gz-gbL"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="hDW-SZ-uQO">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="IRi-UG-GFt"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="uAS-fU-1KV">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="baL-t2-abE"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="D5P-MK-vEY">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="OCf-d3-EY0"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="J2J-68-jed">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="FT4-Db-iew"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="5cL-fE-sm2">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="Td0-bh-uJZ"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="STA-X3-jJK">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="7o7-wU-DJc"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="GQJ-0n-fjK">
+                    <connections>
+                        <action selector="showSeason:" destination="BYZ-38-t0r" id="am1-GE-rsr"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="788" y="38"/>
+        </scene>
+        <!--Season Detail View Controller-->
+        <scene sceneID="XKl-3j-LOz">
+            <objects>
+                <viewController id="suT-MX-M3Z" customClass="SeasonDetailViewController" customModule="iAlhanNew" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NvW-ds-2h2"/>
+                        <viewControllerLayoutGuide type="bottom" id="OSc-er-c56"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TTp-sL-7F0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="lbu-qv-4fy">
+                                <frame key="frameInset" minY="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="REG-Ih-8vZ">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="RHS-pe-DUO">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eUt-3q-bBZ">
+                                            <frame key="frameInset" minX="8" minY="77" width="359" height="582"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <color key="textColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="detailTextView" destination="eUt-3q-bBZ" id="0sS-0C-OBr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o9R-xx-Fgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1576.8" y="37.331334332833585"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zZK-5d-ssF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sv2-4Z-BKR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="AlNile" family="Al Nile" pointSize="17"/>
+                            <color key="textColor" red="1" green="0.87526259465375078" blue="0.42019942558916923" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Cce-oy-cHo"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rdH-6M-2v2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="38.23088455772114"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="crossbck" width="198" height="198"/>
+    </resources>
 </document>
