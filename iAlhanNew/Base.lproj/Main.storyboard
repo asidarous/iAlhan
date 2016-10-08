@@ -255,10 +255,12 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundImageView" destination="lbu-qv-4fy" id="yIy-Oz-5Va"/>
                         <outlet property="detailTextView" destination="eUt-3q-bBZ" id="0sS-0C-OBr"/>
+                        <outlet property="visualEffectView" destination="REG-Ih-8vZ" id="iyP-Ug-0L7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9R-xx-Fgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -270,9 +272,12 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sv2-4Z-BKR" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="AlNile" family="Al Nile" pointSize="17"/>

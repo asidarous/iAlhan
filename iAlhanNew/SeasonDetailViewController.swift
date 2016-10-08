@@ -14,6 +14,9 @@ class SeasonDetailViewController: UIViewController {
     var album: Season?
     
     @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+
 
 
 
@@ -28,13 +31,20 @@ class SeasonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print ("View did load")
-        print (detailTextView)
 
-        
+        title = ((album?.title)!)
         updateUI()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // get rid of the background image from superview
+        backgroundImageView.removeFromSuperview()
+        //visualEffectView.removeFromSuperview()
+
+        
+    }
 }
 
 

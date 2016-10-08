@@ -68,15 +68,15 @@ class SeasonViewController: UIViewController {
             switch identifier
             {
                 case "Show Season Detail":
-                    print ("I'm here")
+                    //print ("I'm here")
                     let seasonDetailVC = segue.destination as! SeasonDetailViewController
                     //print (seasonDetailVC.detailTextView)
                     let detailImageView = sender as! UIImageView
-                    print (detailImageView)
+                    //print (detailImageView)
                     if let index = seasonImages.index(of: detailImageView)
                     {
-                        print ("Index: ")
-                        print (index)
+                        //print ("Index: ")
+                        //print (index)
                         let album = Season.init(index: index)
                         seasonDetailVC.album = album
                         
