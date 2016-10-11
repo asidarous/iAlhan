@@ -20,7 +20,7 @@ class Season
 {
     var title: String?
     var seasonImage: String?
-    var seasonSections: [String]?
+    var seasonSections: [String: [String]]?
 
     // initialize the album
     init(index: Int)
@@ -34,7 +34,7 @@ class Season
             // start initialization of album
             title = seasonAlbum[AlbumKeys.title] as? String
             seasonImage = seasonAlbum[AlbumKeys.seasonImage] as? String
-            seasonSections = seasonAlbum[AlbumKeys.seasonSections] as? [String]
+            seasonSections = seasonAlbum[AlbumKeys.seasonSections] as? [String: [String]]
         
         
         }
