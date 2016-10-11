@@ -17,7 +17,7 @@ struct SeasonLibrary
     let seasonAlbum : [String : Any] = [
         "title" : "Advent",
         "seasonImage" : "AdventImage",
-        "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+        "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
     ]
 
     let seasonAlbums: [[String: Any]] = [
@@ -25,7 +25,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
@@ -35,7 +35,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
@@ -45,7 +45,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
@@ -55,7 +55,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
@@ -65,7 +65,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
@@ -75,7 +75,7 @@ struct SeasonLibrary
         [
             "title" : "Advent",
             "seasonImage" : "epiphany",
-            "seasonSections" : ["Vespers Praise", "Raising of Incense", "Midnight Praise", "Liturgy"]
+            "seasonSections" : ["Vespers Praise" , "Raising of Incense", "Midnight Praise" , "Liturgy"]
         ],
         [
             "title" : "Nativity",
