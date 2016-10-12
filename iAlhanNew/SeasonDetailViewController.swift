@@ -35,32 +35,33 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     func updateUI()
     {
         print("Title")
-        print (album?.title)
+        print (album!.title)
         
-        hymnArray = (album?.seasonSections)! as Dictionary <String, [String]>
+        hymnArray = (album?.seasonSections)!
+        
         arrayCount = hymnArray?.count
         tableView.delegate = self
         tableView.dataSource = self
+        
+        for (key, value) in hymnArray! {
+            //print("\(key) -> \(value)")
+            objectArray.append(structureArray(sectionName: key, sectionDetails: value))
+            
+        }
+        
+        
+    // sorting the section array as for some reason it has a mind of its own
+        objectArray.sort {$0.sectionName < $1.sectionName}
        
-        print (hymnArray?.count)
-        //print (hymnArray)
+    // debug print statement
+        /* print (hymnArray?.count)
+        print ("ORIGINAL.....\(hymnArray)")
+        print ("ORIGINAL SORTED.....\(objectArray)") */
        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let test = (album?.seasonSections)! as Dictionary <String, [String]>
-        print (test)
-//        
-       
-        
-        
-        for (key, value) in test {
-            print("\(key) -> \(value)")
-            objectArray.append(structureArray(sectionName: key, sectionDetails: value))
-            
-        }
         
         title = ((album?.title)!)
         updateUI()
@@ -73,7 +74,6 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         backgroundImageView.removeFromSuperview()
         //visualEffectView.removeFromSuperview()
 
-        
     }
     
  
@@ -88,8 +88,13 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print ("header for section: \(section)")
-        return (objectArray[section].sectionName.description) as String
+        //print ("header for section: \(section)")
+        
+        let rawDescription = objectArray[section].sectionName.description
+        
+        let range = rawDescription.index(rawDescription.startIndex, offsetBy: 4)..<rawDescription.endIndex
+
+        return (rawDescription[range]) as String
     }
     
     
@@ -98,21 +103,22 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         let row = indexPath.row
         let section = indexPath.section
-        //cell.textLabel?.text = (hymnArray?[row]) as! String
         cell.textLabel?.text = (objectArray[section].sectionDetails[row].description) as String
         
         return cell
     }
     
     
-    private func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         
         let row = indexPath.row
-        print(objectArray[row])
+        let section = indexPath.section
+        
+        print(objectArray[section].sectionDetails[row].description)
     }
     
-    
+   
     
 }
 

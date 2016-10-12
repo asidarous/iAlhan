@@ -11,7 +11,6 @@
 		F06927DA1DA853B800A94BB9 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927D91DA853B800A94BB9 /* Season.swift */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
 		F0E3E8081DAC019100174D91 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */; };
-		F0E3E80A1DAD581600174D91 /* SeasonLibraryCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E8091DAD581600174D91 /* SeasonLibraryCopy.swift */; };
 		F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */; };
 		F0E65F801DA6FC2100A96A69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0E65F7E1DA6FC2100A96A69 /* Main.storyboard */; };
 		F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E65F811DA6FC2100A96A69 /* Assets.xcassets */; };
@@ -43,7 +42,6 @@
 		F06927D91DA853B800A94BB9 /* Season.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Season.swift; path = ../Season.swift; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
 		F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		F0E3E8091DAD581600174D91 /* SeasonLibraryCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonLibraryCopy.swift; sourceTree = "<group>"; };
 		F0E65F771DA6FC2000A96A69 /* iAlhanNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlhanNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0E65F7F1DA6FC2100A96A69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,7 +97,6 @@
 			children = (
 				F06927D91DA853B800A94BB9 /* Season.swift */,
 				F06927D51DA82DD000A94BB9 /* SeasonLibrary.swift */,
-				F0E3E8091DAD581600174D91 /* SeasonLibraryCopy.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -304,7 +301,6 @@
 				F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */,
 				F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */,
 				F06927D61DA82DD000A94BB9 /* SeasonLibrary.swift in Sources */,
-				F0E3E80A1DAD581600174D91 /* SeasonLibraryCopy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
