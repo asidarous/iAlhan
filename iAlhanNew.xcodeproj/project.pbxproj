@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
+		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
+		F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F06927D61DA82DD000A94BB9 /* SeasonLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927D51DA82DD000A94BB9 /* SeasonLibrary.swift */; };
 		F06927DA1DA853B800A94BB9 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927D91DA853B800A94BB9 /* Season.swift */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
@@ -49,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
 		F06927D51DA82DD000A94BB9 /* SeasonLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonLibrary.swift; sourceTree = "<group>"; };
 		F06927D91DA853B800A94BB9 /* Season.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Season.swift; path = ../Season.swift; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 		F05826D61DB059D0001E6CA2 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				F0485A281DB1353900DBCFE2 /* copt.ttf */,
 				F0E3E8291DB008EC00174D91 /* DBManager.swift */,
 			);
 			name = Util;
@@ -337,6 +342,7 @@
 			files = (
 				F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
+				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
 				F0E65F801DA6FC2100A96A69 /* Main.storyboard in Resources */,
 				F0E3E8151DAF15E400174D91 /* AlhanSQL.sqlite in Resources */,
 			);
@@ -346,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

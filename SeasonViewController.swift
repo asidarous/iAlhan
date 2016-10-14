@@ -13,12 +13,13 @@ struct SeasonData {
     var seasonImage: String!
     var seasonID: Int!
     //var seasonSections: [String : [String]]!
-    
 }
 
 
-class SeasonViewController: UIViewController {
 
+class SeasonViewController: UIViewController {
+    
+    // IBOutlet for images
     @IBOutlet weak var seasonImage0: UIImageView!
     @IBOutlet weak var seasonImage1: UIImageView!
     @IBOutlet weak var seasonImage2: UIImageView!
@@ -31,9 +32,24 @@ class SeasonViewController: UIViewController {
     @IBOutlet weak var seasonImage9: UIImageView!
     @IBOutlet weak var seasonImage10: UIImageView!
     @IBOutlet weak var seasonImage11: UIImageView!
+    
+    // IBOutlet for labels
+    @IBOutlet var seasonLabel0: UITextField!
+    @IBOutlet var seasonLabel1: UITextField!
+    @IBOutlet var seasonLabel2: UITextField!
+    @IBOutlet var seasonLabel3: UITextField!
+    @IBOutlet var seasonLabel4: UITextField!
+    @IBOutlet var seasonLabel5: UITextField!
+    @IBOutlet var seasonLabel6: UITextField!
+    @IBOutlet var seasonLabel7: UITextField!
+    @IBOutlet var seasonLabel8: UITextField!
+    @IBOutlet var seasonLabel9: UITextField!
+    @IBOutlet var seasonLabel10: UITextField!
+    @IBOutlet var seasonLabel11: UITextField!
 
     
     var seasonImages: [UIImageView]!
+    var seasonLabels: [UITextField]!
     var seasonsData: [SeasonData]!
     
     override func viewDidLoad() {
@@ -41,11 +57,12 @@ class SeasonViewController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo.jpg")!);
         
         // append all seasonImages to the array
-        
         seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]
         
+        // append all seasonLabels to the array
+        seasonLabels = [seasonLabel0, seasonLabel1, seasonLabel2, seasonLabel3, seasonLabel4, seasonLabel5, seasonLabel6, seasonLabel7, seasonLabel8, seasonLabel9, seasonLabel10, seasonLabel11]
+        
         // method to set the images of the IBOutlets
-       
         updateUI()
         
     }
@@ -56,14 +73,12 @@ class SeasonViewController: UIViewController {
         
         for i in 0..<seasonImages.count-1{
             let seasonImage = seasonImages[i]
-            print("Here")
             
             let album = seasonsData[i]
             print (album.seasonImage!)
             seasonImage.image = UIImage(named: album.seasonImage!)
-            
-            
-        }
+            seasonLabels[i].text = album.title
+         }
     }
     
     // MARK: - Target/Action
@@ -92,8 +107,12 @@ class SeasonViewController: UIViewController {
                     {
                         //print ("Index: ")
                         //print (index)
-                        let album = Season.init(index: index)
-                        seasonDetailVC.album = album
+                        let seasonID = seasonsData[index].seasonID
+                        //let hymnArray = Season.init(index: seasonID!)
+                        let hymnArray = DBManager.shared.loadSeasonHymns(WithID: seasonID!)
+                        
+                        print ("Print from within SeasonVC \(hymnArray)")
+                        seasonDetailVC.hymnArray = hymnArray
                         
                     }
             

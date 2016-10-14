@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct SeasonHymns {
+    var hymnName: String!
+    //var seasonSections: [String]!
+}
+
 class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
     // Model: an album
@@ -18,9 +23,10 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     @IBOutlet var tableView: UITableView!
 
-    
+    var seasonID: Int?
     var arrayCount: Int?
-    var hymnArray: [String: [String]]?
+    //var hymnArray: [String: [String]]?
+    var hymnArray: [SeasonHymns]?
     let textCellIdentifier = "TextCell"
     
     struct structureArray {
@@ -35,23 +41,26 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     func updateUI()
     {
         print("Title")
-        print (album!.title)
+        //print (album!.seasonSections?.count)
         
-        hymnArray = (album?.seasonSections)!
-        
+        //if album?.seasonSections?.count != nil {
+        //hymnArray = (album?.seasonSections)!
+        //}
         arrayCount = hymnArray?.count
         tableView.delegate = self
         tableView.dataSource = self
         
-        for (key, value) in hymnArray! {
+        print ("Array count \(arrayCount)")
+        
+       /* for (key, value) in hymnArray! {
             //print("\(key) -> \(value)")
             objectArray.append(structureArray(sectionName: key, sectionDetails: value))
             
-        }
+        } */
         
         
     // sorting the section array as for some reason it has a mind of its own
-        objectArray.sort {$0.sectionName < $1.sectionName}
+       // objectArray.sort {$0.sectionName < $1.sectionName}
        
     // debug print statement
         /* print (hymnArray?.count)
@@ -63,7 +72,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = ((album?.title)!)
+        //title = ((album?.title)!)
         updateUI()
     }
 
@@ -79,15 +88,23 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
  
     
     // MARK:  UITableViewDelegate Methods
+    /*
     func numberOfSections(in tableView: UITableView) -> Int {
         return (objectArray.count)
-    }
+    }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (objectArray[section].sectionDetails?.count)!
+        var noOfRows = 5
+        
+        if (hymnArray?.count) != nil {
+             noOfRows = hymnArray!.count
+             print ("Here is the # of rows: \(noOfRows)")
+        }
+        return (noOfRows)
+        //return (objectArray[section].sectionDetails?.count)!
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+ /*   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         //print ("header for section: \(section)")
         
         let rawDescription = objectArray[section].sectionName.description
@@ -95,21 +112,22 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         let range = rawDescription.index(rawDescription.startIndex, offsetBy: 4)..<rawDescription.endIndex
 
         return (rawDescription[range]) as String
-    }
+    } */
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath as IndexPath)
         
         let row = indexPath.row
-        let section = indexPath.section
-        cell.textLabel?.text = (objectArray[section].sectionDetails[row].description) as String
+        //let section = indexPath.section
+        cell.textLabel?.text = (hymnArray?[row].hymnName)! as String
+        //cell.textLabel?.text = (objectArray[section].sectionDetails[row].description) as String
         
         return cell
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+ /*   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         
         let row = indexPath.row
@@ -117,7 +135,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         print(objectArray[section].sectionDetails[row].description)
     }
-    
+    */
     
     // MARK: - Target/Action
     
