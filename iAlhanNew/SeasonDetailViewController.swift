@@ -99,7 +99,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath as IndexPath)
         
         let row = indexPath.row
         let section = indexPath.section
@@ -118,6 +118,44 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         print(objectArray[section].sectionDetails[row].description)
     }
     
+    
+    // MARK: - Target/Action
+    
+    @IBAction func showHymn(_ sender: UITapGestureRecognizer)
+    {
+        performSegue(withIdentifier: "Show Hymn Detail", sender: sender.view)
+        
+    }
+    
+    // MARK: - Navigation
+    
+//   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+//    {
+//        if let identifier = segue.identifier
+//        {
+//            switch identifier
+//            {
+//            case "Show Hymn Detail":
+//                //print ("I'm here")
+//                let hymnDetailVC = segue.destination as! HymnDetailViewController, blogIndex = tableView.indexPathForSelectedRow?.row
+//                
+//                {
+//                    //print ("Index: ")
+//                    //print (index)
+//                    let hymn = Season.init(index: index)
+//                    hymnDetailVC.album = album
+//                    
+//                }
+//                
+//                
+//            default:
+//                break
+//                
+//                
+//            }
+//        }
+//    }
+
    
     
 }

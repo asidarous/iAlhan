@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AlbumKeys
+public struct SeasonKeys
 {
     static let title = "title"
     static let seasonImage = "seasonImage"
@@ -21,7 +21,7 @@ class Season
     var title: String?
     var seasonImage: String?
     var seasonSections: [String: [String]]?
-
+    
     // initialize the album
     init(index: Int)
     {
@@ -32,9 +32,9 @@ class Season
             let seasonAlbum = SeasonLibrary().seasonAlbums[index]
             
             // start initialization of album
-            title = seasonAlbum[AlbumKeys.title] as? String
-            seasonImage = seasonAlbum[AlbumKeys.seasonImage] as? String
-            seasonSections = seasonAlbum[AlbumKeys.seasonSections] as? [String: [String]]
+            title = seasonAlbum[SeasonKeys.title] as? String
+            seasonImage = seasonAlbum[SeasonKeys.seasonImage] as? String
+            seasonSections = seasonAlbum[SeasonKeys.seasonSections] as? [String: [String]]
         
         
         }

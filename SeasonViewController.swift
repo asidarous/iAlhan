@@ -8,6 +8,15 @@
 
 import UIKit
 
+struct SeasonData {
+    var title: String!
+    var seasonImage: String!
+    var seasonID: Int!
+    //var seasonSections: [String : [String]]!
+    
+}
+
+
 class SeasonViewController: UIViewController {
 
     @IBOutlet weak var seasonImage0: UIImageView!
@@ -25,29 +34,35 @@ class SeasonViewController: UIViewController {
 
     
     var seasonImages: [UIImageView]!
+    var seasonsData: [SeasonData]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo.jpg")!);
         
         // append all seasonImages to the array
+        
         seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]
         
         // method to set the images of the IBOutlets
-       updateUI()
+       
+        updateUI()
         
     }
 
     func updateUI()
     {
-        for i in 0..<seasonImages.count{
+        seasonsData = DBManager.shared.loadSeasons()
+        
+        for i in 0..<seasonImages.count-1{
             let seasonImage = seasonImages[i]
+            print("Here")
             
-            let album = Season(index: i)
-            //if (album.seasonImage != nil)
-            //{
-                seasonImage.image = UIImage(named: album.seasonImage!)
-            //}
+            let album = seasonsData[i]
+            print (album.seasonImage!)
+            seasonImage.image = UIImage(named: album.seasonImage!)
+            
+            
         }
     }
     
