@@ -65,6 +65,8 @@ class SeasonViewController: UIViewController {
         // method to set the images of the IBOutlets
         updateUI()
         
+        
+        
     }
 
     func updateUI()
@@ -75,7 +77,7 @@ class SeasonViewController: UIViewController {
             let seasonImage = seasonImages[i]
             
             let album = seasonsData[i]
-            print (album.seasonImage!)
+            //print (album.seasonImage!)
             seasonImage.image = UIImage(named: album.seasonImage!)
             seasonLabels[i].text = album.title
          }
@@ -105,13 +107,12 @@ class SeasonViewController: UIViewController {
                     //print (detailImageView)
                     if let index = seasonImages.index(of: detailImageView)
                     {
-                        //print ("Index: ")
-                        //print (index)
+
                         let seasonID = seasonsData[index].seasonID
-                        //let hymnArray = Season.init(index: seasonID!)
                         let hymnArray = DBManager.shared.loadSeasonHymns(WithID: seasonID!)
                         
-                        print ("Print from within SeasonVC \(hymnArray)")
+                        //print ("Print from within SeasonVC \(hymnArray)")
+                        seasonDetailVC.labelText = seasonsData[index].title
                         seasonDetailVC.hymnArray = hymnArray
                         
                     }

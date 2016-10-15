@@ -8,26 +8,32 @@
 
 import UIKit
 
-struct SeasonHymns {
+public struct SeasonHymns {
+    //var hymnName: String!
+    var seasonSections: [String: [String]]!
+}
+
+struct EventHymns {
     var hymnName: String!
-    //var seasonSections: [String]!
+    //var hymnID: Int!
+    //var hymnDescrition: String!
 }
 
 class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
     // Model: an album
-    var album: Season?
+    //var album: Season?
+    //var seasonHymnsStruct: SeasonHymns?
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
 
     @IBOutlet var tableView: UITableView!
 
-    var seasonID: Int?
     var arrayCount: Int?
-    //var hymnArray: [String: [String]]?
-    var hymnArray: [SeasonHymns]?
+    var hymnArray: [Any] = []
     let textCellIdentifier = "TextCell"
+    var labelText: String?
     
     struct structureArray {
         var sectionName: String!
@@ -40,40 +46,44 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
    
     func updateUI()
     {
-        print("Title")
+        
         //print (album!.seasonSections?.count)
         
         //if album?.seasonSections?.count != nil {
         //hymnArray = (album?.seasonSections)!
         //}
-        arrayCount = hymnArray?.count
+        arrayCount = hymnArray.count
         tableView.delegate = self
         tableView.dataSource = self
         
-        print ("Array count \(arrayCount)")
+        //print ("Array count \(arrayCount)")
+        //print (hymnArray.description)
         
-       /* for (key, value) in hymnArray! {
-            //print("\(key) -> \(value)")
-            objectArray.append(structureArray(sectionName: key, sectionDetails: value))
+        
+        for (index, _) in hymnArray.enumerated() {
             
-        } */
+            //print("\(index) -> \(item)")
+            //print( hymnArray[index])
+            let arrayText =  (hymnArray[index] as! NSDictionary)
+            
+            for (key, value) in arrayText{
+                //print ("Key and Value info \(key) ------ > \(value)")
+                objectArray.append(structureArray(sectionName: key as! String, sectionDetails: value as! [String]))
+            }
+            
+        }
         
-        
-    // sorting the section array as for some reason it has a mind of its own
-       // objectArray.sort {$0.sectionName < $1.sectionName}
-       
-    // debug print statement
-        /* print (hymnArray?.count)
-        print ("ORIGINAL.....\(hymnArray)")
-        print ("ORIGINAL SORTED.....\(objectArray)") */
+        // print("OBJECT ARRAY COUNT \(objectArray.count)")
        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //title = ((album?.title)!)
+        
         updateUI()
+        //print ("Label Text \(labelText)")
+        title = labelText
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -88,41 +98,35 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
  
     
     // MARK:  UITableViewDelegate Methods
-    /*
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return (objectArray.count)
-    }*/
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var noOfRows = 5
-        
-        if (hymnArray?.count) != nil {
-             noOfRows = hymnArray!.count
-             print ("Here is the # of rows: \(noOfRows)")
-        }
-        return (noOfRows)
-        //return (objectArray[section].sectionDetails?.count)!
     }
     
- /*   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return (objectArray[section].sectionDetails?.count)!
+    }
+    
+   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         //print ("header for section: \(section)")
         
         let rawDescription = objectArray[section].sectionName.description
         
-        let range = rawDescription.index(rawDescription.startIndex, offsetBy: 4)..<rawDescription.endIndex
+        //let range = rawDescription.index(rawDescription.startIndex, offsetBy: 4)..<rawDescription.endIndex
 
-        return (rawDescription[range]) as String
-    } */
+        return (rawDescription) as String
+    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath as IndexPath)
         
         let row = indexPath.row
-        //let section = indexPath.section
-        cell.textLabel?.text = (hymnArray?[row].hymnName)! as String
-        //cell.textLabel?.text = (objectArray[section].sectionDetails[row].description) as String
-        
+        let section = indexPath.section
+        // cell.textLabel?.text = (hymnArray?[row].seasonSections)! as String
+        cell.textLabel?.text = (objectArray[section].sectionDetails[row].description) as String
+        cell.detailTextLabel?.text = "Testing this"
         return cell
     }
     

@@ -36,6 +36,8 @@ class DBManager: NSObject {
         
     }
     
+    
+    // Open DB Funtion
     func openDatabase() -> Bool {
         if database == nil {
             
@@ -59,11 +61,12 @@ class DBManager: NSObject {
         return false
     }
     
+    // Load Seasons
     func loadSeasons() -> [SeasonData]! {
         var seasons: [SeasonData]!
         
         if openDatabase() {
-            let query = "select * from season asc"
+            let query = "select * from season"
             
             do {
                 //print(database)
@@ -95,31 +98,46 @@ class DBManager: NSObject {
         return seasons
     
     }
+  
     
-    func loadSeasonHymns(WithID ID: Int) -> [SeasonHymns]{
-        var seasonHymns: [SeasonHymns]!
+    // Load Season Events and Hymns in a dictionary
+
+    func loadSeasonHymns(WithID ID: Int) -> [Any]{
+        var seasonHymns = [Any]()
         
         if openDatabase() {
-            // this query will return all hymns for that season
-            let query = "select * from hymn where hymn_event_id_fk in (select event_id from event where event_season_fk=?)"
+            // this query will return all events for that season
+            let query = "select * from event where event_season_fk=? order by event_id asc"
+            
+            //print("Here is the event_season_fk \(ID)")
             
             do {
                 //print(database)
                 let results = try database.executeQuery(query, values: [ID])
                 //print("Query result \(results)")
+               
                 while results.next() {
-                    let hymn = SeasonHymns(hymnName: results.string(forColumn: "hymn_name")
-                        
-                    )
-                    print ("$$$ Hymn \(hymn)")
-                    if seasonHymns == nil {
-                        seasonHymns = [SeasonHymns]()
-                    }
+                    let event = results.string(forColumn: "event_name")
+                    let eventID = Int (results.int(forColumn: "event_id"))
                     
-                    seasonHymns.append(hymn)
+                    let eventHymns = loadHymnsForEvent(WithID: eventID)
+                    
+                    // print ("**** returned Event Hymns \(eventHymns.description)")
+                    
+                    let seasonSection = SeasonHymns(seasonSections: [(event?.description)!: eventHymns])
+                    
+                    
+                   // print ("$$$ seasonSection \(seasonSection.seasonSections)")
+
+//                    if seasonHymns == nil {
+//                        seasonHymns = [String: [String]]()
+//                    }
+                   
+                    seasonHymns.append(seasonSection.seasonSections)
+                    
                 }
-                print (seasonHymns.count)
-                print (seasonHymns)
+                // print (seasonHymns.count)
+                 //print ("+++ From outside the while loop : \(seasonHymns)")
             }
             catch {
                 print(error.localizedDescription)
@@ -132,5 +150,60 @@ class DBManager: NSObject {
         return seasonHymns
         
     }
+    
+    
+    func loadHymnsForEvent(WithID ID: Int) -> [String]{
+        var eventHymns: [String]!
+        var dbOpen: Bool?
+        
+        
+        // Due to the fact that we're making this call inside another DB connection
+        // let's check if a connection exists, otherwise initiate it
+        
+        if !database.goodConnection() {
+            
+            if  openDatabase() {
+            dbOpen = true
+            }
+        }
+        else
+        {
+            // this query will return all hymns for that event
+            let query = "select * from hymn where hymn_event_id_fk=? order by hymn_id asc"
+            
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: [ID])
+                //print("Query result \(results)")
+                while results.next() {
+                    
+                    let hymn = EventHymns(hymnName: results.string(forColumn: "hymn_name")
+                        
+                    )
+                    //print ("$-$-$ Hymn \(hymn.hymnName)")
+                    if eventHymns == nil {
+                        eventHymns = [String]()
+                    }
+                    
+                    eventHymns.append(hymn.hymnName)
+                }
+                // print (seasonHymns.count)
+                // print ("///// Event hymns: \(eventHymns.description)")
+                results.close()
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            if dbOpen == true {
+            database.close()
+            }
+            
+        }
+        
+        return eventHymns
+        
+    }
+
 
 } // EOF
