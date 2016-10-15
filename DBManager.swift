@@ -102,8 +102,8 @@ class DBManager: NSObject {
     
     // Load Season Events and Hymns in a dictionary
 
-    func loadSeasonHymns(WithID ID: Int) -> [Any]{
-        var seasonHymns = [Any]()
+    func loadSeasonHymns(WithID ID: Int) -> [SeasonHymns]{
+        var seasonHymns = [SeasonHymns]()
         
         if openDatabase() {
             // this query will return all events for that season
@@ -133,7 +133,7 @@ class DBManager: NSObject {
 //                        seasonHymns = [String: [String]]()
 //                    }
                    
-                    seasonHymns.append(seasonSection.seasonSections)
+                    seasonHymns.append(seasonSection)
                     
                 }
                 // print (seasonHymns.count)
@@ -152,8 +152,8 @@ class DBManager: NSObject {
     }
     
     
-    func loadHymnsForEvent(WithID ID: Int) -> [String]{
-        var eventHymns: [String]!
+    func loadHymnsForEvent(WithID ID: Int) -> [EventHymns]{
+        var eventHymns: [EventHymns]!
         var dbOpen: Bool?
         
         
@@ -177,15 +177,16 @@ class DBManager: NSObject {
                 //print("Query result \(results)")
                 while results.next() {
                     
-                    let hymn = EventHymns(hymnName: results.string(forColumn: "hymn_name")
+                    let hymn = EventHymns(hymnName: results.string(forColumn: "hymn_name"),
+                                          hymnDescription: results.string(forColumn: "hymn_desc")
                         
                     )
                     //print ("$-$-$ Hymn \(hymn.hymnName)")
                     if eventHymns == nil {
-                        eventHymns = [String]()
+                        eventHymns = [EventHymns]()
                     }
                     
-                    eventHymns.append(hymn.hymnName)
+                    eventHymns.append(hymn)
                 }
                 // print (seasonHymns.count)
                 // print ("///// Event hymns: \(eventHymns.description)")
