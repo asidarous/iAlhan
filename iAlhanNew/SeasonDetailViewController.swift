@@ -15,8 +15,11 @@ public struct SeasonHymns {
 
 struct EventHymns {
     var hymnName: String!
-    //var hymnID: Int!
+    var hymnID: Int!
     var hymnDescription: String!
+    var hymnCoptic: String!
+    var hymnEnglish: String!
+    var hymnAudio: String!
 }
 
 class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
@@ -30,10 +33,9 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     @IBOutlet var tableView: UITableView!
 
-    var arrayCount: Int?
-    var hymnArray: [AnyObject] = []
     let textCellIdentifier = "TextCell"
     var labelText: String?
+    
     var eventHymns:[EventHymns]?
     var seasonHymns: [SeasonHymns]?
     
@@ -51,36 +53,16 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         //print (album!.seasonSections?.count)
         
-        //if album?.seasonSections?.count != nil {
-        //hymnArray = (album?.seasonSections)!
-        //}
-        arrayCount = hymnArray.count
+       
         tableView.delegate = self
         tableView.dataSource = self
         
         //print ("Array count \(arrayCount)")
         //print (hymnArray.description)
         
-        print("!!!! SeasonHymns Struct: \(seasonHymns)")
-        print("----------")
+        //print("!!!! SeasonHymns Struct: \(seasonHymns)")
+        //print("----------")
         
-//        for (index, _) in hymnArray.enumerated() {
-//            
-//            //print("\(index) -> \(item)")
-//            //print( hymnArray[index])
-//            let arrayText =  (hymnArray[index] as! NSDictionary)
-//            
-//            for (key, value) in arrayText{
-//                print ("Key and Value info \(key) ------ > \(value)")
-//                //let valurVar = [value] as! [EventHymns]
-//                
-//                
-//                objectArray.append(structureArray(sectionName: key as! String, sectionDetails: value))
-//            }
-//            
-//        }
-        
-        // print("OBJECT ARRAY COUNT \(objectArray.count)")
        
     }
 
@@ -113,10 +95,10 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowsPerSection: Int!
         let tempDict = seasonHymns![section].seasonSections
-        for (k, v) in tempDict!{
-            print ("k & V: \(k) -- > \(v) ")
+        for (_, v) in tempDict!{
+            //print ("k & V: \(k) -- > \(v) ")
             //hymnDetailTemp = v
-            print ("????? No of values for TEMP DICT: \(v.count)")
+            //print ("????? No of values for TEMP DICT: \(v.count)")
             rowsPerSection = v.count
         }
 
@@ -143,21 +125,21 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         let row = indexPath.row
         let section = indexPath.section
         //cell.textLabel?.text = (hymnArray?[row].seasonSections)! as String
-        print("++++++++++++++++++++")
+        /*print("++++++++++++++++++++")
         print(section)
-        print((seasonHymns![section].seasonSections))
+        print((seasonHymns![section].seasonSections)) */
         let tempDict = seasonHymns![section].seasonSections
         //var hymnDetailTemp
         var hymnNameLabel: String!
         var hymnDescLabel: String!
         
-        for (k, v) in tempDict!{
-            print ("k & V: \(k) -- > \(v) ")
+        for (_, v) in tempDict!{
+            //print ("k & V: \(k) -- > \(v) ")
             //hymnDetailTemp = v
-            print ("Number of hymns in section: \(v.count)")
+            //print ("Number of hymns in section: \(v.count)")
             hymnNameLabel = v[row].hymnName
             hymnDescLabel = v[row].hymnDescription
-            print ("This is the row and hymn name \(row) -->> \(hymnNameLabel)")
+            //print ("This is the row and hymn name \(row) -->> \(hymnNameLabel)")
             //print(hymnDetailTemp[row].hymnName)
         }
         //cell.textLabel?.text = (objectArray[section].sectionDetails[row].hymnDescription) as String

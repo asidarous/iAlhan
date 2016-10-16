@@ -166,10 +166,9 @@ class DBManager: NSObject {
             dbOpen = true
             }
         }
-        else
-        {
+       
             // this query will return all hymns for that event
-            let query = "select * from hymn where hymn_event_id_fk=? order by hymn_id asc"
+            let query = "select * from hymn where hymn_event_id_fk=? order by hymn_order asc"
             
             do {
                 //print(database)
@@ -178,7 +177,11 @@ class DBManager: NSObject {
                 while results.next() {
                     
                     let hymn = EventHymns(hymnName: results.string(forColumn: "hymn_name"),
-                                          hymnDescription: results.string(forColumn: "hymn_desc")
+                                          hymnID: Int(results.int(forColumn: "hymn_id")),
+                                          hymnDescription: results.string(forColumn: "hymn_desc"),
+                                          hymnCoptic: results.string(forColumn: "hymn_coptic"),
+                                          hymnEnglish: results.string(forColumn: "hymn_english"),
+                                          hymnAudio: results.string(forColumn: "hymn_audio")
                         
                     )
                     //print ("$-$-$ Hymn \(hymn.hymnName)")
@@ -200,7 +203,7 @@ class DBManager: NSObject {
             database.close()
             }
             
-        }
+        
         
         return eventHymns
         

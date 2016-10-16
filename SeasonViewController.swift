@@ -110,7 +110,7 @@ class SeasonViewController: UIViewController {
                         let seasonID = seasonsData[index].seasonID
                         let hymnArray = DBManager.shared.loadSeasonHymns(WithID: seasonID!)
                         
-                        print ("Print from within SeasonVC \(hymnArray)")
+                        //print ("Print from within SeasonVC \(hymnArray)")
                         seasonDetailVC.labelText = seasonsData[index].title
                         seasonDetailVC.seasonHymns = hymnArray
                         
