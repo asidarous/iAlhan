@@ -134,90 +134,102 @@
                                                         <outletCollection property="gestureRecognizers" destination="GQJ-0n-fjK" appends="YES" id="VeY-xK-chH"/>
                                                     </connections>
                                                 </imageView>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3H1-3j-t6E">
-                                                    <frame key="frameInset" minX="-1" minY="98" width="97" height="30"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H00-Ax-xSy">
+                                                    <frame key="frameInset" minY="103" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aNi-TX-r5B">
-                                                    <frame key="frameInset" minX="129" minY="98" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2WQ-ze-n42">
+                                                    <frame key="frameInset" minX="134" minY="103" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="brw-lc-e2m">
-                                                    <frame key="frameInset" minX="262" minY="98" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dth-qs-7WT">
+                                                    <frame key="frameInset" minX="267" minY="103" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K9T-Yf-y3m">
-                                                    <frame key="frameInset" minY="234" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LVZ-QV-dhF">
+                                                    <frame key="frameInset" minY="239" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bdp-57-NzV">
-                                                    <frame key="frameInset" minX="130" minY="234" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_4" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0yL-vH-cNi">
+                                                    <frame key="frameInset" minX="132" minY="239" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pvh-T6-P8w">
-                                                    <frame key="frameInset" minX="263" minY="234" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_5" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-Ka-hTJ">
+                                                    <frame key="frameInset" minX="265" minY="239" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MKK-qS-a6H">
-                                                    <frame key="frameInset" minY="370" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_6" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EnS-41-AoO">
+                                                    <frame key="frameInset" minX="2" minY="374" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KIg-jd-DXk">
-                                                    <frame key="frameInset" minX="130" minY="370" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_7" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jd7-Lp-c5Y">
+                                                    <frame key="frameInset" minX="134" minY="374" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cC2-NR-rmy">
-                                                    <frame key="frameInset" minX="263" minY="370" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_8" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wXu-lC-Df1">
+                                                    <frame key="frameInset" minX="267" minY="374" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Leu-Bi-ocr">
-                                                    <frame key="frameInset" minY="507" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_9" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="muY-8b-sTE">
+                                                    <frame key="frameInset" minY="510" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kgC-Wp-FYg">
-                                                    <frame key="frameInset" minX="130" minY="507" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_10" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ErO-ha-aHV">
+                                                    <frame key="frameInset" minX="132" minY="510" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vfE-Dt-uiU">
-                                                    <frame key="frameInset" minX="263" minY="507" width="97" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jiZ-aX-QtG">
+                                                    <frame key="frameInset" minX="265" minY="510" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                     </subviews>
@@ -229,6 +241,18 @@
                     </view>
                     <navigationItem key="navigationItem" title="Seasons" id="J7H-b1-bM5"/>
                     <connections>
+                        <outlet property="SeasonLabel_0" destination="H00-Ax-xSy" id="Mf2-7i-yGJ"/>
+                        <outlet property="SeasonLabel_1" destination="2WQ-ze-n42" id="vg3-UR-qPY"/>
+                        <outlet property="SeasonLabel_10" destination="ErO-ha-aHV" id="Dp0-nI-Pg0"/>
+                        <outlet property="SeasonLabel_11" destination="jiZ-aX-QtG" id="PaC-ne-xqA"/>
+                        <outlet property="SeasonLabel_2" destination="dth-qs-7WT" id="9sE-7y-5rq"/>
+                        <outlet property="SeasonLabel_3" destination="LVZ-QV-dhF" id="td9-sd-eKd"/>
+                        <outlet property="SeasonLabel_4" destination="0yL-vH-cNi" id="JpZ-aX-HP6"/>
+                        <outlet property="SeasonLabel_5" destination="uPs-Ka-hTJ" id="frP-8l-uhM"/>
+                        <outlet property="SeasonLabel_6" destination="EnS-41-AoO" id="f1U-KL-fNh"/>
+                        <outlet property="SeasonLabel_7" destination="jd7-Lp-c5Y" id="yFr-ch-0Wq"/>
+                        <outlet property="SeasonLabel_8" destination="wXu-lC-Df1" id="nhB-IN-Lp0"/>
+                        <outlet property="SeasonLabel_9" destination="muY-8b-sTE" id="ate-WX-xoN"/>
                         <outlet property="seasonImage0" destination="OmJ-Zc-YGw" id="tfP-EZ-1wW"/>
                         <outlet property="seasonImage1" destination="mMC-af-cie" id="pp3-fI-7It"/>
                         <outlet property="seasonImage10" destination="EFs-zh-0Qz" id="cBJ-lB-nkW"/>
@@ -241,18 +265,6 @@
                         <outlet property="seasonImage7" destination="5b5-M9-lEG" id="Zxj-Q1-HZ3"/>
                         <outlet property="seasonImage8" destination="Rwq-j4-PlD" id="b4f-dh-lpR"/>
                         <outlet property="seasonImage9" destination="SJf-kS-ZqG" id="yYb-QW-ABz"/>
-                        <outlet property="seasonLabel0" destination="3H1-3j-t6E" id="wcM-vx-OMr"/>
-                        <outlet property="seasonLabel1" destination="aNi-TX-r5B" id="1NH-j2-4JQ"/>
-                        <outlet property="seasonLabel10" destination="kgC-Wp-FYg" id="SjC-zk-GCd"/>
-                        <outlet property="seasonLabel11" destination="vfE-Dt-uiU" id="9cO-LU-PVY"/>
-                        <outlet property="seasonLabel2" destination="brw-lc-e2m" id="b3X-95-BOv"/>
-                        <outlet property="seasonLabel3" destination="K9T-Yf-y3m" id="RUb-6a-umT"/>
-                        <outlet property="seasonLabel4" destination="bdp-57-NzV" id="F1B-1d-Mzv"/>
-                        <outlet property="seasonLabel5" destination="Pvh-T6-P8w" id="Ljx-uk-AQp"/>
-                        <outlet property="seasonLabel6" destination="MKK-qS-a6H" id="m71-0S-jyp"/>
-                        <outlet property="seasonLabel7" destination="KIg-jd-DXk" id="dDx-l2-FpO"/>
-                        <outlet property="seasonLabel8" destination="cC2-NR-rmy" id="wma-3x-G7f"/>
-                        <outlet property="seasonLabel9" destination="Leu-Bi-ocr" id="F79-3D-S9Z"/>
                         <segue destination="suT-MX-M3Z" kind="show" identifier="Show Season Detail" id="1HV-QI-Oid"/>
                     </connections>
                 </viewController>
@@ -318,7 +330,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="788" y="38"/>
+            <point key="canvasLocation" x="788" y="37.331334332833585"/>
         </scene>
         <!--Season Detail View Controller-->
         <scene sceneID="XKl-3j-LOz">

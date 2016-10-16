@@ -34,22 +34,21 @@ class SeasonViewController: UIViewController {
     @IBOutlet weak var seasonImage11: UIImageView!
     
     // IBOutlet for labels
-    @IBOutlet var seasonLabel0: UITextField!
-    @IBOutlet var seasonLabel1: UITextField!
-    @IBOutlet var seasonLabel2: UITextField!
-    @IBOutlet var seasonLabel3: UITextField!
-    @IBOutlet var seasonLabel4: UITextField!
-    @IBOutlet var seasonLabel5: UITextField!
-    @IBOutlet var seasonLabel6: UITextField!
-    @IBOutlet var seasonLabel7: UITextField!
-    @IBOutlet var seasonLabel8: UITextField!
-    @IBOutlet var seasonLabel9: UITextField!
-    @IBOutlet var seasonLabel10: UITextField!
-    @IBOutlet var seasonLabel11: UITextField!
-
+    @IBOutlet weak var SeasonLabel_0: UILabel!
+    @IBOutlet weak var SeasonLabel_1: UILabel!
+    @IBOutlet weak var SeasonLabel_2: UILabel!
+    @IBOutlet weak var SeasonLabel_3: UILabel!
+    @IBOutlet weak var SeasonLabel_4: UILabel!
+    @IBOutlet weak var SeasonLabel_5: UILabel!
+    @IBOutlet weak var SeasonLabel_6: UILabel!
+    @IBOutlet weak var SeasonLabel_7: UILabel!
+    @IBOutlet weak var SeasonLabel_8: UILabel!
+    @IBOutlet weak var SeasonLabel_9: UILabel!
+    @IBOutlet weak var SeasonLabel_10: UILabel!
+    @IBOutlet weak var SeasonLabel_11: UILabel!
     
     var seasonImages: [UIImageView]!
-    var seasonLabels: [UITextField]!
+    var seasonLabels: [UILabel]!
     var seasonsData: [SeasonData]!
     
     override func viewDidLoad() {
@@ -60,7 +59,7 @@ class SeasonViewController: UIViewController {
         seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]
         
         // append all seasonLabels to the array
-        seasonLabels = [seasonLabel0, seasonLabel1, seasonLabel2, seasonLabel3, seasonLabel4, seasonLabel5, seasonLabel6, seasonLabel7, seasonLabel8, seasonLabel9, seasonLabel10, seasonLabel11]
+        seasonLabels = [SeasonLabel_0, SeasonLabel_1, SeasonLabel_2, SeasonLabel_3, SeasonLabel_4, SeasonLabel_5, SeasonLabel_6, SeasonLabel_7, SeasonLabel_8, SeasonLabel_9, SeasonLabel_10, SeasonLabel_11]
         
         // method to set the images of the IBOutlets
         updateUI()
