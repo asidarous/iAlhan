@@ -8,19 +8,31 @@
 
 import UIKit
 
+struct HymnDetail {
+    var hymnName: String!
+    var hymnID: Int!
+    var hymnDescription: String!
+    var hymnCoptic: String!
+    var hymnEnglish: String!
+    var hymnAudio: String!
+}
+
 class HymnDetailViewController: UIViewController {
     @IBOutlet var HymnText: UITextView!
 
+    var hymnDetail: [EventHymns]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
-    var HymnName = String()
+    
     
     override func viewWillAppear(_ animated: Bool) {
-        HymnText.text = HymnName
+        HymnText.text = hymnDetail?[0].hymnCoptic
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

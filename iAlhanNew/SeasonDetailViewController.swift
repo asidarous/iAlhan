@@ -79,7 +79,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         super.viewWillDisappear(animated)
         
         // get rid of the background image from superview
-        backgroundImageView.removeFromSuperview()
+        // backgroundImageView.removeFromSuperview()
         //visualEffectView.removeFromSuperview()
 
     }
@@ -149,15 +149,26 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     
- /*   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        
-        let row = indexPath.row
-        let section = indexPath.section
-        
-        print(objectArray[section].sectionDetails[row].description)
-    }
-    */
+//   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+//    
+//    let row = indexPath.row
+//    let section = indexPath.section
+//    
+//    let tempDict = seasonHymns![section].seasonSections
+//    
+//    for (_, v) in tempDict!{
+//        //print ("k & V: \(k) -- > \(v) ")
+//        //hymnDetailTemp = v
+//        //print ("Number of hymns in section: \(v.count)")
+//        print("+++++ hymn ID \(v[row].hymnID)")
+//        print(v[row])
+//        
+//    }
+//
+//    
+//    }
+    
     
     // MARK: - Target/Action
     
@@ -169,32 +180,44 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - Navigation
     
-//   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-//    {
-//        if let identifier = segue.identifier
-//        {
-//            switch identifier
-//            {
-//            case "Show Hymn Detail":
-//                //print ("I'm here")
-//                let hymnDetailVC = segue.destination as! HymnDetailViewController, blogIndex = tableView.indexPathForSelectedRow?.row
-//                
-//                {
-//                    //print ("Index: ")
-//                    //print (index)
-//                    let hymn = Season.init(index: index)
-//                    hymnDetailVC.album = album
-//                    
-//                }
-//                
-//                
-//            default:
-//                break
-//                
-//                
-//            }
-//        }
-//    }
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let identifier = segue.identifier
+        {
+            switch identifier
+            {
+            case "Show Hymn Detail":
+                //print ("I'm here")
+                let hymnDetailVC = segue.destination as! HymnDetailViewController
+                let indexPath = tableView.indexPathForSelectedRow
+                
+                let row = indexPath?.row
+                let section = indexPath?.section
+                
+                let tempDict = seasonHymns![section!].seasonSections
+                
+                for (_, v) in tempDict!{
+                    //print ("k & V: \(k) -- > \(v) ")
+                    //hymnDetailTemp = v
+                    //print ("Number of hymns in section: \(v.count)")
+                    print("+++++ hymn ID \(v[row!].hymnID)")
+                    print(v[row!])
+                    
+                    hymnDetailVC.hymnDetail = [v[row!]]
+                }
+                
+                
+                    //print ("Index: ")
+                    //print (index)
+                    //hymnDetailVC.hymnDetail =
+                
+            default:
+                break
+                
+                
+            }
+        }
+    }
 
    
     
