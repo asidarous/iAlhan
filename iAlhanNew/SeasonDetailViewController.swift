@@ -75,6 +75,13 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         title = labelText
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        if let row = tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: row, animated: true)
+        }
+    }
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -118,6 +125,15 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         return description
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        let title = UILabel()
+        
+        title.textColor = UIColor(red: CGFloat(70/255.0), green: CGFloat(0/255.0), blue: CGFloat(0/255.0), alpha: CGFloat(1.0) )
+        
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor=title.textColor
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextCell", for: indexPath as IndexPath)
@@ -200,12 +216,13 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                     //print ("k & V: \(k) -- > \(v) ")
                     //hymnDetailTemp = v
                     //print ("Number of hymns in section: \(v.count)")
-                    print("+++++ hymn ID \(v[row!].hymnID)")
-                    print(v[row!])
+                    //print("+++++ hymn ID \(v[row!].hymnID)")
+                    //print(v[row!])
                     
                     hymnDetailVC.hymnDetail = [v[row!]]
                 }
                 
+                //tableView.deselectRow(at: indexPath!, animated: "YES")
                 
                     //print ("Index: ")
                     //print (index)
