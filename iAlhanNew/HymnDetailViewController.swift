@@ -19,7 +19,13 @@ struct HymnDetail {
 
 class HymnDetailViewController: UIViewController {
     @IBOutlet var HymnText: UITextView!
+    @IBOutlet var ToolBar: UIToolbar!
 
+
+
+    var pauseButton = UIBarButtonItem()
+    var playButton = UIBarButtonItem()
+    var arrayOfButtons = [UIBarButtonItem]()
 
     var hymnDetail: [EventHymns]?
     
@@ -28,11 +34,41 @@ class HymnDetailViewController: UIViewController {
         super.viewDidLoad()
 
         title = hymnDetail?[0].hymnName
+       
+        ToolBar.tintColor = GlobalConstants.kColor_DarkColor
+        pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
+        playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
+        
+        arrayOfButtons = self.ToolBar.items!
+        arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        
         
 //
         
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    
+    func playButtonTapped() {
+        arrayOfButtons = self.ToolBar.items!
+        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+        arrayOfButtons.insert(pauseButton, at: 0)
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+    }
+    
+    func pauseButtonTapped() {
+        arrayOfButtons = self.ToolBar.items!
+        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+        arrayOfButtons.insert(playButton, at: 0)
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+         HymnText.setContentOffset(CGPoint.zero, animated: false)
     }
 
     var originalStyle: [String: Any]!
@@ -44,9 +80,7 @@ class HymnDetailViewController: UIViewController {
         originalStyle = navigationController?.navigationBar.titleTextAttributes?.lazy.elements
         print(originalStyle)
         
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "copt", size: 24)!, NSForegroundColorAttributeName: UIColor(red: CGFloat(255/255.0), green: CGFloat(223/255.0), blue: CGFloat(107/255.0), alpha: CGFloat(1.0) )
-            //. .init(red: 1.00205, green: 0.891642, blue: 0.492594, alpha: 1)
-        ]
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "copt", size: 24)!, NSForegroundColorAttributeName: GlobalConstants.kColor_GoldColor]
            }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -129,7 +129,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     {
         let title = UILabel()
         
-        title.textColor = UIColor(red: CGFloat(70/255.0), green: CGFloat(0/255.0), blue: CGFloat(0/255.0), alpha: CGFloat(1.0) )
+        title.textColor = UIColor.gray//GlobalConstants.kColor_DarkColor
         
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor=title.textColor
