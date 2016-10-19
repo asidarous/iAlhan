@@ -139,6 +139,24 @@ class HymnDetailViewController: UIViewController {
         
     }
     
+    @IBAction func Seek(_ sender: AnyObject) {
+        
+        alhanPlayer.pause()
+        
+        arrayOfButtons = self.ToolBar.items!
+        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+        arrayOfButtons.insert(playButton, at: 0)
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        
+        alhanPlayer.seek(to: CMTimeMake(( Int64(ProgressBar.value)), 1) )
+        //alhanPlayer.play()
+        play()
+        
+        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+        arrayOfButtons.insert(pauseButton, at: 0)
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        
+    }
 
    
     override func viewDidLayoutSubviews() {
