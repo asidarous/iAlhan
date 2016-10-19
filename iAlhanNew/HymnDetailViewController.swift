@@ -58,9 +58,27 @@ class HymnDetailViewController: UIViewController {
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
-        ProgressBar.minimumValue = 0
-        ProgressBar.maximumValue = 100
+      
         
+        
+        ProgressBar.minimumValue = 0
+        //ProgressBar.maximumValue = 100
+            //Float((alhanPlayer.currentItem?.duration.seconds)!)
+        
+    }
+
+    
+    func finishedPlaying(myNotification: Notification ){
+        
+        arrayOfButtons = self.ToolBar.items!
+        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+        //print("IMGONACHANGEIT------------")
+        arrayOfButtons.insert(playButton, at: 0)
+        //self.ProgressBar.setValue(0.0, animated: false)
+        resetBar()
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        
+    
     }
     
     func play() {
@@ -69,6 +87,8 @@ class HymnDetailViewController: UIViewController {
             updater.preferredFramesPerSecond = 30
             updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             alhanPlayer.volume = 1.0
+            print("------ \(alhanPlayer.currentItem?.duration.seconds)")
+            ProgressBar.maximumValue = Float((alhanPlayer.currentItem?.duration.seconds)!)
             alhanPlayer.play()
 
     }
@@ -79,6 +99,15 @@ class HymnDetailViewController: UIViewController {
             alhanPlayer.volume = 1.0
             alhanPlayer.pause()
     }
+    
+    func resetBar(){
+    
+        updater.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
+        ProgressBar.value = 0
+       
+    }
+    
+    
     
     func playButtonTapped() {
         arrayOfButtons = self.ToolBar.items!
@@ -103,9 +132,14 @@ class HymnDetailViewController: UIViewController {
     
     // tracking audio
     func trackAudio() {
-        let normalizedTime = Float((alhanPlayer.currentTime().seconds) * 100 / (alhanPlayer.currentItem?.duration.seconds)!)
-        ProgressBar.value = normalizedTime
+        //let normalizedTime = Float((alhanPlayer.currentTime().seconds) * 100 / (alhanPlayer.currentItem?.duration.seconds)!)
+
+        ProgressBar.value = Float((alhanPlayer.currentTime().seconds))
+        //normalizedTime
+        
     }
+    
+
    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -122,7 +156,11 @@ class HymnDetailViewController: UIViewController {
         //print(originalStyle)
         
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "copt", size: 24)!, NSForegroundColorAttributeName: GlobalConstants.kColor_GoldColor]
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HymnDetailViewController.finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+
            }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -131,6 +169,7 @@ class HymnDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         
         navigationController?.navigationBar.titleTextAttributes = originalStyle
+        NotificationCenter.default.removeObserver(self)
         
         
     }
