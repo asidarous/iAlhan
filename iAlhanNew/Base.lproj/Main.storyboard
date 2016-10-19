@@ -450,6 +450,7 @@
                     </view>
                     <connections>
                         <outlet property="HymnText" destination="xFp-QG-MV7" id="l7l-aX-dnu"/>
+                        <outlet property="ProgressBar" destination="SMa-uc-Eq6" id="faN-oy-DGF"/>
                         <outlet property="ToolBar" destination="N0R-cL-Mxp" id="ym5-d3-5A2"/>
                     </connections>
                 </viewController>

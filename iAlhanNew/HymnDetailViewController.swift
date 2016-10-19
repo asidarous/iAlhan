@@ -23,6 +23,7 @@ class HymnDetailViewController: UIViewController {
     @IBOutlet var ToolBar: UIToolbar!
     @IBOutlet var ProgressBar: UISlider!
 
+
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
     var arrayOfButtons = [UIBarButtonItem]()
@@ -57,13 +58,16 @@ class HymnDetailViewController: UIViewController {
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
+        ProgressBar.minimumValue = 0
+        ProgressBar.maximumValue = 100
+        
     }
     
     func play() {
 
-            //updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-            //updater.preferredFramesPerSecond = 1
-            //updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+            updater.preferredFramesPerSecond = 30
+            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             alhanPlayer.volume = 1.0
             alhanPlayer.play()
 
