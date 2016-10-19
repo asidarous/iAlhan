@@ -68,19 +68,22 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //self.navigationItem.leftBarButtonItem?.tintColor = UIColor.blue
+        //UINavigationBar.appearance().tintColor = UIColor.blue
         
         updateUI()
         //print ("Label Text \(labelText)")
         title = labelText
     }
+    
+    
 
     override func viewWillAppear(_ animated: Bool) {
         if let row = tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: row, animated: true)
         }
+
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

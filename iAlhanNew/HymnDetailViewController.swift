@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 struct HymnDetail {
     var hymnName: String!
@@ -20,8 +21,7 @@ struct HymnDetail {
 class HymnDetailViewController: UIViewController {
     @IBOutlet var HymnText: UITextView!
     @IBOutlet var ToolBar: UIToolbar!
-
-
+    @IBOutlet var ProgressBar: UISlider!
 
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
@@ -29,12 +29,26 @@ class HymnDetailViewController: UIViewController {
 
     var hymnDetail: [EventHymns]?
     
+    var alhanPlayer = AVPlayer()
+    var playerItem: AVPlayerItem!
+    var hymnAudioURL: NSURL!
+    var error:NSError?
+    
+    var asset:AVAsset?
+    
+    var updater : CADisplayLink! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = hymnDetail?[0].hymnName
-       
+        hymnAudioURL = NSURL(string: (hymnDetail?[0].hymnAudio)!)
+
+        
+        playerItem = AVPlayerItem(url: hymnAudioURL as URL)
+        self.alhanPlayer = AVPlayer(playerItem: playerItem)
+        
+        //print("PLAYER ITEM At view Did Load : -- \(playerItem)")
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
@@ -43,19 +57,32 @@ class HymnDetailViewController: UIViewController {
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
-        
-//
-        
-        
-        // Do any additional setup after loading the view.
+    }
+    
+    func play() {
+
+            //updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+            //updater.preferredFramesPerSecond = 1
+            //updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+            alhanPlayer.volume = 1.0
+            alhanPlayer.play()
+
     }
     
     
+    func pause() {
+
+            alhanPlayer.volume = 1.0
+            alhanPlayer.pause()
+    }
     
     func playButtonTapped() {
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(pauseButton, at: 0)
+
+        play()
+
         self.ToolBar.setItems(arrayOfButtons, animated: false)
     }
     
@@ -63,9 +90,19 @@ class HymnDetailViewController: UIViewController {
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(playButton, at: 0)
+        
+        pause()
+       
         self.ToolBar.setItems(arrayOfButtons, animated: false)
     }
+
     
+    // tracking audio
+    func trackAudio() {
+        let normalizedTime = Float((alhanPlayer.currentTime().seconds) * 100 / (alhanPlayer.currentItem?.duration.seconds)!)
+        ProgressBar.value = normalizedTime
+    }
+   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
          HymnText.setContentOffset(CGPoint.zero, animated: false)
@@ -78,7 +115,7 @@ class HymnDetailViewController: UIViewController {
         
         
         originalStyle = navigationController?.navigationBar.titleTextAttributes?.lazy.elements
-        print(originalStyle)
+        //print(originalStyle)
         
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "copt", size: 24)!, NSForegroundColorAttributeName: GlobalConstants.kColor_GoldColor]
            }

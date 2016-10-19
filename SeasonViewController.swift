@@ -115,6 +115,7 @@ class SeasonViewController: UIViewController {
                         seasonDetailVC.seasonHymns = hymnArray
                         
                     }
+               
             
                 
                 default:

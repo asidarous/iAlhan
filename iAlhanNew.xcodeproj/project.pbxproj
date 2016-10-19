@@ -10,6 +10,8 @@
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
+		F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0524DF91DB682EF0066B075 /* AVFoundation.framework */; };
+		F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
 		F07790331DB5A53E001B3376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07790321DB5A53E001B3376 /* Constants.swift */; };
 		F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */; };
@@ -49,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
+		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
 		F07790321DB5A53E001B3376 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -88,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */,
 				F0E3E8131DADECC900174D91 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +117,7 @@
 		F05826D61DB059D0001E6CA2 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */,
 				F0485A281DB1353900DBCFE2 /* copt.ttf */,
 				F0E3E8291DB008EC00174D91 /* DBManager.swift */,
 				F07790321DB5A53E001B3376 /* Constants.swift */,
@@ -140,6 +146,7 @@
 		F0E3E8061DAC019100174D91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0524DF91DB682EF0066B075 /* AVFoundation.framework */,
 				F0E3E8111DADEC9900174D91 /* libsqlite3.tbd */,
 				F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */,
 			);
@@ -331,6 +338,7 @@
 				F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
 				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
+				F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */,
 				F0E65F801DA6FC2100A96A69 /* Main.storyboard in Resources */,
 				F0E3E8151DAF15E400174D91 /* AlhanSQL.sqlite in Resources */,
 			);

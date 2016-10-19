@@ -16,6 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let barbuttonFont = UIFont(name: "verdana", size: 12) ?? UIFont.systemFont(ofSize: 12)
+        
+       
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: barbuttonFont, NSForegroundColorAttributeName:UIColor.gray], for: UIControlState.normal)
+        
+        //navigationController?
+         //print("~~~WIDTH -- \(UINavigationController().navigationItem.leftBarButtonItem!.width)")
+        
+        //setTitleTextAttributes([NSFontAttributeName: UIFont(name: "copt", size: 10)!], for: .normal)
+        
+        
+        //UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Verdana", size: 10)!]
+            //.sizeThatFits(CGSize(width: 30, height: 50))
+            //.tintColor = UIColor.blue
+        //    = [ NSFontAttributeName: UIFont(name: "Verdana", size: 10)!]
+        
+        //UINavigationController().navigationItem.leftBarButtonItem?.tintColor = UIColor.blue
+        //UINavigationController().navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Verdana", size: 10)!], for:.normal)
+        
         return true
     }
 
