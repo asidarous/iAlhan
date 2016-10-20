@@ -18,9 +18,11 @@ struct HymnDetail {
     var hymnAudio: String!
 }
 
-class HymnDetailViewController: UIViewController {
-    @IBOutlet var HymnText: UITextView!
+class HymnDetailViewController: UIViewController, UITextViewDelegate {
+
     @IBOutlet var ToolBar: UIToolbar!
+    @IBOutlet var HymnTextEnglish: UITextView!
+    @IBOutlet var HymnTextCoptic: UITextView!
 
     
     
@@ -47,6 +49,9 @@ class HymnDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HymnTextEnglish.delegate = self
+        HymnTextCoptic.delegate = self
 
         title = hymnDetail?[0].hymnName
         hymnAudioURL = NSURL(string: (hymnDetail?[0].hymnAudio)!)
@@ -87,6 +92,16 @@ class HymnDetailViewController: UIViewController {
         //ProgressBar.maximumValue = 100
             //Float((alhanPlayer.currentItem?.duration.seconds)!)
         
+    }
+    
+    // MARK: Scroll control
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == HymnTextCoptic{
+            HymnTextEnglish.contentOffset = HymnTextCoptic.contentOffset
+        }else{
+            HymnTextCoptic.contentOffset = HymnTextEnglish.contentOffset
+        }
     }
 
     // MARK: Audio controls
@@ -198,14 +213,15 @@ class HymnDetailViewController: UIViewController {
     // MARK: View Functions
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-         HymnText.setContentOffset(CGPoint.zero, animated: false)
+         HymnTextCoptic.setContentOffset(CGPoint.zero, animated: false)
+        HymnTextEnglish.setContentOffset(CGPoint.zero, animated: false)
     }
 
     var originalStyle: [String: Any]!
     
     override func viewWillAppear(_ animated: Bool) {
-        HymnText.text = hymnDetail?[0].hymnCoptic
-        
+        HymnTextCoptic.text = hymnDetail?[0].hymnCoptic
+        HymnTextEnglish.text = hymnDetail?[0].hymnEnglish
         
         originalStyle = navigationController?.navigationBar.titleTextAttributes?.lazy.elements
         //print(originalStyle)
