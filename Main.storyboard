@@ -424,36 +424,19 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="COPT" family="Copt" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="COPT" family="Copt" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0R-cL-Mxp">
                                 <frame key="frameInset" height="44" maxY="8"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Item" id="6cJ-8h-y4B">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="SMa-uc-Eq6">
-                                            <rect key="frame" x="14" y="7" width="285" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="minimumTrackTintColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="thumbTintColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="Seek:" destination="YcG-3g-TgJ" eventType="valueChanged" id="KEY-zh-OnV"/>
-                                            </connections>
-                                        </slider>
-                                        <color key="tintColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="organize" id="v2z-8z-i9b">
-                                        <color key="tintColor" red="0.27450980392156865" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </barButtonItem>
-                                </items>
+                                <items/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="HymnText" destination="xFp-QG-MV7" id="l7l-aX-dnu"/>
-                        <outlet property="ProgressBar" destination="SMa-uc-Eq6" id="faN-oy-DGF"/>
                         <outlet property="ToolBar" destination="N0R-cL-Mxp" id="ym5-d3-5A2"/>
                     </connections>
                 </viewController>

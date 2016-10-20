@@ -21,11 +21,17 @@ struct HymnDetail {
 class HymnDetailViewController: UIViewController {
     @IBOutlet var HymnText: UITextView!
     @IBOutlet var ToolBar: UIToolbar!
-    @IBOutlet var ProgressBar: UISlider!
 
+    
+    
+     @IBOutlet var ProgressBar: UISlider!
 
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
+    var saveButton = UIBarButtonItem()
+    var deleteButton = UIBarButtonItem()
+    
+    
     var arrayOfButtons = [UIBarButtonItem]()
 
     var hymnDetail: [EventHymns]?
@@ -46,6 +52,16 @@ class HymnDetailViewController: UIViewController {
         hymnAudioURL = NSURL(string: (hymnDetail?[0].hymnAudio)!)
 
         
+        //new progress bar
+        ProgressBar = UISlider(frame:CGRect(x: 10, y: 100, width: 280, height: 20))
+        ProgressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
+        ProgressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
+        ProgressBar.isUserInteractionEnabled = true
+        
+        ProgressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
+        ProgressBar.sizeToFit()
+
+        
         playerItem = AVPlayerItem(url: hymnAudioURL as URL)
         self.alhanPlayer = AVPlayer(playerItem: playerItem)
         
@@ -53,9 +69,15 @@ class HymnDetailViewController: UIViewController {
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
+        saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.organize, target: self, action: #selector(HymnDetailViewController.saveFile))
+       
+        let flexible = UIBarButtonItem(customView: ProgressBar)
+        
         
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
+        arrayOfButtons.insert(flexible, at: 1)
+        arrayOfButtons.insert(saveButton, at: 2)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
       
@@ -67,6 +89,7 @@ class HymnDetailViewController: UIViewController {
         
     }
 
+    // MARK: Audio controls
     
     func finishedPlaying(myNotification: Notification ){
         
@@ -74,20 +97,22 @@ class HymnDetailViewController: UIViewController {
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         //print("IMGONACHANGEIT------------")
         arrayOfButtons.insert(playButton, at: 0)
-        //self.ProgressBar.setValue(0.0, animated: false)
-        resetBar()
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        //self.ProgressBar.value = 0.0
         
-    
+        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        updater.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
+        
+        resetBar()
+        
     }
     
     func play() {
 
             updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-            updater.preferredFramesPerSecond = 30
+            updater.preferredFramesPerSecond = 60
             updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             alhanPlayer.volume = 1.0
-            print("------ \(alhanPlayer.currentItem?.duration.seconds)")
+            //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
             ProgressBar.maximumValue = Float((alhanPlayer.currentItem?.duration.seconds)!)
             alhanPlayer.play()
 
@@ -101,10 +126,9 @@ class HymnDetailViewController: UIViewController {
     }
     
     func resetBar(){
+        alhanPlayer.currentItem?.seek(to: CMTimeMake(0,1))
+        //ProgressBar.value = Float(0)
     
-        updater.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
-        ProgressBar.value = 0
-       
     }
     
     
@@ -130,7 +154,7 @@ class HymnDetailViewController: UIViewController {
     }
 
     
-    // tracking audio
+    // MARK: tracking audio
     func trackAudio() {
         //let normalizedTime = Float((alhanPlayer.currentTime().seconds) * 100 / (alhanPlayer.currentItem?.duration.seconds)!)
 
@@ -139,7 +163,7 @@ class HymnDetailViewController: UIViewController {
         
     }
     
-    @IBAction func Seek(_ sender: AnyObject) {
+    @IBAction func Seek(_ sender: UISlider) {
         
         alhanPlayer.pause()
         
@@ -157,8 +181,21 @@ class HymnDetailViewController: UIViewController {
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
     }
+    
+    
 
+    
+    // MARK: file handling
+    
+    func saveFile(){
+    }
    
+    func deleteFile(){
+    }
+    
+    
+    
+    // MARK: View Functions
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
          HymnText.setContentOffset(CGPoint.zero, animated: false)
