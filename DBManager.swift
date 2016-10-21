@@ -34,6 +34,7 @@ class DBManager: NSObject {
         
         pathToDatabase = Bundle.main.path(forResource: databaseFileName, ofType: "sqlite")
         
+        
     }
     
     
@@ -41,7 +42,7 @@ class DBManager: NSObject {
     func openDatabase() -> Bool {
         if database == nil {
             
-            //print("***** Path to Db \(pathToDatabase)")
+            print("***** Path to Db \(pathToDatabase)")
             
             if FileManager.default.fileExists(atPath: pathToDatabase) {
                 //print("Horray found file")
