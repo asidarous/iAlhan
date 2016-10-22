@@ -123,6 +123,10 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         return (rowsPerSection)!
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         //print ("header for section: \(section)")
     
@@ -188,7 +192,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         else{
             
             //cell.imageView?.image = UIImage(named: "white_indicator")
-            image = "white_indicator"
+            image = "grey_indicator"
         }
 
         

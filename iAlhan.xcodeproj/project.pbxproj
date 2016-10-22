@@ -77,15 +77,15 @@
 		F0E3E8361DB03E5400174D91 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 		F0E3E8371DB03E5400174D91 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		F0E3E83D1DB03EE700174D91 /* iAlhanNew-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iAlhanNew-Bridging-Header.h"; sourceTree = "<group>"; };
-		F0E65F771DA6FC2000A96A69 /* iAlhanNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlhanNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0E65F771DA6FC2000A96A69 /* iAlhan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlhan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0E65F811DA6FC2100A96A69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0E65F841DA6FC2100A96A69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0E65F861DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0E65F8B1DA6FC2100A96A69 /* iAlhanNewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanNewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F8F1DA6FC2100A96A69 /* iAlhanNewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlhanNewTests.swift; sourceTree = "<group>"; };
 		F0E65F911DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0E65F961DA6FC2100A96A69 /* iAlhanNewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanNewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F9A1DA6FC2100A96A69 /* iAlhanNewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlhanNewUITests.swift; sourceTree = "<group>"; };
 		F0E65F9C1DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeasonViewController.swift; path = ../SeasonViewController.swift; sourceTree = "<group>"; };
@@ -191,9 +191,9 @@
 		F0E65F781DA6FC2000A96A69 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F0E65F771DA6FC2000A96A69 /* iAlhanNew.app */,
-				F0E65F8B1DA6FC2100A96A69 /* iAlhanNewTests.xctest */,
-				F0E65F961DA6FC2100A96A69 /* iAlhanNewUITests.xctest */,
+				F0E65F771DA6FC2000A96A69 /* iAlhan.app */,
+				F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */,
+				F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,9 +236,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F0E65F761DA6FC2000A96A69 /* iAlhanNew */ = {
+		F0E65F761DA6FC2000A96A69 /* iAlhan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F0E65F9F1DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNew" */;
+			buildConfigurationList = F0E65F9F1DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhan" */;
 			buildPhases = (
 				F0E65F731DA6FC2000A96A69 /* Sources */,
 				F0E65F741DA6FC2000A96A69 /* Frameworks */,
@@ -248,14 +248,14 @@
 			);
 			dependencies = (
 			);
-			name = iAlhanNew;
+			name = iAlhan;
 			productName = iAlhanNew;
-			productReference = F0E65F771DA6FC2000A96A69 /* iAlhanNew.app */;
+			productReference = F0E65F771DA6FC2000A96A69 /* iAlhan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F0E65F8A1DA6FC2100A96A69 /* iAlhanNewTests */ = {
+		F0E65F8A1DA6FC2100A96A69 /* iAlhanTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F0E65FA21DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNewTests" */;
+			buildConfigurationList = F0E65FA21DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanTests" */;
 			buildPhases = (
 				F0E65F871DA6FC2100A96A69 /* Sources */,
 				F0E65F881DA6FC2100A96A69 /* Frameworks */,
@@ -266,14 +266,14 @@
 			dependencies = (
 				F0E65F8D1DA6FC2100A96A69 /* PBXTargetDependency */,
 			);
-			name = iAlhanNewTests;
+			name = iAlhanTests;
 			productName = iAlhanNewTests;
-			productReference = F0E65F8B1DA6FC2100A96A69 /* iAlhanNewTests.xctest */;
+			productReference = F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F0E65F951DA6FC2100A96A69 /* iAlhanNewUITests */ = {
+		F0E65F951DA6FC2100A96A69 /* iAlhanUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNewUITests" */;
+			buildConfigurationList = F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanUITests" */;
 			buildPhases = (
 				F0E65F921DA6FC2100A96A69 /* Sources */,
 				F0E65F931DA6FC2100A96A69 /* Frameworks */,
@@ -284,9 +284,9 @@
 			dependencies = (
 				F0E65F981DA6FC2100A96A69 /* PBXTargetDependency */,
 			);
-			name = iAlhanNewUITests;
+			name = iAlhanUITests;
 			productName = iAlhanNewUITests;
-			productReference = F0E65F961DA6FC2100A96A69 /* iAlhanNewUITests.xctest */;
+			productReference = F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -301,6 +301,7 @@
 				TargetAttributes = {
 					F0E65F761DA6FC2000A96A69 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = BGQNQ2M53K;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -316,7 +317,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F0E65F721DA6FC2000A96A69 /* Build configuration list for PBXProject "iAlhanNew" */;
+			buildConfigurationList = F0E65F721DA6FC2000A96A69 /* Build configuration list for PBXProject "iAlhan" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -329,9 +330,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F0E65F761DA6FC2000A96A69 /* iAlhanNew */,
-				F0E65F8A1DA6FC2100A96A69 /* iAlhanNewTests */,
-				F0E65F951DA6FC2100A96A69 /* iAlhanNewUITests */,
+				F0E65F761DA6FC2000A96A69 /* iAlhan */,
+				F0E65F8A1DA6FC2100A96A69 /* iAlhanTests */,
+				F0E65F951DA6FC2100A96A69 /* iAlhanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -410,12 +411,12 @@
 /* Begin PBXTargetDependency section */
 		F0E65F8D1DA6FC2100A96A69 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F0E65F761DA6FC2000A96A69 /* iAlhanNew */;
+			target = F0E65F761DA6FC2000A96A69 /* iAlhan */;
 			targetProxy = F0E65F8C1DA6FC2100A96A69 /* PBXContainerItemProxy */;
 		};
 		F0E65F981DA6FC2100A96A69 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F0E65F761DA6FC2000A96A69 /* iAlhanNew */;
+			target = F0E65F761DA6FC2000A96A69 /* iAlhan */;
 			targetProxy = F0E65F971DA6FC2100A96A69 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -531,9 +532,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -547,9 +549,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -566,7 +569,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhanNew.app/iAlhanNew";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
 			};
 			name = Debug;
 		};
@@ -580,7 +583,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhanNew.app/iAlhanNew";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
 			};
 			name = Release;
 		};
@@ -613,7 +616,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F0E65F721DA6FC2000A96A69 /* Build configuration list for PBXProject "iAlhanNew" */ = {
+		F0E65F721DA6FC2000A96A69 /* Build configuration list for PBXProject "iAlhan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E65F9D1DA6FC2100A96A69 /* Debug */,
@@ -622,7 +625,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F0E65F9F1DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNew" */ = {
+		F0E65F9F1DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E65FA01DA6FC2100A96A69 /* Debug */,
@@ -631,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F0E65FA21DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNewTests" */ = {
+		F0E65FA21DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E65FA31DA6FC2100A96A69 /* Debug */,
@@ -640,7 +643,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanNewUITests" */ = {
+		F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E65FA61DA6FC2100A96A69 /* Debug */,

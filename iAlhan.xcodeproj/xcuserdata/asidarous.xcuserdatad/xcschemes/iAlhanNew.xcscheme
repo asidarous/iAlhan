@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0E65F761DA6FC2000A96A69"
-               BuildableName = "iAlhanNew.app"
-               BlueprintName = "iAlhanNew"
-               ReferencedContainer = "container:iAlhanNew.xcodeproj">
+               BuildableName = "iAlhan.app"
+               BlueprintName = "iAlhan"
+               ReferencedContainer = "container:iAlhan.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0E65F8A1DA6FC2100A96A69"
-               BuildableName = "iAlhanNewTests.xctest"
-               BlueprintName = "iAlhanNewTests"
-               ReferencedContainer = "container:iAlhanNew.xcodeproj">
+               BuildableName = "iAlhanTests.xctest"
+               BlueprintName = "iAlhanTests"
+               ReferencedContainer = "container:iAlhan.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0E65F951DA6FC2100A96A69"
-               BuildableName = "iAlhanNewUITests.xctest"
-               BlueprintName = "iAlhanNewUITests"
-               ReferencedContainer = "container:iAlhanNew.xcodeproj">
+               BuildableName = "iAlhanUITests.xctest"
+               BlueprintName = "iAlhanUITests"
+               ReferencedContainer = "container:iAlhan.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0E65F761DA6FC2000A96A69"
-            BuildableName = "iAlhanNew.app"
-            BlueprintName = "iAlhanNew"
-            ReferencedContainer = "container:iAlhanNew.xcodeproj">
+            BuildableName = "iAlhan.app"
+            BlueprintName = "iAlhan"
+            ReferencedContainer = "container:iAlhan.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0E65F761DA6FC2000A96A69"
-            BuildableName = "iAlhanNew.app"
-            BlueprintName = "iAlhanNew"
-            ReferencedContainer = "container:iAlhanNew.xcodeproj">
+            BuildableName = "iAlhan.app"
+            BlueprintName = "iAlhan"
+            ReferencedContainer = "container:iAlhan.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0E65F761DA6FC2000A96A69"
-            BuildableName = "iAlhanNew.app"
-            BlueprintName = "iAlhanNew"
-            ReferencedContainer = "container:iAlhanNew.xcodeproj">
+            BuildableName = "iAlhan.app"
+            BlueprintName = "iAlhan"
+            ReferencedContainer = "container:iAlhan.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
