@@ -33,6 +33,8 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     @IBOutlet var tableView: UITableView!
 
+
+
     let textCellIdentifier = "TextCell"
     var labelText: String?
     
@@ -46,7 +48,9 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     var objectArray = [structureArray]()
 
-   
+    let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+
    
     func updateUI()
     {
@@ -68,10 +72,13 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck")!)
         //self.navigationItem.leftBarButtonItem?.tintColor = UIColor.blue
         //UINavigationBar.appearance().tintColor = UIColor.blue
-        
+        tableView.backgroundView?.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
+       
         updateUI()
+        
         //print ("Label Text \(labelText)")
         title = labelText
     }
@@ -81,6 +88,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     override func viewWillAppear(_ animated: Bool) {
         if let row = tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: row, animated: true)
+            self.tableView.reloadData()
         }
 
     }
@@ -151,19 +159,46 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         //var hymnDetailTemp
         var hymnNameLabel: String!
         var hymnDescLabel: String!
+        var hymnAudioURL: String!
+        var image: String!
         
         for (_, v) in tempDict!{
             //print ("k & V: \(k) -- > \(v) ")
             //hymnDetailTemp = v
             //print ("Number of hymns in section: \(v.count)")
+            //"\u{26AA} \(v[row].hymnName)"
             hymnNameLabel = v[row].hymnName
             hymnDescLabel = v[row].hymnDescription
+            hymnAudioURL = v[row].hymnAudio
             //print ("This is the row and hymn name \(row) -->> \(hymnNameLabel)")
             //print(hymnDetailTemp[row].hymnName)
         }
         //cell.textLabel?.text = (objectArray[section].sectionDetails[row].hymnDescription) as String
         cell.textLabel?.text = hymnNameLabel
         cell.detailTextLabel?.text = hymnDescLabel
+        
+        let localDir = getDirectory(url: hymnAudioURL)
+        let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
+        let destinationUrl = localPath.appendingPathComponent((URL(string: hymnAudioURL)?.lastPathComponent)!)
+        if FileManager.default.fileExists(atPath: destinationUrl.path){
+            //cell.imageView?.image = UIImage(named: "green_indicator")
+            image = "green_indicator"
+            
+        }
+        else{
+            
+            //cell.imageView?.image = UIImage(named: "white_indicator")
+            image = "white_indicator"
+        }
+
+        
+        var imageView : UIImageView
+        imageView  = UIImageView(frame: CGRect(x: 40,y: 40,width: 40,height: 40))
+        imageView.image = UIImage(named: image)
+        
+        //cell.editingAccessoryView = imageView
+        cell.accessoryView = imageView
+        
         return cell
     }
     
@@ -187,6 +222,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 //
 //    
 //    }
+    
     
     
     // MARK: - Target/Action
@@ -225,11 +261,6 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                     hymnDetailVC.hymnDetail = [v[row!]]
                 }
                 
-                //tableView.deselectRow(at: indexPath!, animated: "YES")
-                
-                    //print ("Index: ")
-                    //print (index)
-                    //hymnDetailVC.hymnDetail =
                 
             default:
                 break
@@ -239,6 +270,11 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
 
-   
+    func unwindSegue(segue:UIStoryboardSegue) {
+        if segue.identifier == "Show Hymn Detail" {
+            
+            self.tableView.reloadData()
+        }
+    }
     
 }

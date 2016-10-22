@@ -53,7 +53,7 @@ class SeasonViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo.jpg")!);
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo.jpg")!)
         
         // append all seasonImages to the array
         seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]

@@ -54,7 +54,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
         // file download handling
         localDir = getDirectory(url: (hymnDetail?[0].hymnAudio)!)
         //print("DIRECTORY \(localDir)")
