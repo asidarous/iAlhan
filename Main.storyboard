@@ -335,7 +335,7 @@
         <!--Season Detail View Controller-->
         <scene sceneID="XKl-3j-LOz">
             <objects>
-                <viewController id="suT-MX-M3Z" customClass="SeasonDetailViewController" customModule="iAlhanNew" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="suT-MX-M3Z" customClass="SeasonDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NvW-ds-2h2"/>
                         <viewControllerLayoutGuide type="bottom" id="OSc-er-c56"/>
@@ -414,7 +414,7 @@
         <!--Hymn Detail View Controller-->
         <scene sceneID="o75-X2-0u0">
             <objects>
-                <viewController id="YcG-3g-TgJ" customClass="HymnDetailViewController" customModule="iAlhanNew" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YcG-3g-TgJ" customClass="HymnDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2CB-ZA-aQ7"/>
                         <viewControllerLayoutGuide type="bottom" id="kTy-jS-g5J"/>
