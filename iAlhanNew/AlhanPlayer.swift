@@ -17,6 +17,8 @@ class AlhanPlayer {
     
     func play() {
 
+       
+        
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
         print("DESCRIPTION from inside the player \(player.currentItem?.description)")
@@ -46,5 +48,8 @@ class AlhanPlayer {
         
     }
     
-       
+    
+  
+    
+           
 }

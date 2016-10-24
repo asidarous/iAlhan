@@ -55,6 +55,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
+        
+        // handles audio when device is muted
+        do {
+            
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+        }
+        catch {
+            print(error)
+        }
+
+
         // file download handling
         localDir = getDirectory(url: (hymnDetail?[0].hymnAudio)!)
         //print("DIRECTORY \(localDir)")
@@ -382,5 +395,63 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
         
     }
+    
+    // Interruption handler
+    
+    var interruptedOnPlayback = false
+    
+    internal func audioPlayerBeginInterruption(_ player: AVAudioPlayer){
+        
+        print(player.debugDescription)
+        
+        print("--- audioPlayerBeginInterruption")
+        DispatchQueue.main.async(execute: {
+            print("--- main queue")
+            self.pauseButtonTapped()
+        })
+        print("audioPlayer.playing", player.isPlaying)
+        interruptedOnPlayback = true
+        
+        if deActivateSession() {
+            print("AVAudioSession is inactive")
+        }
+    }
+    
+    func audioPlayerEndInterruption(player: AVAudioPlayer, withOptions flags: Int) {
+        print("--- audioPlayerEndInterruption")
+        guard
+            AVAudioSessionInterruptionOptions(rawValue: UInt(flags)) == .shouldResume
+                && interruptedOnPlayback
+        else { return }
+        if activateSession() {
+            print("AVAudioSession is Active again")
+            interruptedOnPlayback = false
+        DispatchQueue.main.async(execute: {
+            self.playButtonTapped() })
+        }
+       
+    }
+    
+    func activateSession() -> Bool {
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("AVAudioSession is inactive")
+            return true
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+    func deActivateSession() -> Bool {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            print("AVAudioSession is inactive")
+            return true
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+    
     
 }
