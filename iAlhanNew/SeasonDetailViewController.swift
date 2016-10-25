@@ -264,8 +264,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                     
                     hymnDetailVC.hymnDetail = [v[row!]]
                 }
-                
-                
+                                
             default:
                 break
                 

@@ -94,6 +94,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         ProgressBar.isUserInteractionEnabled = true
         
         ProgressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
+        ProgressBar.autoresizingMask = UIViewAutoresizing.flexibleWidth
         ProgressBar.sizeToFit()
         
 
@@ -105,6 +106,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action: #selector(HymnDetailViewController.deleteFile))
         
         let flexible = UIBarButtonItem(customView: ProgressBar)
+        
         
         ProgressBar.minimumValue = 0
         
@@ -362,6 +364,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         super.viewDidLayoutSubviews()
          HymnTextCoptic.setContentOffset(CGPoint.zero, animated: false)
         HymnTextEnglish.setContentOffset(CGPoint.zero, animated: false)
+        
     }
 
     var originalStyle: [String: Any]!
@@ -369,6 +372,9 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         HymnTextCoptic.text = hymnDetail?[0].hymnCoptic
         HymnTextEnglish.text = hymnDetail?[0].hymnEnglish
+        
+        
+        
         
         originalStyle = navigationController?.navigationBar.titleTextAttributes?.lazy.elements
         //print(originalStyle)
