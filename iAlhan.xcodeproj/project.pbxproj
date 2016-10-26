@@ -14,6 +14,7 @@
 		F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */; };
 		F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFD1DB837E60066B075 /* Main.storyboard */; };
 		F0524E021DB88F1B0066B075 /* AlhanSQL.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */; };
+		F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */; };
 		F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
 		F07790331DB5A53E001B3376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07790321DB5A53E001B3376 /* Constants.swift */; };
@@ -57,6 +58,7 @@
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
 		F0524DFD1DB837E60066B075 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = AlhanSQL.sqlite; sourceTree = "<group>"; };
+		F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonCollectionViewCell.swift; sourceTree = "<group>"; };
 		F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
 		F07790321DB5A53E001B3376 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */,
 				F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */,
 				F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */,
+				F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */,
 				F0E3E8391DB03E5400174D91 /* FMResultSet.m in Sources */,
 				F0E3E8381DB03E5400174D91 /* FMDatabaseQueue.m in Sources */,
+				F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
 			);
@@ -452,6 +456,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -502,6 +507,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

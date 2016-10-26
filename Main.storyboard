@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -23,314 +24,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1o-rb-LOV">
-                                <frame key="frameInset" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5eE-xG-0gA">
-                                <frame key="frameInset"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="L1q-vf-bHp">
-                                    <frame key="frameInset"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="17z-yS-wHw">
-                                            <frame key="frameInset" minX="8" minY="75" width="359" height="584"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnk-KT-DgS">
+                                <frame key="frameInset" minX="16" minY="72" width="343" height="583"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VAR-5R-PkO">
+                                    <size key="itemSize" width="110" height="110"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeasonCollectionViewCell" id="MHH-0s-yuo" customClass="SeasonCollectionViewCell" customModule="iAlhan" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="OmJ-Zc-YGw">
-                                                    <frame key="frameInset" width="94" height="94"/>
+                                                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woO-2K-r11">
+                                                    <frame key="frameInset" minX="10" minY="10" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="RCY-sT-bu3" appends="YES" id="SwS-2R-IiU"/>
-                                                    </connections>
                                                 </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="mMC-af-cie">
-                                                    <frame key="frameInset" minX="132" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="s0T-Pr-YQ1" appends="YES" id="K7V-su-N6F"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="cfb-VN-wil">
-                                                    <frame key="frameInset" minX="265" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="rxR-OF-Mbl" appends="YES" id="wq5-Db-NRe"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="Eye-Vw-4SV">
-                                                    <frame key="frameInset" minY="136" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="797-gv-puT" appends="YES" id="la9-8q-pet"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="FMj-OJ-c7D">
-                                                    <frame key="frameInset" minX="132" minY="136" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="wbB-Kx-hOn" appends="YES" id="Sco-5e-piM"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="apz-bB-d9L">
-                                                    <frame key="frameInset" minX="265" minY="136" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="hDW-SZ-uQO" appends="YES" id="vkW-yG-PHH"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="8xZ-tW-NhE">
-                                                    <frame key="frameInset" minY="272" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="uAS-fU-1KV" appends="YES" id="lvM-Hd-tos"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="5b5-M9-lEG">
-                                                    <frame key="frameInset" minX="132" minY="272" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="D5P-MK-vEY" appends="YES" id="71g-8Q-Gge"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="Rwq-j4-PlD">
-                                                    <frame key="frameInset" minX="265" minY="272" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="J2J-68-jed" appends="YES" id="UBO-qR-YUF"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="SJf-kS-ZqG">
-                                                    <frame key="frameInset" minY="408" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="5cL-fE-sm2" appends="YES" id="LP3-ti-eMV"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="EFs-zh-0Qz">
-                                                    <frame key="frameInset" minX="132" minY="408" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="STA-X3-jJK" appends="YES" id="duG-0q-k9g"/>
-                                                    </connections>
-                                                </imageView>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="crossbck" translatesAutoresizingMaskIntoConstraints="NO" id="vOS-E2-843">
-                                                    <frame key="frameInset" minX="265" minY="408" width="94" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="GQJ-0n-fjK" appends="YES" id="VeY-xK-chH"/>
-                                                    </connections>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H00-Ax-xSy">
-                                                    <frame key="frameInset" minY="103" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2WQ-ze-n42">
-                                                    <frame key="frameInset" minX="134" minY="103" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dth-qs-7WT">
-                                                    <frame key="frameInset" minX="267" minY="103" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LVZ-QV-dhF">
-                                                    <frame key="frameInset" minY="239" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_4" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0yL-vH-cNi">
-                                                    <frame key="frameInset" minX="132" minY="239" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_5" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-Ka-hTJ">
-                                                    <frame key="frameInset" minX="265" minY="239" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_6" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EnS-41-AoO">
-                                                    <frame key="frameInset" minX="2" minY="374" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_7" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jd7-Lp-c5Y">
-                                                    <frame key="frameInset" minX="134" minY="374" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_8" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wXu-lC-Df1">
-                                                    <frame key="frameInset" minX="267" minY="374" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_9" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="muY-8b-sTE">
-                                                    <frame key="frameInset" minY="510" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_10" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ErO-ha-aHV">
-                                                    <frame key="frameInset" minX="132" minY="510" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SeasonLabel_11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jiZ-aX-QtG">
-                                                    <frame key="frameInset" minX="265" minY="510" width="94" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="11"/>
-                                                    <color key="textColor" red="0.89663461538461542" green="0.73716827306583232" blue="0.37755422678970357" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.4287174916" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
                                             </subviews>
                                         </view>
-                                    </subviews>
-                                </view>
-                                <blurEffect style="dark"/>
-                            </visualEffectView>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="itemImageView" destination="woO-2K-r11" id="sBr-SL-AFf"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Xbq-Vo-U74"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ER2-4h-wmH"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rnk-KT-DgS" secondAttribute="trailing" id="Q8p-sN-XEi"/>
+                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="aXx-d9-tg8"/>
+                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jlC-wQ-pb7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rnk-KT-DgS" secondAttribute="bottom" id="kRW-TU-AEg"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Seasons" id="J7H-b1-bM5"/>
                     <connections>
-                        <outlet property="SeasonLabel_0" destination="H00-Ax-xSy" id="Mf2-7i-yGJ"/>
-                        <outlet property="SeasonLabel_1" destination="2WQ-ze-n42" id="vg3-UR-qPY"/>
-                        <outlet property="SeasonLabel_10" destination="ErO-ha-aHV" id="Dp0-nI-Pg0"/>
-                        <outlet property="SeasonLabel_11" destination="jiZ-aX-QtG" id="PaC-ne-xqA"/>
-                        <outlet property="SeasonLabel_2" destination="dth-qs-7WT" id="9sE-7y-5rq"/>
-                        <outlet property="SeasonLabel_3" destination="LVZ-QV-dhF" id="td9-sd-eKd"/>
-                        <outlet property="SeasonLabel_4" destination="0yL-vH-cNi" id="JpZ-aX-HP6"/>
-                        <outlet property="SeasonLabel_5" destination="uPs-Ka-hTJ" id="frP-8l-uhM"/>
-                        <outlet property="SeasonLabel_6" destination="EnS-41-AoO" id="f1U-KL-fNh"/>
-                        <outlet property="SeasonLabel_7" destination="jd7-Lp-c5Y" id="yFr-ch-0Wq"/>
-                        <outlet property="SeasonLabel_8" destination="wXu-lC-Df1" id="nhB-IN-Lp0"/>
-                        <outlet property="SeasonLabel_9" destination="muY-8b-sTE" id="ate-WX-xoN"/>
-                        <outlet property="seasonImage0" destination="OmJ-Zc-YGw" id="tfP-EZ-1wW"/>
-                        <outlet property="seasonImage1" destination="mMC-af-cie" id="pp3-fI-7It"/>
-                        <outlet property="seasonImage10" destination="EFs-zh-0Qz" id="cBJ-lB-nkW"/>
-                        <outlet property="seasonImage11" destination="vOS-E2-843" id="0Zw-rc-0kh"/>
-                        <outlet property="seasonImage2" destination="cfb-VN-wil" id="hrC-cw-vZK"/>
-                        <outlet property="seasonImage3" destination="Eye-Vw-4SV" id="J95-y1-qzt"/>
-                        <outlet property="seasonImage4" destination="FMj-OJ-c7D" id="WWc-vV-QZ5"/>
-                        <outlet property="seasonImage5" destination="apz-bB-d9L" id="aNg-zQ-NrF"/>
-                        <outlet property="seasonImage6" destination="8xZ-tW-NhE" id="tq4-rC-UEc"/>
-                        <outlet property="seasonImage7" destination="5b5-M9-lEG" id="Zxj-Q1-HZ3"/>
-                        <outlet property="seasonImage8" destination="Rwq-j4-PlD" id="b4f-dh-lpR"/>
-                        <outlet property="seasonImage9" destination="SJf-kS-ZqG" id="yYb-QW-ABz"/>
+                        <outlet property="collectionView" destination="Rnk-KT-DgS" id="dQs-eT-kzz"/>
                         <segue destination="suT-MX-M3Z" kind="show" identifier="Show Season Detail" id="1HV-QI-Oid"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="RCY-sT-bu3">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="8Dc-Jr-6EO"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="s0T-Pr-YQ1">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="OyT-OP-JWs"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="rxR-OF-Mbl">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="qfl-6q-rAu"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="797-gv-puT">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="ALy-xF-oeP"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="wbB-Kx-hOn">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="RYm-gz-gbL"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="hDW-SZ-uQO">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="IRi-UG-GFt"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="uAS-fU-1KV">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="baL-t2-abE"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="D5P-MK-vEY">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="OCf-d3-EY0"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="J2J-68-jed">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="FT4-Db-iew"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="5cL-fE-sm2">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="Td0-bh-uJZ"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="STA-X3-jJK">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="7o7-wU-DJc"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="GQJ-0n-fjK">
-                    <connections>
-                        <action selector="showSeason:" destination="BYZ-38-t0r" id="am1-GE-rsr"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1084" y="36"/>
+            <point key="canvasLocation" x="8.8000000000000007" y="36.431784107946029"/>
         </scene>
         <!--Season Detail View Controller-->
         <scene sceneID="XKl-3j-LOz">
@@ -409,7 +155,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9R-xx-Fgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1576.8" y="37.331334332833585"/>
+            <point key="canvasLocation" x="918" y="36"/>
         </scene>
         <!--Hymn Detail View Controller-->
         <scene sceneID="o75-X2-0u0">
@@ -466,7 +212,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Ezr-3O-BXv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -488,10 +234,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdH-6M-2v2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="609" y="36"/>
+            <point key="canvasLocation" x="-798" y="37"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="crossbck" width="198" height="198"/>
-    </resources>
 </document>
