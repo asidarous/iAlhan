@@ -27,33 +27,48 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnk-KT-DgS">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VAR-5R-PkO">
-                                    <size key="itemSize" width="110" height="110"/>
+                                    <size key="itemSize" width="110" height="137"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeasonCollectionViewCell" id="MHH-0s-yuo" customClass="SeasonCollectionViewCell" customModule="iAlhan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="137"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="137"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="woO-2K-r11">
+                                                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="woO-2K-r11">
                                                     <gestureRecognizers/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="qkH-AW-oIo">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="12"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="woO-2K-r11" secondAttribute="trailing" constant="2" id="3kA-6Y-IVg"/>
+                                            <constraint firstItem="qkH-AW-oIo" firstAttribute="leading" secondItem="MHH-0s-yuo" secondAttribute="leading" constant="2" id="517-S8-tzF"/>
                                             <constraint firstItem="woO-2K-r11" firstAttribute="top" secondItem="MHH-0s-yuo" secondAttribute="top" constant="2" id="8eW-Ml-0DD"/>
+                                            <constraint firstAttribute="trailing" secondItem="qkH-AW-oIo" secondAttribute="trailing" constant="2" id="DVh-Zu-knM"/>
                                             <constraint firstItem="woO-2K-r11" firstAttribute="leading" secondItem="MHH-0s-yuo" secondAttribute="leading" constant="2" id="IV4-Zd-Hi4"/>
-                                            <constraint firstAttribute="bottom" secondItem="woO-2K-r11" secondAttribute="bottom" constant="2" id="xWr-CG-xvg"/>
+                                            <constraint firstAttribute="bottom" secondItem="qkH-AW-oIo" secondAttribute="bottom" constant="2" id="p7x-0x-uX6"/>
+                                            <constraint firstAttribute="bottom" secondItem="woO-2K-r11" secondAttribute="bottom" constant="27" id="xWr-CG-xvg"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="itemImageView" destination="woO-2K-r11" id="sBr-SL-AFf"/>
+                                            <outlet property="itemLabel" destination="qkH-AW-oIo" id="l51-rq-dgo"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -215,7 +230,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Ezr-3O-BXv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>

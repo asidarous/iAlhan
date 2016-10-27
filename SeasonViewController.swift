@@ -136,10 +136,10 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
 
         if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
             // Compact
-            vSize = CGSize(width: collectionView.frame.width * 0.28, height: collectionView.frame.width * 0.28)
+            vSize = CGSize(width: collectionView.frame.width * 0.28, height: (collectionView.frame.width * 0.28)+25)
         } else {
             // Regular 
-            vSize = CGSize(width: collectionView.frame.width * 0.22, height: collectionView.frame.width * 0.22)
+            vSize = CGSize(width: collectionView.frame.width * 0.22, height: (collectionView.frame.width * 0.22)+35)
         }
         
         return vSize
