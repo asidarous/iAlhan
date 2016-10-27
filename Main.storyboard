@@ -15,7 +15,7 @@
         <!--Seasons-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SeasonViewController" customModule="iAlhan" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="SeasonViewController" customModule="iAlhan" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -24,8 +24,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnk-KT-DgS">
-                                <frame key="frameInset" minX="16" minY="72" width="343" height="583"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnk-KT-DgS">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VAR-5R-PkO">
                                     <size key="itemSize" width="110" height="110"/>
@@ -41,14 +40,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woO-2K-r11">
-                                                    <frame key="frameInset" minX="10" minY="10" width="90" height="90"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="woO-2K-r11">
                                                     <gestureRecognizers/>
                                                 </imageView>
                                             </subviews>
                                         </view>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="woO-2K-r11" secondAttribute="trailing" constant="2" id="3kA-6Y-IVg"/>
+                                            <constraint firstItem="woO-2K-r11" firstAttribute="top" secondItem="MHH-0s-yuo" secondAttribute="top" constant="2" id="8eW-Ml-0DD"/>
+                                            <constraint firstItem="woO-2K-r11" firstAttribute="leading" secondItem="MHH-0s-yuo" secondAttribute="leading" constant="2" id="IV4-Zd-Hi4"/>
+                                            <constraint firstAttribute="bottom" secondItem="woO-2K-r11" secondAttribute="bottom" constant="2" id="xWr-CG-xvg"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="itemImageView" destination="woO-2K-r11" id="sBr-SL-AFf"/>
                                         </connections>
@@ -62,10 +65,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Rnk-KT-DgS" secondAttribute="trailing" id="Q8p-sN-XEi"/>
-                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="aXx-d9-tg8"/>
-                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jlC-wQ-pb7"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rnk-KT-DgS" secondAttribute="bottom" id="kRW-TU-AEg"/>
+                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="R7m-t1-weG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rnk-KT-DgS" secondAttribute="bottom" constant="12" id="mgP-Nk-sfp"/>
+                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="tH4-x5-vos"/>
+                            <constraint firstItem="Rnk-KT-DgS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="v2E-Bi-MSt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Seasons" id="J7H-b1-bM5"/>
@@ -212,7 +215,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Ezr-3O-BXv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>

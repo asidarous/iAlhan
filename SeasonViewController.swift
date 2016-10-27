@@ -130,7 +130,20 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     }
     
-   
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var vSize: CGSize
+
+        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
+            // Compact
+            vSize = CGSize(width: collectionView.frame.width * 0.28, height: collectionView.frame.width * 0.28)
+        } else {
+            // Regular 
+            vSize = CGSize(width: collectionView.frame.width * 0.22, height: collectionView.frame.width * 0.22)
+        }
+        
+        return vSize
+    }
     
     // MARK: - Navigation
     
