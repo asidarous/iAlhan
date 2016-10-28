@@ -19,6 +19,7 @@
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
 		F07790331DB5A53E001B3376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07790321DB5A53E001B3376 /* Constants.swift */; };
 		F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F3C081DBA91660019153A /* AlhanPlayer.swift */; };
+		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
 		F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */; };
 		F0E3E8131DADECC900174D91 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */; };
 		F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E8291DB008EC00174D91 /* DBManager.swift */; };
@@ -63,6 +64,7 @@
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
 		F07790321DB5A53E001B3376 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F09F3C081DBA91660019153A /* AlhanPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlhanPlayer.swift; sourceTree = "<group>"; };
+		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HymnDetailViewController.swift; sourceTree = "<group>"; };
 		F0E3E8111DADEC9900174D91 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -140,6 +142,7 @@
 				F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */,
 				F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */,
 				F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */,
+				F0E370461DC301E900979B78 /* InfoVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				F07790331DB5A53E001B3376 /* Constants.swift in Sources */,
 				F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */,
 				F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */,
+				F0E370471DC301E900979B78 /* InfoVC.swift in Sources */,
 				F0E3E83B1DB03E5400174D91 /* FMDatabaseAdditions.m in Sources */,
 				F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */,
 				F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */,

@@ -29,10 +29,15 @@ class SeasonCollectionViewCell: UICollectionViewCell {
         print("RRRRRRR \(radius)")
         itemImageView.layer.cornerRadius = radius
         itemImageView.clipsToBounds = true
+        itemImageView.layer.borderColor = UIColor.white.cgColor
+        itemImageView.layer.borderWidth = 1
+
         
         // MARK: Label
         itemLabel.text = item.title
         
     }
+    
+
     
 }

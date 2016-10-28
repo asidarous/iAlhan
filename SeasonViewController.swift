@@ -55,10 +55,13 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var iPath: IndexPath!
     
+    var iSize: CGSize!
+    var coverLayer: CALayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
-        
+        coverLayer = CALayer()
         
 //        // append all seasonImages to the array
 //        seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]
@@ -69,6 +72,20 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
 //        seasonLabels = [SeasonLabel_0, SeasonLabel_1, SeasonLabel_2, SeasonLabel_3, SeasonLabel_4, SeasonLabel_5, SeasonLabel_6, SeasonLabel_7, SeasonLabel_8, SeasonLabel_9, SeasonLabel_10, SeasonLabel_11]
 //        
         // method to set the images of the IBOutlets
+        
+        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
+            // Compact
+            
+            iSize = CGSize(width: collectionView.frame.width * 0.28, height: collectionView.frame.width * 0.28)
+
+            
+        } else {
+            // Regular
+            iSize = CGSize(width: collectionView.frame.width * 0.22, height: collectionView.frame.width * 0.22)
+            
+        }
+        
+        
         updateUI()
         
         
@@ -130,19 +147,48 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     }
     
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var vSize: CGSize
 
+        var vSize: CGSize
+        
+        
         if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
             // Compact
+            
             vSize = CGSize(width: collectionView.frame.width * 0.28, height: (collectionView.frame.width * 0.28)+25)
+            
         } else {
-            // Regular 
+            // Regular
+
             vSize = CGSize(width: collectionView.frame.width * 0.22, height: (collectionView.frame.width * 0.22)+35)
         }
         
+        
         return vSize
+    }
+    
+    // MARK:- UICollectionViewDelegate Methods
+
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        //cell?.addSubview(tempView)
+        
+        coverLayer.frame = CGRect(origin: collectionView.frame.origin, size: iSize)
+        coverLayer.backgroundColor = UIColor.black.cgColor
+        coverLayer.opacity = 0.1
+        cell?.layer.addSublayer(coverLayer)
+        
+            
+            //.backgroundColor = UIColor.red
+    }
+    
+    // change background color back when user releases touch
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.clear
     }
     
     // MARK: - Navigation
