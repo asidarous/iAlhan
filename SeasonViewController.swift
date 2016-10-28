@@ -12,40 +12,13 @@ struct SeasonData {
     var title: String!
     var seasonImage: String!
     var seasonID: Int!
-    //var seasonSections: [String : [String]]!
+
 }
 
 
 
 class SeasonViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-//    // IBOutlet for images
-//    @IBOutlet weak var seasonImage0: UIImageView!
-//    @IBOutlet weak var seasonImage1: UIImageView!
-//    @IBOutlet weak var seasonImage2: UIImageView!
-//    @IBOutlet weak var seasonImage3: UIImageView!
-//    @IBOutlet weak var seasonImage4: UIImageView!
-//    @IBOutlet weak var seasonImage5: UIImageView!
-//    @IBOutlet weak var seasonImage6: UIImageView!
-//    @IBOutlet weak var seasonImage7: UIImageView!
-//    @IBOutlet weak var seasonImage8: UIImageView!
-//    @IBOutlet weak var seasonImage9: UIImageView!
-//    @IBOutlet weak var seasonImage10: UIImageView!
-//    @IBOutlet weak var seasonImage11: UIImageView!
-//    
-//    // IBOutlet for labels
-//    @IBOutlet weak var SeasonLabel_0: UILabel!
-//    @IBOutlet weak var SeasonLabel_1: UILabel!
-//    @IBOutlet weak var SeasonLabel_2: UILabel!
-//    @IBOutlet weak var SeasonLabel_3: UILabel!
-//    @IBOutlet weak var SeasonLabel_4: UILabel!
-//    @IBOutlet weak var SeasonLabel_5: UILabel!
-//    @IBOutlet weak var SeasonLabel_6: UILabel!
-//    @IBOutlet weak var SeasonLabel_7: UILabel!
-//    @IBOutlet weak var SeasonLabel_8: UILabel!
-//    @IBOutlet weak var SeasonLabel_9: UILabel!
-//    @IBOutlet weak var SeasonLabel_10: UILabel!
-//    @IBOutlet weak var SeasonLabel_11: UILabel!
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -63,15 +36,6 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
         coverLayer = CALayer()
         
-//        // append all seasonImages to the array
-//        seasonImages = [seasonImage0, seasonImage1, seasonImage2, seasonImage3, seasonImage4, seasonImage5, seasonImage6, seasonImage7, seasonImage8, seasonImage9, seasonImage10, seasonImage11]
-       
-        
-//        
-//        // append all seasonLabels to the array
-//        seasonLabels = [SeasonLabel_0, SeasonLabel_1, SeasonLabel_2, SeasonLabel_3, SeasonLabel_4, SeasonLabel_5, SeasonLabel_6, SeasonLabel_7, SeasonLabel_8, SeasonLabel_9, SeasonLabel_10, SeasonLabel_11]
-//        
-        // method to set the images of the IBOutlets
         
         if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
             // Compact
@@ -95,36 +59,15 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     func updateUI()
     {
         seasonsData = DBManager.shared.loadSeasons()
-        
-//        for i in 0..<seasonsData.count-1 {
-//            print ("!!!! \(i)")
-//            seasonImages.append(UIImage (named: seasonsData[i].seasonImage)!)
-//        }
-//        for i in 0..<seasonImages.count-1{
-//            let seasonImage = seasonImages[i]
-//            
-//            let album = seasonsData[i]
-//            //print (album.seasonImage!)
-//            seasonImage.image = UIImage(named: album.seasonImage!)
-//            seasonLabels[i].text = album.title
-//         }
+
     }
     
     // MARK: - Target/Action
     
-//    @IBAction func showSeason(_ sender: UITapGestureRecognizer)
-//    {
-//        let point: CGPoint = sender.location(in: collectionView)
-//        
-//        iPath = collectionView.indexPathForItem(at: point)!
-//        
-//        performSegue(withIdentifier: "Show Season Detail", sender: sender.view)
-//        
-//    }
     
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("@@@@@@@@@ GOING to have this many icons \(seasonsData.count)")
+        //print("@@@@@@@@@ GOING to have this many icons \(seasonsData.count)")
         
         return seasonsData.count
     }
@@ -133,7 +76,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCollectionViewCell", for: indexPath as IndexPath) as! SeasonCollectionViewCell
         
-        print("!!!!!!!! \(seasonsData[indexPath.row])")
+        //print("!!!!!!!! \(seasonsData[indexPath.row])")
             
         cell.setSeasonItem(item: seasonsData[indexPath.row])
         return cell
@@ -141,8 +84,8 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-      print("+++++++ User clicked on index \(indexPath.row)")
-      print("$$$ here is the season \(seasonsData[indexPath.row].seasonID)")
+      //print("+++++++ User clicked on index \(indexPath.row)")
+      //print("$$$ here is the season \(seasonsData[indexPath.row].seasonID)")
       performSegue(withIdentifier: "Show Season Detail", sender: [seasonsData[indexPath.row].seasonID, seasonsData[indexPath.row].title] )
     
     }

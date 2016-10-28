@@ -80,6 +80,7 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="0.80517241380000004" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rnk-KT-DgS" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="R7m-t1-weG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rnk-KT-DgS" secondAttribute="bottom" constant="12" id="mgP-Nk-sfp"/>
@@ -126,33 +127,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcd-na-VzL">
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQV-sn-gKL">
-                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
-                                        <state key="normal" title="Contact Us">
-                                            <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.82653556034482756" colorSpace="calibratedRGB"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="jQV-sn-gKL" secondAttribute="trailing" constant="20" id="JAR-JZ-k3o"/>
-                                    <constraint firstAttribute="bottom" secondItem="jQV-sn-gKL" secondAttribute="bottom" constant="20" id="xN7-J2-r6u"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Iys-ZK-e7k" appends="YES" id="Cli-4H-s2T"/>
-                                </connections>
-                            </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u26-t4-2Sx">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="3GE-0n-T68">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcd-na-VzL">
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQV-sn-gKL">
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                                    <state key="normal" title="Contact Us">
+                                                        <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.27941810344827589" colorSpace="calibratedRGB"/>
+                                            <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="jQV-sn-gKL" secondAttribute="trailing" constant="20" id="JAR-JZ-k3o"/>
+                                                <constraint firstAttribute="bottom" secondItem="jQV-sn-gKL" secondAttribute="bottom" constant="20" id="xN7-J2-r6u"/>
+                                            </constraints>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Iys-ZK-e7k" appends="YES" id="Cli-4H-s2T"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="wcd-na-VzL" firstAttribute="leading" secondItem="3GE-0n-T68" secondAttribute="leading" constant="36" id="KnX-LS-sFt"/>
+                                        <constraint firstItem="wcd-na-VzL" firstAttribute="top" secondItem="3GE-0n-T68" secondAttribute="top" constant="40" id="p6L-J2-gIu"/>
+                                        <constraint firstAttribute="trailing" secondItem="wcd-na-VzL" secondAttribute="trailing" constant="36" id="xF1-vh-y1x"/>
+                                        <constraint firstAttribute="bottom" secondItem="wcd-na-VzL" secondAttribute="bottom" constant="40" id="ycc-PF-BAF"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wcd-na-VzL" firstAttribute="leading" secondItem="gZE-gf-j3j" secondAttribute="leadingMargin" constant="20" id="6l6-JJ-cD5"/>
-                            <constraint firstItem="ieQ-Zx-9Xb" firstAttribute="top" secondItem="wcd-na-VzL" secondAttribute="bottom" constant="40" id="EtH-xf-QTo"/>
-                            <constraint firstItem="wcd-na-VzL" firstAttribute="top" secondItem="fnd-bA-x63" secondAttribute="bottom" constant="40" id="VhN-Ch-bPM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wcd-na-VzL" secondAttribute="trailing" constant="20" id="g3o-oG-NtS"/>
+                            <constraint firstAttribute="trailing" secondItem="u26-t4-2Sx" secondAttribute="trailing" id="Lre-4r-1XA"/>
+                            <constraint firstItem="ieQ-Zx-9Xb" firstAttribute="top" secondItem="u26-t4-2Sx" secondAttribute="bottom" id="eac-JH-3nV"/>
+                            <constraint firstItem="u26-t4-2Sx" firstAttribute="leading" secondItem="gZE-gf-j3j" secondAttribute="leading" id="jOi-Cd-h9M"/>
+                            <constraint firstItem="u26-t4-2Sx" firstAttribute="top" secondItem="fnd-bA-x63" secondAttribute="bottom" id="psV-m4-Esg"/>
                         </constraints>
                     </view>
                     <connections>

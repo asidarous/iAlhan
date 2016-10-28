@@ -21,16 +21,18 @@ class SeasonCollectionViewCell: UICollectionViewCell {
         if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
             // Compact
             radius = CGFloat(self.frame.width * 0.28 )
+            itemImageView.layer.borderWidth = 1
         } else {
             // Regular
             radius = CGFloat(self.frame.width * 0.22 )
+            itemImageView.layer.borderWidth = 2
         }
         
         print("RRRRRRR \(radius)")
         itemImageView.layer.cornerRadius = radius
         itemImageView.clipsToBounds = true
         itemImageView.layer.borderColor = UIColor.white.cgColor
-        itemImageView.layer.borderWidth = 1
+        
 
         
         // MARK: Label
