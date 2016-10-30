@@ -27,14 +27,21 @@ class DBManager: NSObject {
     let databaseFileName = "AlhanSQL"
     var pathToDatabase: String!
     var database: FMDatabase!
+    var pl_database: FMDatabase!
+    
+    var pl_databaseFileName = "AlhanPL"
+    var pl_pathToDatabase: String!
+    
+    let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
     
     
     override init() {
         super.init()
         
         pathToDatabase = Bundle.main.path(forResource: databaseFileName, ofType: "sqlite")
-        
-        
+        pl_pathToDatabase = doumentDirectoryPath.appendingPathComponent("LocalAlhanPL.sqlite")
+
+
     }
     
     
@@ -61,6 +68,32 @@ class DBManager: NSObject {
         
         return false
     }
+    
+    // Open DB Funtion
+    func pl_openDatabase() -> Bool {
+        if pl_database == nil {
+            
+            print("***** Path to Db \(pl_pathToDatabase)")
+            
+            if FileManager.default.fileExists(atPath: pl_pathToDatabase) {
+                print("Horray found file")
+                pl_database = FMDatabase(path: pl_pathToDatabase)
+            } else
+            {
+                print ("Cen't find file \(pl_pathToDatabase)")
+            }
+        }
+        
+        if pl_database != nil {
+            if pl_database.open() {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    
     
     // Load Seasons
     func loadSeasons() -> [SeasonData]! {
@@ -210,5 +243,99 @@ class DBManager: NSObject {
         
     }
 
+    
+    // MARK: Playlist calls
+    
+    func getPL() -> [String]!{
+        var playLists: [String] = []
+        
+        if pl_openDatabase() {
+            let query = "SELECT ListName FROM Playlists"
+            
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: nil)
+                //print("Query result \(results)")
+                while results.next() {
+                print("!!!!!!!!!!!!")
+                print(results.string(forColumn: "ListName"))
+                playLists.append(results.string(forColumn: "ListName"))
+                    
+                }
+                //print (seasons.count)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            database.close()
+            
+        }
+        return playLists
+    }
+    
+    func getPLHymns(){
+    }
+    
+    func createPL(playlist: String){
+        
+        if pl_openDatabase() {
+            let query = "INSERT INTO \"Playlists\" (\"ListName\") VALUES (\"\(playlist)\")"
+            
+            do {
+                //print(database)
+                //let results =
+                try database.executeQuery(query, values: nil)
+                //print("Query result \(results)")
+                
+                //print (seasons.count)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            database.close()
+        }
+    }
+    
+//    func addHymnsToPL(hymns: [listID: Int, hymnName: String, hymnID: Int]){
+//        var values: String!
+//        
+//        var i = hymns.makeIterator()
+//        while let hymn = i.next() {
+//            if values.isEmpty
+//            {
+//              values = "(\"\(hymn.description)\")"
+//            }else
+//            {
+//                values = "\(values),(\"\(hymn.description)\")"
+//            }
+//        }
+//        
+//        if openDatabase() {
+//            let query = "INSERT INTO \"main\".\"ListDetail\" (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES (?1,?2,?3)"
+//            
+//            do {
+//                //print(database)
+//                //let results =
+//                    try database.executeQuery(query, values: nil)
+//                //print("Query result \(results)")
+//                
+//                //print (seasons.count)
+//            }
+//            catch {
+//                print(error.localizedDescription)
+//            }
+//            
+//            database.close()
+//        
+//        }
+//    }
+    
+    func removeHymnsFromPL(){
+    }
+    
+    func deletePL(){
+    }
 
 } // EOF

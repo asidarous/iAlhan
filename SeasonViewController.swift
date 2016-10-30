@@ -49,6 +49,11 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
             
         }
         
+        // MARK: Swipe controls
+        let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
+        recognizer.direction = .left
+        self.view .addGestureRecognizer(recognizer)
+        
         
         updateUI()
         
@@ -173,6 +178,9 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+        self.performSegue(withIdentifier: "Go To Playlist Segue", sender: self)
+    }
     
     
     

@@ -109,11 +109,12 @@
                     <connections>
                         <outlet property="collectionView" destination="Rnk-KT-DgS" id="dQs-eT-kzz"/>
                         <segue destination="suT-MX-M3Z" kind="show" identifier="Show Season Detail" id="1HV-QI-Oid"/>
+                        <segue destination="rwX-ZZ-IP9" kind="show" identifier="Go To Playlist Segue" id="c7r-NI-iIj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8.8000000000000007" y="36.431784107946029"/>
+            <point key="canvasLocation" x="8" y="36.431784107946029"/>
         </scene>
         <!--InfoVC-->
         <scene sceneID="p9W-Mx-1dc">
@@ -182,12 +183,12 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="917.60000000000002" y="-698.5007496251875"/>
+            <point key="canvasLocation" x="15" y="845"/>
         </scene>
-        <!--Season Detail View Controller-->
+        <!--SeasonDetail-->
         <scene sceneID="XKl-3j-LOz">
             <objects>
-                <viewController id="suT-MX-M3Z" customClass="SeasonDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="suT-MX-M3Z" userLabel="SeasonDetail" customClass="SeasonDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NvW-ds-2h2"/>
                         <viewControllerLayoutGuide type="bottom" id="OSc-er-c56"/>
@@ -254,19 +255,27 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="BkP-ir-wkr">
+                        <barButtonItem key="rightBarButtonItem" image="add_to_playlist_icon" id="3yz-r9-5xq">
+                            <connections>
+                                <segue destination="rwX-ZZ-IP9" kind="show" id="Ia3-8E-VVm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="KAO-hj-IZA" id="5fL-2g-fmE"/>
                         <outlet property="visualEffectView" destination="REG-Ih-8vZ" id="iyP-Ug-0L7"/>
+                        <segue destination="rwX-ZZ-IP9" kind="show" identifier="Season Detail to Playlist" id="B3d-Cf-eFN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9R-xx-Fgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="918" y="36"/>
         </scene>
-        <!--Hymn Detail View Controller-->
+        <!--HymnDetail-->
         <scene sceneID="o75-X2-0u0">
             <objects>
-                <viewController id="YcG-3g-TgJ" customClass="HymnDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YcG-3g-TgJ" userLabel="HymnDetail" customClass="HymnDetailViewController" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2CB-ZA-aQ7"/>
                         <viewControllerLayoutGuide type="bottom" id="kTy-jS-g5J"/>
@@ -301,15 +310,153 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="6ax-MV-rUa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="UwO-yW-vaf">
+                            <connections>
+                                <segue destination="rwX-ZZ-IP9" kind="show" id="6bS-Xr-0eG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="HymnTextCoptic" destination="ySn-rD-Lie" id="tXR-vo-j7i"/>
                         <outlet property="HymnTextEnglish" destination="zfc-ha-neo" id="Siz-x9-RJO"/>
                         <outlet property="ToolBar" destination="N0R-cL-Mxp" id="ym5-d3-5A2"/>
+                        <segue destination="rwX-ZZ-IP9" kind="show" identifier="Hymn Detail to Playlist" id="fvZ-yi-SCF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUG-zU-BoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2096" y="36"/>
+            <point key="canvasLocation" x="1811" y="36"/>
+        </scene>
+        <!--PlayList-->
+        <scene sceneID="Y4c-Oe-0eM">
+            <objects>
+                <tableViewController title="Playlists" id="rwX-ZZ-IP9" userLabel="PlayList" customClass="PlayListVC" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zgc-Rg-gCY">
+                        <rect key="frame" x="0.0" y="0.0" width="384" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playlistCell" id="wAi-sJ-Rem">
+                                <rect key="frame" x="0.0" y="92" width="384" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wAi-sJ-Rem" id="Qr6-ZQ-rdo">
+                                    <frame key="frameInset" width="384" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naw-AM-gOv">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="naw-AM-gOv" firstAttribute="top" secondItem="Qr6-ZQ-rdo" secondAttribute="top" id="4Bu-xO-JiJ"/>
+                                        <constraint firstItem="naw-AM-gOv" firstAttribute="leading" secondItem="Qr6-ZQ-rdo" secondAttribute="leading" id="OGP-qU-kC7"/>
+                                        <constraint firstAttribute="bottom" secondItem="naw-AM-gOv" secondAttribute="bottom" id="hHD-4G-dhT"/>
+                                        <constraint firstAttribute="trailing" secondItem="naw-AM-gOv" secondAttribute="trailing" id="qXh-qp-QJd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rwX-ZZ-IP9" id="cWU-ZH-kM7"/>
+                            <outlet property="delegate" destination="rwX-ZZ-IP9" id="dig-rk-PK0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Playlists" id="Y5b-lS-8dq">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qOT-lE-bBk">
+                            <connections>
+                                <segue destination="AeI-h1-A9F" kind="presentation" identifier="createPLSegue" id="hR4-D3-urh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="PlayListItemsTable" destination="Zgc-Rg-gCY" id="cP3-hS-DKS"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PbM-b2-aNn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1810" y="-732"/>
+        </scene>
+        <!--AddVC-->
+        <scene sceneID="Ieo-43-stg">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="AeI-h1-A9F" customClass="PLAddVC" customModule="iAlhan" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1N5-yp-dku"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bg1-JF-CXz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lpS-jk-Br6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4e-jP-fCp">
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-SC-CQA">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Je8-wp-MmT"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auW-d6-3ra">
+                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                        <state key="normal" title="Add Playlist">
+                                            <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="AddPL:" destination="AeI-h1-A9F" eventType="touchUpInside" id="bRF-F5-JuH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="0.76457435344827585" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="auW-d6-3ra" firstAttribute="centerX" secondItem="H4e-jP-fCp" secondAttribute="centerX" id="Hkm-jm-Lt7"/>
+                                    <constraint firstItem="auW-d6-3ra" firstAttribute="leading" secondItem="Dtw-SC-CQA" secondAttribute="leading" id="Jzb-os-NNP"/>
+                                    <constraint firstItem="Dtw-SC-CQA" firstAttribute="centerY" secondItem="H4e-jP-fCp" secondAttribute="centerY" id="Lz2-PN-WDo"/>
+                                    <constraint firstItem="auW-d6-3ra" firstAttribute="top" secondItem="Dtw-SC-CQA" secondAttribute="bottom" constant="8" id="QTZ-Is-Soc"/>
+                                    <constraint firstAttribute="trailing" secondItem="Dtw-SC-CQA" secondAttribute="trailing" constant="10" id="UyA-lU-NIm"/>
+                                    <constraint firstItem="Dtw-SC-CQA" firstAttribute="centerX" secondItem="H4e-jP-fCp" secondAttribute="centerX" id="dXM-hU-yJz"/>
+                                    <constraint firstItem="auW-d6-3ra" firstAttribute="trailing" secondItem="Dtw-SC-CQA" secondAttribute="trailing" id="nkC-gh-17S"/>
+                                    <constraint firstItem="Dtw-SC-CQA" firstAttribute="leading" secondItem="H4e-jP-fCp" secondAttribute="leading" constant="10" id="sqJ-0p-MvC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="H4e-jP-fCp" secondAttribute="trailing" constant="40" id="Cbf-Hq-cEp"/>
+                            <constraint firstItem="H4e-jP-fCp" firstAttribute="leading" secondItem="lpS-jk-Br6" secondAttribute="leadingMargin" constant="40" id="IWL-0V-5Q7"/>
+                            <constraint firstItem="Bg1-JF-CXz" firstAttribute="top" secondItem="H4e-jP-fCp" secondAttribute="bottom" constant="200" id="LWo-e0-vAs"/>
+                            <constraint firstItem="H4e-jP-fCp" firstAttribute="top" secondItem="1N5-yp-dku" secondAttribute="bottom" constant="250" id="ePA-sJ-Wiu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="plText" destination="Dtw-SC-CQA" id="EnL-3B-H3k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mc6-dE-Vqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2798" y="-733"/>
+        </scene>
+        <!--PlayListDetail-->
+        <scene sceneID="QL9-aL-FCS">
+            <objects>
+                <viewController id="2Pa-J1-olf" userLabel="PlayListDetail" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qhf-h1-rMm"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Nb-QG-UDm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MpW-AS-vbC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pbk-cD-NRH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2628" y="906"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zZK-5d-ssF">
@@ -343,4 +490,10 @@
             <point key="canvasLocation" x="-798" y="37"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="add_to_playlist_icon" width="50" height="50"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="fvZ-yi-SCF"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -20,6 +20,10 @@
 		F07790331DB5A53E001B3376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07790321DB5A53E001B3376 /* Constants.swift */; };
 		F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F3C081DBA91660019153A /* AlhanPlayer.swift */; };
 		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
+		F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3704E1DC425D700979B78 /* PlayListVC.swift */; };
+		F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370501DC42E7800979B78 /* PLAddVC.swift */; };
+		F0E370531DC482CB00979B78 /* AlhanPL.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F0E370521DC482CA00979B78 /* AlhanPL.sqlite */; };
+		F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370541DC50F2A00979B78 /* PL_DBManager.swift */; };
 		F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */; };
 		F0E3E8131DADECC900174D91 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */; };
 		F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E8291DB008EC00174D91 /* DBManager.swift */; };
@@ -65,6 +69,10 @@
 		F07790321DB5A53E001B3376 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F09F3C081DBA91660019153A /* AlhanPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlhanPlayer.swift; sourceTree = "<group>"; };
 		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
+		F0E3704E1DC425D700979B78 /* PlayListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
+		F0E370501DC42E7800979B78 /* PLAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddVC.swift; sourceTree = "<group>"; };
+		F0E370521DC482CA00979B78 /* AlhanPL.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = AlhanPL.sqlite; sourceTree = "<group>"; };
+		F0E370541DC50F2A00979B78 /* PL_DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PL_DBManager.swift; sourceTree = "<group>"; };
 		F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		F0E3E80B1DADDFFD00174D91 /* HymnDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HymnDetailViewController.swift; sourceTree = "<group>"; };
 		F0E3E8111DADEC9900174D91 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -131,6 +139,7 @@
 				F07790321DB5A53E001B3376 /* Constants.swift */,
 				F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */,
 				F09F3C081DBA91660019153A /* AlhanPlayer.swift */,
+				F0E370541DC50F2A00979B78 /* PL_DBManager.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -143,6 +152,8 @@
 				F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */,
 				F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */,
 				F0E370461DC301E900979B78 /* InfoVC.swift */,
+				F0E3704E1DC425D700979B78 /* PlayListVC.swift */,
+				F0E370501DC42E7800979B78 /* PLAddVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -150,6 +161,7 @@
 		F06927D81DA82E4500A94BB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F0E370521DC482CA00979B78 /* AlhanPL.sqlite */,
 				F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */,
 			);
 			name = Model;
@@ -349,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0E370531DC482CB00979B78 /* AlhanPL.sqlite in Resources */,
 				F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */,
 				F0524E021DB88F1B0066B075 /* AlhanSQL.sqlite in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
@@ -385,8 +398,10 @@
 				F07790331DB5A53E001B3376 /* Constants.swift in Sources */,
 				F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */,
 				F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */,
+				F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */,
 				F0E370471DC301E900979B78 /* InfoVC.swift in Sources */,
 				F0E3E83B1DB03E5400174D91 /* FMDatabaseAdditions.m in Sources */,
+				F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */,
 				F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */,
 				F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */,
 				F0E3E83C1DB03E5400174D91 /* FMDatabasePool.m in Sources */,
@@ -394,6 +409,7 @@
 				F0E3E8391DB03E5400174D91 /* FMResultSet.m in Sources */,
 				F0E3E8381DB03E5400174D91 /* FMDatabaseQueue.m in Sources */,
 				F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */,
+				F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
 			);

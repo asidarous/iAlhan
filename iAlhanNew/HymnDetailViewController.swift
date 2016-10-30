@@ -56,6 +56,13 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
         
+        // MARK: Swipe controls
+        let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
+        recognizer.direction = .left
+        self.view .addGestureRecognizer(recognizer)
+        
+        
+        
         // handles audio when device is muted
         do {
             
@@ -457,6 +464,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             print(error.localizedDescription)
             return false
         }
+    }
+    
+    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+        self.performSegue(withIdentifier: "Hymn Detail to Playlist", sender: self)
     }
     
     

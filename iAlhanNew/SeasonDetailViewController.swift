@@ -77,6 +77,12 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         //UINavigationBar.appearance().tintColor = UIColor.blue
         tableView.backgroundView?.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
        
+        // MARK: Swipe controls
+        let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
+        recognizer.direction = .left
+        self.view .addGestureRecognizer(recognizer)
+        
+        
         updateUI()
         
         //print ("Label Text \(labelText)")
@@ -280,4 +286,8 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
+    
+    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+        self.performSegue(withIdentifier: "Season Detail to Playlist", sender: self)
+    }
 }

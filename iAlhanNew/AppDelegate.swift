@@ -20,8 +20,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let barbuttonFont = UIFont(name: "verdana", size: 12) ?? UIFont.systemFont(ofSize: 12)
         
         
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: barbuttonFont, NSForegroundColorAttributeName:UIColor.clear], for: UIControlState.normal)
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: barbuttonFont, NSForegroundColorAttributeName:UIColor.gray], for: UIControlState.normal)
+        
+        
+        
+        
+        let fileManger = FileManager.default
+        let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let destinationPath = doumentDirectoryPath.appendingPathComponent("LocalAlhanPL.sqlite")
+        let sourcePath = Bundle.main.path(forResource: "AlhanPL", ofType: "sqlite")
+        
+        if FileManager.default.fileExists(atPath: destinationPath) {
+            print("The file already exists at path")
+            
+            // if the file doesn't exist
+        } else {
+        
+        
+            do{
+               try fileManger.copyItem(atPath: sourcePath!, toPath: destinationPath)
+                print("Copied the file successfully to \(destinationPath)")
+                }
+            catch let error as NSError {
+                NSLog("Unable to copy PlaylistDB to  directory \(error.debugDescription)")
+            }
+
+        }
+
+    
+    
+    
+        
+        // Register a UserDefaults Domain
+        //UserDefaults.register("PlayListDomain")
         
         //navigationController?
          //print("~~~WIDTH -- \(UINavigationController().navigationItem.leftBarButtonItem!.width)")
