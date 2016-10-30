@@ -25,7 +25,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnTextEnglish: UITextView!
     @IBOutlet var HymnTextCoptic: UITextView!
     
-    var ProgressBar: UISlider!
+    var progressBar: UISlider!
+    var progressBarLabel: UILabel!
 
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
@@ -95,27 +96,45 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
         
         //new progress bar
-        ProgressBar = UISlider(frame:CGRect(x: 10, y: 100, width: 280, height: 20))
-        ProgressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
-        ProgressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
-        ProgressBar.isUserInteractionEnabled = true
+        //Get progress bar width based on orientation
+        var pbWidth: CGFloat!
+        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
+            // Compact
+            
+            pbWidth = ToolBar.frame.size.width * 0.65
+            
+        } else {
+            // Regular
+           pbWidth = ToolBar.frame.size.height * 0.65
+        }
         
-        ProgressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
-        ProgressBar.autoresizingMask = UIViewAutoresizing.flexibleWidth
-        ProgressBar.sizeToFit()
+        progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
+        progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
+        progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
+        progressBar.isUserInteractionEnabled = true
+        
+        progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
+        progressBar.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        progressBar.sizeToFit()
+        
+        
         
 
         //print("PLAYER ITEM At view Did Load : -- \(playerItem)")
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
-        saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.save, target: self, action: #selector(HymnDetailViewController.saveFile))
+        saveButton = UIBarButtonItem(image: UIImage(named: "download"), landscapeImagePhone: nil, style: .done, target: self, action: #selector(HymnDetailViewController.saveFile))
         deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action: #selector(HymnDetailViewController.deleteFile))
         
-        let flexible = UIBarButtonItem(customView: ProgressBar)
+        let flexible = UIBarButtonItem(customView: progressBar)
+        progressBarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
+        progressBarLabel.adjustsFontSizeToFitWidth = true
+        progressBarLabel.text = "00.00"
+        let sliderLabel = UIBarButtonItem(customView: progressBarLabel)
         
         
-        ProgressBar.minimumValue = 0
+        progressBar.minimumValue = 0
         
         //*******
         //*** check to see if there is a hymn playing
@@ -129,11 +148,12 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
         arrayOfButtons.insert(flexible, at: 1)
+        arrayOfButtons.insert(sliderLabel, at: 2)
         // check if file is local
         if FileManager.default.fileExists(atPath: destinationUrl.path){
-            arrayOfButtons.insert(deleteButton, at: 2)
+            arrayOfButtons.insert(deleteButton, at: 3)
         }else {
-            arrayOfButtons.insert(saveButton, at: 2)
+            arrayOfButtons.insert(saveButton, at: 3)
         }
         self.ToolBar.setItems(arrayOfButtons, animated: false)
        
@@ -143,16 +163,17 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             arrayOfButtons = self.ToolBar.items!
             arrayOfButtons.insert(pauseButton, at: 0) // change index to wherever you'd like the button
             arrayOfButtons.insert(flexible, at: 1)
+            arrayOfButtons.insert(sliderLabel, at: 2)
             // check if file is local
             if FileManager.default.fileExists(atPath: destinationUrl.path){
-                arrayOfButtons.insert(deleteButton, at: 2)
+                arrayOfButtons.insert(deleteButton, at: 3)
             }else {
-                arrayOfButtons.insert(saveButton, at: 2)
+                arrayOfButtons.insert(saveButton, at: 3)
             }
             self.ToolBar.setItems(arrayOfButtons, animated: false)
             
             // get the bar to the playing position
-            ProgressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
+            progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
             updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
             updater.preferredFramesPerSecond = 60
             updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
@@ -197,7 +218,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
             AlhanPlayer.sharedInstance.play()
             // print("MAX VALUE: \(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds) --DONE")
-            ProgressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
+            progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
          }
     
     
@@ -260,8 +281,14 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     // MARK: tracking audio
     func trackAudio() {
 
-        ProgressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
-        //print("****** ProgressBar VALUE: \(ProgressBar.value) ***")
+        progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
+        //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
+
+        let minutes = Int(floor(progressBar.value / 60))
+        let seconds = Int(round(progressBar.value.truncatingRemainder(dividingBy: 60)))
+        let timeString = NSString(format: "%02d:%02d", minutes, seconds)
+        //print("****** ProgressBar VALUE: \(timeString) ***")
+        progressBarLabel.text = "\(timeString)"
         
     }
     
@@ -274,7 +301,13 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         arrayOfButtons.insert(playButton, at: 0)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
-        AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(( Int64(ProgressBar.value)), 1) )
+        AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(( Int64(progressBar.value)), 1) )
+        //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
+        let minutes = Int(floor(progressBar.value / 60))
+        let seconds = Int(round(progressBar.value.truncatingRemainder(dividingBy: 60)))
+        let timeString = NSString(format: "%02d:%02d", minutes, seconds)
+        //print("****** ProgressBar VALUE: \(timeString) ***")
+        progressBarLabel.text = "\(timeString)"
         //alhanPlayer.play()
         play()
         
@@ -332,8 +365,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
         
         // change the button to delete
-        arrayOfButtons.remove(at: 2) // change index to correspond to where your button is
-        arrayOfButtons.insert(deleteButton, at: 2)
+        arrayOfButtons.remove(at: 3) // change index to correspond to where your button is
+        arrayOfButtons.insert(deleteButton, at: 3)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
     }
 
@@ -357,8 +390,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             print("An error took place: \(error)")
         }
         // change the button to save
-        arrayOfButtons.remove(at: 2) // change index to correspond to where your button is
-        arrayOfButtons.insert(saveButton, at: 2)
+        arrayOfButtons.remove(at: 3) // change index to correspond to where your button is
+        arrayOfButtons.insert(saveButton, at: 3)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
         
