@@ -391,9 +391,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JlI-K3-mva" userLabel="bckGrndV">
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4e-jP-fCp">
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-SC-CQA">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Playlist Name ...." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-SC-CQA">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Je8-wp-MmT"/>
                                         </constraints>
@@ -410,15 +413,27 @@
                                             <action selector="AddPL:" destination="AeI-h1-A9F" eventType="touchUpInside" id="bRF-F5-JuH"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCo-bm-Wb4">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="f8m-En-jnn"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="Cancel:" destination="AeI-h1-A9F" eventType="touchUpInside" id="OBN-He-MSM"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="0.76457435344827585" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="auW-d6-3ra" firstAttribute="centerX" secondItem="H4e-jP-fCp" secondAttribute="centerX" id="Hkm-jm-Lt7"/>
-                                    <constraint firstItem="auW-d6-3ra" firstAttribute="leading" secondItem="Dtw-SC-CQA" secondAttribute="leading" id="Jzb-os-NNP"/>
                                     <constraint firstItem="Dtw-SC-CQA" firstAttribute="centerY" secondItem="H4e-jP-fCp" secondAttribute="centerY" id="Lz2-PN-WDo"/>
                                     <constraint firstItem="auW-d6-3ra" firstAttribute="top" secondItem="Dtw-SC-CQA" secondAttribute="bottom" constant="8" id="QTZ-Is-Soc"/>
                                     <constraint firstAttribute="trailing" secondItem="Dtw-SC-CQA" secondAttribute="trailing" constant="10" id="UyA-lU-NIm"/>
+                                    <constraint firstItem="tCo-bm-Wb4" firstAttribute="leading" secondItem="Dtw-SC-CQA" secondAttribute="leading" id="aSc-CP-vbK"/>
                                     <constraint firstItem="Dtw-SC-CQA" firstAttribute="centerX" secondItem="H4e-jP-fCp" secondAttribute="centerX" id="dXM-hU-yJz"/>
+                                    <constraint firstItem="tCo-bm-Wb4" firstAttribute="baseline" secondItem="auW-d6-3ra" secondAttribute="baseline" id="i7K-6m-rnb"/>
+                                    <constraint firstItem="auW-d6-3ra" firstAttribute="leading" secondItem="tCo-bm-Wb4" secondAttribute="trailing" constant="10" id="ldj-ja-zxB"/>
                                     <constraint firstItem="auW-d6-3ra" firstAttribute="trailing" secondItem="Dtw-SC-CQA" secondAttribute="trailing" id="nkC-gh-17S"/>
                                     <constraint firstItem="Dtw-SC-CQA" firstAttribute="leading" secondItem="H4e-jP-fCp" secondAttribute="leading" constant="10" id="sqJ-0p-MvC"/>
                                 </constraints>
@@ -426,10 +441,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JlI-K3-mva" firstAttribute="leading" secondItem="lpS-jk-Br6" secondAttribute="leadingMargin" id="Anr-zF-uk9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H4e-jP-fCp" secondAttribute="trailing" constant="40" id="Cbf-Hq-cEp"/>
                             <constraint firstItem="H4e-jP-fCp" firstAttribute="leading" secondItem="lpS-jk-Br6" secondAttribute="leadingMargin" constant="40" id="IWL-0V-5Q7"/>
-                            <constraint firstItem="Bg1-JF-CXz" firstAttribute="top" secondItem="H4e-jP-fCp" secondAttribute="bottom" constant="200" id="LWo-e0-vAs"/>
-                            <constraint firstItem="H4e-jP-fCp" firstAttribute="top" secondItem="1N5-yp-dku" secondAttribute="bottom" constant="250" id="ePA-sJ-Wiu"/>
+                            <constraint firstItem="Bg1-JF-CXz" firstAttribute="top" secondItem="H4e-jP-fCp" secondAttribute="bottom" constant="350" id="LWo-e0-vAs"/>
+                            <constraint firstItem="JlI-K3-mva" firstAttribute="top" secondItem="1N5-yp-dku" secondAttribute="bottom" id="MUt-8J-wv1"/>
+                            <constraint firstItem="Bg1-JF-CXz" firstAttribute="top" secondItem="JlI-K3-mva" secondAttribute="bottom" id="RfI-6Z-iYX"/>
+                            <constraint firstItem="H4e-jP-fCp" firstAttribute="top" secondItem="1N5-yp-dku" secondAttribute="bottom" constant="150" id="ePA-sJ-Wiu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JlI-K3-mva" secondAttribute="trailing" id="uwn-DL-ka7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -438,7 +457,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mc6-dE-Vqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2798" y="-733"/>
+            <point key="canvasLocation" x="2797.5999999999999" y="-733.5832083958021"/>
         </scene>
         <!--PlayListDetail-->
         <scene sceneID="QL9-aL-FCS">

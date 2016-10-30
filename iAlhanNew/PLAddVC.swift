@@ -17,7 +17,7 @@ class PLAddVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        plText.becomeFirstResponder()
         // Do any additional setup after loading the view.
     }
 
@@ -41,6 +41,9 @@ class PLAddVC: UIViewController {
         
     }
 
+    @IBAction func Cancel(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
