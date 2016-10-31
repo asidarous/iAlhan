@@ -525,16 +525,33 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4gc-ED-qrV">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hymnCell" id="4gc-ED-qrV">
                                 <rect key="frame" x="0.0" y="28" width="384" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4gc-ED-qrV" id="39F-WY-46b">
                                     <rect key="frame" x="0.0" y="0.0" width="384" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzm-y9-u9w">
+                                            <rect key="frame" x="8" y="18" width="368" height="12.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="yzm-y9-u9w" secondAttribute="trailing" id="C1A-p1-vGm"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="yzm-y9-u9w" secondAttribute="bottom" constant="5" id="Qqw-f1-848"/>
+                                        <constraint firstItem="yzm-y9-u9w" firstAttribute="leading" secondItem="39F-WY-46b" secondAttribute="leadingMargin" id="ZQT-kA-n5Z"/>
+                                        <constraint firstItem="yzm-y9-u9w" firstAttribute="top" secondItem="39F-WY-46b" secondAttribute="topMargin" constant="10" id="h0m-qg-gYs"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
+                    <connections>
+                        <outlet property="plDetail" destination="Cvp-SD-LxH" id="Dcs-31-rSU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pbk-cD-NRH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

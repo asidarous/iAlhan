@@ -8,18 +8,58 @@
 
 import UIKit
 
-class PlaylistDetailVC: UIViewController {
-
+struct PlaylistHymns{
     
-    var playlistHymns:[String]?
+    var HymnName: String!
+    var HymnID: Int!
+}
+
+class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+    @IBOutlet var plDetail: UITableView!
+    
+    var playlistHymns:[PlaylistHymns]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
+        
+    playlistHymns = PL_DBManager.shared.getPLHymns(playlist: self.title!)
+        print("\(playlistHymns?.count)")
         // Do any additional setup after loading the view.
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return (playlistHymns?.count)!
+    }
 
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "hymnCell", for: indexPath)
+        
+        let row = indexPath.row
+        
+        print("just outside")
+        if ((playlistHymns?.count)! > 0)
+        {
+            print("Got in")
+            cell.textLabel?.text = playlistHymns?[row].HymnName
+        }
+        
+        
+        
+        return cell
+    }
+    
+
+    
     /*
     // MARK: - Navigation
 

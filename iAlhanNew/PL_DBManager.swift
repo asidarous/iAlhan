@@ -88,7 +88,37 @@ class PL_DBManager: NSObject {
         return playLists
     }
     
-    func getPLHymns(){
+    func getPLHymns(playlist: String) -> [PlaylistHymns]!{
+        var hymnsLists: [PlaylistHymns]!
+        
+        if pl_openDatabase() {
+            let query = "select HymnName, HymnID from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)')"
+            
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: nil)
+                //print("Query result \(results)")
+                while results.next() {
+                    let hymnsList = PlaylistHymns(HymnName: results.string(forColumn: "HymnName"), HymnID: Int (results.int(forColumn: "HymnID")) )
+                    
+                    //print ("+++ Here is the season \(season)")
+                    if hymnsLists == nil {
+                        hymnsLists = [PlaylistHymns]()
+                    }
+                    
+                    hymnsLists.append(hymnsList)
+                }
+                //print (seasons.count)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            database.close()
+            
+        }
+        return hymnsLists
+        
+        
     }
     
     func createPL(playlist: String){
@@ -135,36 +165,35 @@ class PL_DBManager: NSObject {
             while let hymn = i.next() {
                 if values.isEmpty
                 {
-                  values = "(\(playlist), \(hymn.key.description), \(hymn.value.description))"
+                  values = "(\(playlist), '\(hymn.key.description)', \(hymn.value.description))"
                   print("First value: \(values!)")
                     
                 }else
                 {
-                    values = "\(values!),(\(playlist), \(hymn.key.description), \(hymn.value.description))"
+                    values = "\(values!),(\(playlist), '\(hymn.key.description)', \(hymn.value.description))"
                     
                 }
             }
     
             print ("VAlues: \(values!)")
         
-//            if pl_openDatabase() {
-//                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES (\(values))"
-//    
-//                do {
-//                    //print(database)
-//                    //let results =
-//                        try database.executeQuery(query, values: nil)
-//                    //print("Query result \(results)")
-//    
-//                    //print (seasons.count)
-//                }
-//                catch {
-//                    print(error.localizedDescription)
-//                }
-//    
-//                database.close()
-//    
-//            }
+            if pl_openDatabase() {
+                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES \(values!)"
+                print("QUERY")
+                print(query)
+                do {
+                    if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                        throw error!}
+                    
+                    print ("Updated!!!")
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+    
+                database.close()
+    
+            }
         }
     
     func removeHymnsFromPL(){
@@ -189,6 +218,35 @@ class PL_DBManager: NSObject {
         }
 
         
+    }
+    
+    func getPLID (playlist: String) -> Int{
+        var playlistID: Int!
+        if pl_openDatabase() {
+            let query = "SELECT ID FROM Playlists where LISTNAME = \"\(playlist)\""
+            // TODO: delete all hymns pertaining to the deleted playlist
+            print(query)
+            //var playlistID: Int
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: nil)
+                if (results.next()) {
+                print("Query result \(Int (results.int(forColumn: "ID")))")
+                //while results.next() {
+                playlistID = Int (results.int(forColumn: "ID"))
+                }
+                //}
+                //print (seasons.count)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+
+            
+            database.close()
+        }
+        
+        return playlistID
     }
     
 } // EOF

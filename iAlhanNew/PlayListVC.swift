@@ -13,7 +13,7 @@ class PlayListVC: UITableViewController {
     
     var plArray: [String]!
 
-    var plHymnsArray: [String: Int]!
+    var plHymnsArray: [String: Int] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +83,22 @@ class PlayListVC: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        
+        if plHymnsArray.isEmpty {
         performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
-    
+        }
+        else
+        {
+           // get playlist ID
+            let playlistID = PL_DBManager.shared.getPLID(playlist: plArray[indexPath.row])
+            
+            print("Here is the playlist ID \(playlistID)")
+            
+            // insert hymns into playlist DB (listdetails)
+            PL_DBManager.shared.addHymnsToPL(playlist: playlistID, hymnLists: plHymnsArray)
+            performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
+            print (plHymnsArray)
+            plHymnsArray.removeAll()
+        }
     }
     /*
     // Override to support conditional editing of the table view.
