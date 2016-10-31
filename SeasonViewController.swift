@@ -33,7 +33,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo")!)
         coverLayer = CALayer()
         
         

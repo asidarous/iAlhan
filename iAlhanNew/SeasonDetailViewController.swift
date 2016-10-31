@@ -236,6 +236,9 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     
     // MARK: - Target/Action
+    @IBAction func AddToPlayList(_ sender: Any) {
+        performSegue(withIdentifier: "Add to Playlist", sender: self)
+    }
     
     @IBAction func showHymn(_ sender: UITapGestureRecognizer)
     {
@@ -270,6 +273,32 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                     
                     hymnDetailVC.hymnDetail = [v[row!]]
                 }
+                
+            case "Add to Playlist":
+                print ("I'm going to add hymns to selected playlist")
+                let playlistVC = segue.destination as! PlayListVC
+                var hymnArray: [String: Int] = [:]
+                
+                
+                for i in 0..<seasonHymns!.count{
+                    
+                    let tempDict = seasonHymns![i].seasonSections
+                    for (_, v) in tempDict!{
+                        print ("Number of hymns in section: \(v.count)")
+                        for j in 0..<v.count{
+                            print(v[j].hymnName)
+                            hymnArray.updateValue(v[j].hymnID, forKey: v[j].hymnName)
+                            
+                        }
+                    }
+                    
+                playlistVC.plHymnsArray = hymnArray
+                
+                 //let newDict =
+                    
+                }
+                print ("Going into playlist I have: \(hymnArray.count)")
+                
                                 
             default:
                 break

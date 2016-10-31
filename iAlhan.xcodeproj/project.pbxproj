@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AAA097631DC6A129002384D8 /* PlaylistDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */; };
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistDetailVC.swift; sourceTree = "<group>"; };
 		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
 		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				F0E370461DC301E900979B78 /* InfoVC.swift */,
 				F0E3704E1DC425D700979B78 /* PlayListVC.swift */,
 				F0E370501DC42E7800979B78 /* PLAddVC.swift */,
+				AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				F0E3E83B1DB03E5400174D91 /* FMDatabaseAdditions.m in Sources */,
 				F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */,
 				F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */,
+				AAA097631DC6A129002384D8 /* PlaylistDetailVC.swift in Sources */,
 				F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */,
 				F0E3E83C1DB03E5400174D91 /* FMDatabasePool.m in Sources */,
 				F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */,

@@ -45,7 +45,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     var asset:AVAsset?
     
-    var updater : CADisplayLink! = nil
+    //var updater : CADisplayLink! = nil
     
     var localDir: String!
     
@@ -96,17 +96,25 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
         
         //new progress bar
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(HymnDetailViewController.trackAudio), userInfo: nil, repeats: true)
+        
         //Get progress bar width based on orientation
         var pbWidth: CGFloat!
-        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
-            // Compact
-            
-            pbWidth = ToolBar.frame.size.width * 0.65
-            
-        } else {
-            // Regular
-           pbWidth = ToolBar.frame.size.height * 0.65
-        }
+//        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
+//            // Compact
+//            print("%%%% I'm compact")
+//            
+//            pbWidth = ToolBar.frame.size.width * 0.65
+//            print("WIDTH: \(pbWidth)")
+//            
+//        } else {
+//            // Regular
+//            print("%%%% I'm regular")
+//           pbWidth = ToolBar.frame.size.width * 0.65
+//           print("WIDTH: \(pbWidth)") 
+//        }
+        
+        pbWidth = ToolBar.frame.size.width * 0.65
         
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
@@ -115,8 +123,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
         progressBar.autoresizingMask = UIViewAutoresizing.flexibleWidth
-        progressBar.sizeToFit()
-        
+        //progressBar.sizeToFit()
         
         
 
@@ -174,10 +181,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             
             // get the bar to the playing position
             progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
-            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-            updater.preferredFramesPerSecond = 60
-            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-        
+//            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+//            updater.preferredFramesPerSecond = 60
+//            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//        
         }
         
         
@@ -212,10 +219,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     func play() {
 
-            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-            updater.preferredFramesPerSecond = 60
-            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-
+//            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+//            updater.preferredFramesPerSecond = 60
+//            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//
             AlhanPlayer.sharedInstance.play()
             // print("MAX VALUE: \(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds) --DONE")
             progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
@@ -435,10 +442,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         navigationController?.navigationBar.titleTextAttributes = originalStyle
         NotificationCenter.default.removeObserver(self)
         
-        if (updater != nil) {
-
-            updater.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
-        }
+//        if (updater != nil) {
+//
+//            updater.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
+//        }
         
     }
     

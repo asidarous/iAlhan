@@ -12,9 +12,13 @@ class PlayListVC: UITableViewController {
     @IBOutlet var PlayListItemsTable: UITableView!
     
     var plArray: [String]!
-   
+
+    var plHymnsArray: [String: Int]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
         NotificationCenter.default.addObserver(self, selector: #selector (loadList(notification:)),name:NSNotification.Name(rawValue: "load"), object: nil)
         
         plArray = PL_DBManager.shared.getPL()
@@ -53,19 +57,19 @@ class PlayListVC: UITableViewController {
         if (plArray != nil)
         {
             noOfRows = plArray.count
-            print("zzzzzzz count: \(noOfRows)")
+            //print("zzzzzzz count: \(noOfRows)")
             
         }
         
         return noOfRows
     }
-
-  
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "playlistCell", for: indexPath)
         
         let row = indexPath.row
-        
         
         if (plArray != nil)
         {
@@ -78,6 +82,11 @@ class PlayListVC: UITableViewController {
     }
     
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
+    
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -95,6 +104,7 @@ class PlayListVC: UITableViewController {
         
         if editingStyle == .delete {
             // Delete the row from the data source
+            
             PL_DBManager.shared.deletePL(playlist: (cell?.textLabel?.text)!)
             plArray.remove(at: row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -131,6 +141,28 @@ class PlayListVC: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-   
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let identifier = segue.identifier
+        {
+            switch identifier
+            {
+            case "Show Playlist Detail":
+                let playlistDetailVC = segue.destination as! PlaylistDetailVC
+                playlistDetailVC.title = sender as? String
+                print ("I'm here")
+                
+            
+            default:
+                break
+                
+                
+            }
+        }
+    }
 
+   
+    
 }

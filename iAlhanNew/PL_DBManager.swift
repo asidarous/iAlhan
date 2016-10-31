@@ -95,7 +95,7 @@ class PL_DBManager: NSObject {
         
         if pl_openDatabase() {
             let findQuery = "Select listname from playlists where listname = \"\(playlist)\" "
-            let query = "INSERT INTO \"Playlists\" (\"ListName\") VALUES (\"\(playlist)\")"
+            let query = "INSERT INTO Playlists (\"ListName\") VALUES (\"\(playlist)\")"
             
             do {
                 //print(database)
@@ -128,39 +128,44 @@ class PL_DBManager: NSObject {
         }
     }
     
-    //    func addHymnsToPL(hymns: [listID: Int, hymnName: String, hymnID: Int]){
-    //        var values: String!
-    //
-    //        var i = hymns.makeIterator()
-    //        while let hymn = i.next() {
-    //            if values.isEmpty
-    //            {
-    //              values = "(\"\(hymn.description)\")"
-    //            }else
-    //            {
-    //                values = "\(values),(\"\(hymn.description)\")"
-    //            }
-    //        }
-    //
-    //        if openDatabase() {
-    //            let query = "INSERT INTO \"main\".\"ListDetail\" (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES (?1,?2,?3)"
-    //
-    //            do {
-    //                //print(database)
-    //                //let results =
-    //                    try database.executeQuery(query, values: nil)
-    //                //print("Query result \(results)")
-    //
-    //                //print (seasons.count)
-    //            }
-    //            catch {
-    //                print(error.localizedDescription)
-    //            }
-    //
-    //            database.close()
-    //
-    //        }
-    //    }
+    func addHymnsToPL(playlist: Int, hymnLists: [String:Int]){
+            var values: String! = ""
+    
+            var i = hymnLists.makeIterator()
+            while let hymn = i.next() {
+                if values.isEmpty
+                {
+                  values = "(\(playlist), \(hymn.key.description), \(hymn.value.description))"
+                  print("First value: \(values!)")
+                    
+                }else
+                {
+                    values = "\(values!),(\(playlist), \(hymn.key.description), \(hymn.value.description))"
+                    
+                }
+            }
+    
+            print ("VAlues: \(values!)")
+        
+//            if pl_openDatabase() {
+//                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES (\(values))"
+//    
+//                do {
+//                    //print(database)
+//                    //let results =
+//                        try database.executeQuery(query, values: nil)
+//                    //print("Query result \(results)")
+//    
+//                    //print (seasons.count)
+//                }
+//                catch {
+//                    print(error.localizedDescription)
+//                }
+//    
+//                database.close()
+//    
+//            }
+        }
     
     func removeHymnsFromPL(){
     }
