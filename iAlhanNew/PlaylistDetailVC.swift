@@ -18,15 +18,21 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     @IBOutlet var plDetail: UITableView!
     
-    var playlistHymns:[PlaylistHymns]?
+    var playlistHymns:[PlaylistHymns]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+        plDetail.delegate = self
+        plDetail.dataSource = self
         
-    playlistHymns = PL_DBManager.shared.getPLHymns(playlist: self.title!)
-        print("\(playlistHymns?.count)")
+        playlistHymns = []
+
+        if let array = PL_DBManager.shared.getPLHymns(playlist: self.title!) {
+            
+            playlistHymns = array
+
+        }
+            //print("\(playlistHymns.count)")
         // Do any additional setup after loading the view.
     }
 
@@ -35,22 +41,28 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("No of rows: \(playlistHymns.count)!")
+        var noOfRows: Int = 0
         
-        return (playlistHymns?.count)!
+        if (playlistHymns.count) > 0{
+            noOfRows = (playlistHymns.count)
+        }
+        
+        return noOfRows
     }
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "hymnCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "hymnCell", for: indexPath) 
         
         let row = indexPath.row
         
         print("just outside")
-        if ((playlistHymns?.count)! > 0)
+        if ((playlistHymns.count) > 0)
         {
             print("Got in")
-            cell.textLabel?.text = playlistHymns?[row].HymnName
+            cell.textLabel?.text = playlistHymns[row].HymnName
         }
         
         
@@ -59,7 +71,19 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
     
 
-    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            // delete item at indexPath
+        }
+        
+        let share = UITableViewRowAction(style: .normal, title: "Disable") { (action, indexPath) in
+            // share item at indexPath
+        }
+        
+        share.backgroundColor = UIColor.blue
+        
+        return [delete, share]
+    }
     /*
     // MARK: - Navigation
 
