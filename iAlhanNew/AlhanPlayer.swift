@@ -13,6 +13,7 @@ class AlhanPlayer {
     static let sharedInstance = AlhanPlayer()
     
     var player:AVPlayer = AVPlayer()
+    var queuePlayer: AVQueuePlayer = AVQueuePlayer()
     var updater : CADisplayLink! = nil
     
     func play() {
@@ -29,8 +30,8 @@ class AlhanPlayer {
     
     func playWithURL(playableURL : URL) {
 
-        let temp = "http://www.alhan.org/nativity/mp3/piouoiny2.mp3"
-        let playerItem = AVPlayerItem(url: NSURL(string: temp)! as URL)
+        //let temp = "http://www.alhan.org/nativity/mp3/piouoiny2.mp3"
+        let playerItem = AVPlayerItem(url: playableURL)
         player = AVPlayer(playerItem: playerItem)
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
@@ -40,6 +41,12 @@ class AlhanPlayer {
         player.play()
         
 
+    }
+    
+    func playQueue(playerURL: URL){
+        let playerItem = AVPlayerItem(url: playerURL)
+        queuePlayer.insert(playerItem, after: nil)
+        queuePlayer.play()
     }
     
     func resetTimer(){

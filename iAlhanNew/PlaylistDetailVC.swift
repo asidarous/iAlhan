@@ -29,6 +29,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         plDetail.delegate = self
         plDetail.dataSource = self
         
+       
+        
         playlistHymns = []
 
         if let array = PL_DBManager.shared.getPLHymns(playlist: self.title!) {
@@ -108,10 +110,17 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     @IBAction func Play(_ sender: AnyObject) {
         playButtonTapped()
         
+        
     }
     
     func playButtonTapped() {
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: nil), animated: true)
+        for hymnURL in hymnURLS{
+            print("HYMN URL TO PLAY: \(hymnURL)")
+            AlhanPlayer.sharedInstance.playQueue(playerURL: hymnURL)
+            
+            //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
+        }
         //play()
         //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
         
