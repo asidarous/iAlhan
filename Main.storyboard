@@ -310,9 +310,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0R-cL-Mxp">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="wLz-nf-FPe"/>
-                                </constraints>
                                 <items/>
                                 <color key="barTintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.25347521551724139" colorSpace="calibratedRGB"/>
                             </toolbar>
@@ -340,8 +337,8 @@
                             <constraint firstItem="ySn-rD-Lie" firstAttribute="leading" secondItem="c0k-NJ-flz" secondAttribute="leadingMargin" constant="10" id="UiG-V9-Osk"/>
                             <constraint firstAttribute="trailing" secondItem="zfc-ha-neo" secondAttribute="trailing" constant="10" id="Wcf-Kk-wPj"/>
                             <constraint firstItem="zfc-ha-neo" firstAttribute="leading" secondItem="ySn-rD-Lie" secondAttribute="trailing" constant="5" id="aHT-kL-5y8"/>
-                            <constraint firstItem="kTy-jS-g5J" firstAttribute="top" secondItem="N0R-cL-Mxp" secondAttribute="bottom" id="cck-e5-bZc"/>
-                            <constraint firstAttribute="trailing" secondItem="N0R-cL-Mxp" secondAttribute="trailing" id="eqa-lV-XDv"/>
+                            <constraint firstItem="N0R-cL-Mxp" firstAttribute="bottom" secondItem="kTy-jS-g5J" secondAttribute="top" id="cck-e5-bZc"/>
+                            <constraint firstItem="N0R-cL-Mxp" firstAttribute="trailing" secondItem="c0k-NJ-flz" secondAttribute="trailing" id="eqa-lV-XDv"/>
                             <constraint firstItem="zfc-ha-neo" firstAttribute="top" secondItem="2CB-ZA-aQ7" secondAttribute="bottom" constant="10" id="y1S-aC-g2J"/>
                             <constraint firstItem="N0R-cL-Mxp" firstAttribute="top" secondItem="ySn-rD-Lie" secondAttribute="bottom" constant="10" id="yC1-fh-wTq"/>
                         </constraints>
@@ -354,6 +351,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="HymnDetailView" destination="c0k-NJ-flz" id="LFK-fg-mlO"/>
                         <outlet property="HymnTextCoptic" destination="ySn-rD-Lie" id="tXR-vo-j7i"/>
                         <outlet property="HymnTextEnglish" destination="zfc-ha-neo" id="Siz-x9-RJO"/>
                         <outlet property="ToolBar" destination="N0R-cL-Mxp" id="ym5-d3-5A2"/>
@@ -574,6 +572,6 @@
         <image name="add_to_playlist_icon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="B3d-Cf-eFN"/>
+        <segue reference="fvZ-yi-SCF"/>
     </inferredMetricsTieBreakers>
 </document>

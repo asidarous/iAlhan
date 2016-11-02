@@ -74,15 +74,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             // delete item at indexPath
+            let row = indexPath.row
+            PL_DBManager.shared.removeHymnsFromPL(hymnID: self.playlistHymns[row].HymnID)
+            self.playlistHymns.remove(at: row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
         
-        let share = UITableViewRowAction(style: .normal, title: "Disable") { (action, indexPath) in
-            // share item at indexPath
-        }
         
-        share.backgroundColor = UIColor.blue
-        
-        return [delete, share]
+        return [delete]
     }
     /*
     // MARK: - Navigation

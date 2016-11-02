@@ -20,6 +20,7 @@ struct HymnDetail {
 }
 
 class HymnDetailViewController: UIViewController, UITextViewDelegate{
+    @IBOutlet var HymnDetailView: UIView!
 
     @IBOutlet var ToolBar: UIToolbar!
     @IBOutlet var HymnTextEnglish: UITextView!
@@ -114,15 +115,15 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //           print("WIDTH: \(pbWidth)") 
 //        }
         
-        pbWidth = ToolBar.frame.size.width * 0.65
-        
+        pbWidth = HymnDetailView.frame.width * 0.65
+        print("The width: \(pbWidth)")
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
         progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
         progressBar.isUserInteractionEnabled = true
         
         progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
-        progressBar.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        //progressBar.autoresizingMask = .flexibleWidth
         //progressBar.sizeToFit()
         
         

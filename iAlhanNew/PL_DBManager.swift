@@ -196,7 +196,27 @@ class PL_DBManager: NSObject {
             }
         }
     
-    func removeHymnsFromPL(){
+    func removeHymnsFromPL(hymnID: Int){
+        
+        if pl_openDatabase() {
+            let query = "DELETE FROM Listdetail where HymnId = \(hymnID)"
+            // TODO: delete all hymns pertaining to the deleted playlist
+            print(query)
+            do {
+                if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                    throw error!}
+                
+                print ("Hymn Successfully Deleted!!!")
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            database.close()
+        }
+        
+
+        
     }
     
     func deletePL(playlist: String){
