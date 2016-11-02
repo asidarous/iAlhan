@@ -8,12 +8,18 @@
 
 import UIKit
 
+struct PlayHymns {
+    var HymnName: String!
+    var HymnID: Int!
+    var HymnURL: String!
+}
+
 class PlayListVC: UITableViewController {
     @IBOutlet var PlayListItemsTable: UITableView!
     
     var plArray: [String]!
 
-    var plHymnsArray: [String: Int] = [:]
+    var plHymnsArray: [PlayHymns] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

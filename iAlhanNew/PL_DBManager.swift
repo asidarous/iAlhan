@@ -92,14 +92,14 @@ class PL_DBManager: NSObject {
         var hymnsLists: [PlaylistHymns]!
         
         if pl_openDatabase() {
-            let query = "select HymnName, HymnID from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)')"
+            let query = "select HymnName, HymnID, HymnURL from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)')"
             
             do {
                 //print(database)
                 let results = try database.executeQuery(query, values: nil)
                 //print("Query result \(results)")
                 while results.next() {
-                    let hymnsList = PlaylistHymns(HymnName: results.string(forColumn: "HymnName"), HymnID: Int (results.int(forColumn: "HymnID")) )
+                    let hymnsList = PlaylistHymns(HymnName: results.string(forColumn: "HymnName"), HymnID: Int (results.int(forColumn: "HymnID")), HymnURL: results.string(forColumn: "HymnURL") )
                     
                     //print ("+++ Here is the season \(season)")
                     if hymnsLists == nil {
@@ -158,19 +158,19 @@ class PL_DBManager: NSObject {
         }
     }
     
-    func addHymnsToPL(playlist: Int, hymnLists: [String:Int]){
+    func addHymnsToPL(playlist: Int, hymnLists: [PlayHymns]){
             var values: String! = ""
     
             var i = hymnLists.makeIterator()
             while let hymn = i.next() {
                 if values.isEmpty
                 {
-                  values = "(\(playlist), '\(hymn.key.description)', \(hymn.value.description))"
+                  values = "(\(playlist), '\(hymn.HymnName!)', \(hymn.HymnID!), '\(hymn.HymnURL!)')"
                   print("First value: \(values!)")
                     
                 }else
                 {
-                    values = "\(values!),(\(playlist), '\(hymn.key.description)', \(hymn.value.description))"
+                    values = "\(values!),(\(playlist), '\(hymn.HymnName!)', \(hymn.HymnID!), '\(hymn.HymnURL!)')"
                     
                 }
             }
@@ -178,7 +178,7 @@ class PL_DBManager: NSObject {
             print ("VAlues: \(values!)")
         
             if pl_openDatabase() {
-                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\") VALUES \(values!)"
+                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\",\"HymnURL\") VALUES \(values!)"
                 print("QUERY")
                 print(query)
                 do {

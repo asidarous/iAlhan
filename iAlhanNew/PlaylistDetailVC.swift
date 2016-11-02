@@ -12,13 +12,17 @@ struct PlaylistHymns{
     
     var HymnName: String!
     var HymnID: Int!
+    var HymnURL: String!
 }
 
 class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet var PlayPauseButton: UIBarButtonItem!
     @IBOutlet var plDetail: UITableView!
     
     var playlistHymns:[PlaylistHymns]!
+    
+    var hymnURLS = [URL]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         }
             //print("\(playlistHymns.count)")
         // Do any additional setup after loading the view.
+        
+        for playlistHymn in playlistHymns {
+            
+            hymnURLS.append(URL(string: playlistHymn.HymnURL)!)
+        }
+//
+        print("HYMN URLS: \(hymnURLS)")
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -92,5 +103,19 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: Audio controls
+    @IBAction func Play(_ sender: AnyObject) {
+        playButtonTapped()
+        
+    }
+    
+    func playButtonTapped() {
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: nil), animated: true)
+        //play()
+        //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
+        
+        
+    }
 
 }

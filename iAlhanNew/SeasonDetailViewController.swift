@@ -277,7 +277,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
             case "Add to Playlist":
                 print ("I'm going to add hymns to selected playlist")
                 let playlistVC = segue.destination as! PlayListVC
-                var hymnArray: [String: Int] = [:]
+                var hymnArrays: [PlayHymns]!
                 
                 
                 for i in 0..<seasonHymns!.count{
@@ -287,17 +287,21 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                         print ("Number of hymns in section: \(v.count)")
                         for j in 0..<v.count{
                             print(v[j].hymnName)
-                            hymnArray.updateValue(v[j].hymnID, forKey: v[j].hymnName)
-                            
+                           let hymnArray = PlayHymns(HymnName: v[j].hymnName, HymnID: v[i].hymnID, HymnURL: v[j].hymnAudio)
+                            //updateValue(v[j].hymnID, forKey: v[j].hymnName)
+                            if hymnArrays == nil {
+                                hymnArrays = [PlayHymns]()
+                            }
+                            hymnArrays.append(hymnArray)
                         }
                     }
                     
-                playlistVC.plHymnsArray = hymnArray
+                playlistVC.plHymnsArray = hymnArrays
                 
                  //let newDict =
                     
                 }
-                print ("Going into playlist I have: \(hymnArray.count)")
+                print ("Going into playlist I have: \(hymnArrays.count)")
                 
                                 
             default:
