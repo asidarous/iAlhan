@@ -47,6 +47,28 @@ class AlhanPlayer {
         let playerItem = AVPlayerItem(url: playerURL)
         queuePlayer.insert(playerItem, after: nil)
         queuePlayer.play()
+        //print("HYMN URL: \(playerURL)")
+
+    }
+    
+    func getQueueCurrentItem() -> String{
+       let temp = player.currentItem?.asset.description
+//       let temp =  queuePlayer.currentItem?.asset
+//        if (temp?.isKind(of: AVURLAsset.self))!{
+//        
+            print("TEMP: \(temp)")
+       // }
+        return "\(temp)"
+    }
+    
+    func pauseQueue(){
+        queuePlayer.pause()
+    }
+    
+    func nextHymnInQueue(){
+        if queuePlayer.rate == 1 {
+            queuePlayer.advanceToNextItem()
+        }        
     }
     
     func resetTimer(){
