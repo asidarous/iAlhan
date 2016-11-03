@@ -287,7 +287,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                         print ("Number of hymns in section: \(v.count)")
                         for j in 0..<v.count{
                             print(v[j].hymnName)
-                           let hymnArray = PlayHymns(HymnName: v[j].hymnName, HymnID: v[i].hymnID, HymnURL: v[j].hymnAudio)
+                           let hymnArray = PlayHymns(HymnName: v[j].hymnName, HymnID: v[j].hymnID, HymnURL: v[j].hymnAudio)
                             //updateValue(v[j].hymnID, forKey: v[j].hymnName)
                             if hymnArrays == nil {
                                 hymnArrays = [PlayHymns]()

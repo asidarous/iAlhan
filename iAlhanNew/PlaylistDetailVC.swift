@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 struct PlaylistHymns{
     
@@ -53,6 +54,16 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //
         print("HYMN URLS: \(hymnURLS)")
         
+        // handles audio when device is muted
+        do {
+            
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+        }
+        catch {
+            print(error)
+        }
         
         // Define buttons
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
@@ -93,10 +104,10 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
         let row = indexPath.row
         
-        print("just outside")
+        //print("just outside")
         if ((playlistHymns.count) > 0)
         {
-            print("Got in")
+            //print("Got in")
             cell.textLabel?.text = playlistHymns[row].HymnName
         }
         
@@ -106,17 +117,36 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
     
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            // delete item at indexPath
-            let row = indexPath.row
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+//            // delete item at indexPath
+//            let row = indexPath.row
+//            PL_DBManager.shared.removeHymnsFromPL(hymnID: self.playlistHymns[row].HymnID)
+//            self.playlistHymns.remove(at: row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//        
+//        
+//        return [delete]
+//    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let row = indexPath.row
+        
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            print("I'm about to delete the following: \(self.playlistHymns[row].HymnID)")
             PL_DBManager.shared.removeHymnsFromPL(hymnID: self.playlistHymns[row].HymnID)
             self.playlistHymns.remove(at: row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows (at: [indexPath], with: .fade)
+
+            //tableView.
+            //self.tableView.reloadData()
+            
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-        
-        
-        return [delete]
     }
     
     func highlightRow (hymnURL: URL){

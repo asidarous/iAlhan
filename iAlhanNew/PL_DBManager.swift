@@ -200,7 +200,7 @@ class PL_DBManager: NSObject {
         
         if pl_openDatabase() {
             let query = "DELETE FROM Listdetail where HymnId = \(hymnID)"
-            // TODO: delete all hymns pertaining to the deleted playlist
+            
             print(query)
             do {
                 if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
