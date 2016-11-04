@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+import MediaPlayer
 
 struct HymnDetail {
     var hymnName: String!
@@ -52,12 +52,16 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
         
+        
+        if (self.canBecomeFirstResponder){
+            self.becomeFirstResponder()
+        }
         // MARK: Swipe controls
         let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
         recognizer.direction = .left
@@ -68,7 +72,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         // handles audio when device is muted
         do {
             
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)//.mixWithOthers)
+            UIApplication.shared.beginReceivingRemoteControlEvents()
             try AVAudioSession.sharedInstance().setActive(true)
             
         }
@@ -152,7 +157,9 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             playerItem = AVPlayerItem(url: hymnAudioURL)
             //self.alhanPlayer = AVPlayer(playerItem: playerItem)
             AlhanPlayer.sharedInstance.player = AVPlayer(playerItem: playerItem)
-        
+            //AlhanPlayer.sharedInstance.player.replaceCurrentItem(with: playerItem)
+            
+            
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
         arrayOfButtons.insert(flexible, at: 1)
@@ -188,7 +195,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //        
         }
         
+        // Media Info Center
         
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget(self, action: #selector(HymnDetailViewController.pause))
     }
     
     // MARK: Scroll control
@@ -224,9 +235,20 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //            updater.preferredFramesPerSecond = 60
 //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
 //
+        let albumArtWork = MPMediaItemArtwork(image: UIImage (named: "photo")!)
+
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnName)!)",
+            MPMediaItemPropertyArtwork: albumArtWork,
+            MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!),
+            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
+        ]
             AlhanPlayer.sharedInstance.play()
             // print("MAX VALUE: \(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds) --DONE")
             progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
+        
+        
          }
     
     
@@ -511,5 +533,32 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         self.performSegue(withIdentifier: "Hymn Detail to Playlist", sender: self)
     }
     
+    
+    // Info center
+    override var canBecomeFirstResponder : Bool {
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.becomeFirstResponder()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+    }
+
+    
+    override func remoteControlReceived(with event: UIEvent?) { // *
+        let rc = event!.subtype
+        let p = AlhanPlayer.sharedInstance.player
+        print("received remote control \(rc.rawValue)") // 101 = pause, 100 = play
+        switch rc {
+        case .remoteControlTogglePlayPause:
+            if p.rate == 1 { p.pause() } else { p.play() }
+        case .remoteControlPlay:
+            p.play()
+        case .remoteControlPause:
+            p.pause()
+        default:break
+        }
+    }
     
 }

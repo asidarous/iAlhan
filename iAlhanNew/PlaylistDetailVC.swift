@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 struct PlaylistHymns{
     
@@ -35,6 +36,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         plDetail.delegate = self
         plDetail.dataSource = self
         
+        if (self.canBecomeFirstResponder){
+            self.becomeFirstResponder()
+        }
        
         
         playlistHymns = []
@@ -57,7 +61,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         // handles audio when device is muted
         do {
             
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
             try AVAudioSession.sharedInstance().setActive(true)
             
         }
@@ -78,6 +82,11 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         } else {
             self.navigationItem.setRightBarButton(playButton, animated: true)
         }
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget(self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
+
         
         
     }
@@ -192,13 +201,28 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
     func playButtonTapped() {
         self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
-        for hymnURL in hymnURLS{
-            print("HYMN URL TO PLAY: \(hymnURL)")
-            AlhanPlayer.sharedInstance.playQueue(playerURL: hymnURL)
+        
+       
+        
+        
+        for hymnURL in playlistHymns{
+            //print("HYMN URL TO PLAY: \(hymnURL)")
+            AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
+           
+            
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
         }
-        let test = AlhanPlayer.sharedInstance.getQueueCurrentItem()
-        print("TEST :\(test)")
+        AlhanPlayer.sharedInstance.queuePlayer.play()
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: " \((playlistHymns[0].HymnName)!)",
+            //MPMediaItemPropertyArtwork: albumArtWork,
+            MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
+            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
+        ]
+        print("TEST \(AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)")
+        
+        //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem
+        //print("TEST :\(test)")
         //play()
         //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
         
@@ -221,6 +245,34 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
         
     }
+    
+    override var canBecomeFirstResponder : Bool {
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.becomeFirstResponder()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+    }
+    
+    override func remoteControlReceived(with event: UIEvent?) { // *
+        let rc = event!.subtype
+        let p = AlhanPlayer.sharedInstance.queuePlayer
+        print("received remote control \(rc.rawValue)") // 101 = pause, 100 = play
+        switch rc {
+        case .remoteControlTogglePlayPause:
+            if p.rate == 1 { p.pause() } else { p.play() }
+        case .remoteControlPlay:
+            p.play()
+        case .remoteControlPause:
+            p.pause()
+        case .remoteControlNextTrack:
+            AlhanPlayer.sharedInstance.nextHymnInQueue()
+        default:break
+        }
+    }
+    
 
 
 }

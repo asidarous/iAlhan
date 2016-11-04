@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 
 class AlhanPlayer {
     static let sharedInstance = AlhanPlayer()
@@ -25,7 +26,9 @@ class AlhanPlayer {
         print("DESCRIPTION from inside the player \(player.currentItem?.description)")
         print("Duration of the hymn from inside the player class \(player.currentItem?.duration.seconds) -- END")
         player.play()
-        
+        //player.allowsExternalPlayback = true
+       
+       
     }
     
     func playWithURL(playableURL : URL) {
@@ -46,7 +49,7 @@ class AlhanPlayer {
     func playQueue(playerURL: URL){
         let playerItem = AVPlayerItem(url: playerURL)
         queuePlayer.insert(playerItem, after: nil)
-        queuePlayer.play()
+        //queuePlayer.play()
         //print("HYMN URL: \(playerURL)")
 
     }

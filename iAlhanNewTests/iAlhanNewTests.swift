@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import iAlhanNew
+@testable import iAlhan
 
-class iAlhanNewTests: XCTestCase {
+class iAlhanTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
