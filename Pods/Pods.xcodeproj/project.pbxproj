@@ -1,0 +1,868 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02B748C8BEF24678F327D34CA07937FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20CE9534590C98E5065D08BEB1487E5 /* MediaPlayer.framework */; };
+		37094ECFAE5825701F2F2ABEBEF74C20 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D7DD8B9ADE8E8A6D87718C6B488B9B /* AudioPlayer.swift */; };
+		3F11C5F1203F321EE5308E4FF4DA7201 /* KDEAudioPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57FDB41A61F02ACD7B1A4B98038C78 /* KDEAudioPlayer-dummy.m */; };
+		485BBE10949E4F76F9F643B71DB99FF5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B98A092507BF9E30B0E16E687BC55FA /* AVFoundation.framework */; };
+		61B7C660A2DA99363C0F90D95EFB5D8F /* KDEAudioPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EADE1F5B7E20F4DF155FE773038CEEB /* KDEAudioPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6AB7FC8F6831EF02F68894056A529C73 /* Pods-iAlhanTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24ED30634AF2CE81840688CD41B7CE5E /* Pods-iAlhanTests-dummy.m */; };
+		744F58C1AF270BE3575B88D8FF8A4743 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C54AA474AF631E9DC953537FB95CE7 /* SystemConfiguration.framework */; };
+		8AAA13DDA2491F6564D3F4DA67801873 /* Pods-iAlhanTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 131DD17323C91202AED0083FAD97C289 /* Pods-iAlhanTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		924255130F97BABF168D783CC22D074D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B0C99111511393094F4538E574E8AB /* UIKit.framework */; };
+		9F34B6FD0A57580778D3377F7B238041 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */; };
+		A972E0F8B3EB6E1103D260F9691D3830 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */; };
+		AE4FC8ABF9E742BDB13283926CCE0E1F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFA4ED0E6B048ED2A673C0DD3EEA31 /* Reachability.swift */; };
+		AEC4522F69D18AFDE8DFFE43669878AF /* Pods-iAlhan-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CAB7791F0B076FB548DB9750CE945656 /* Pods-iAlhan-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AF03B2FC70D46CE7F6BC79E2E3421D36 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */; };
+		CA7EF798DD95A8985AC83ECCFBD21994 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */; };
+		D862F217FA6826A371D9CBAD8D1B956D /* Pods-iAlhanUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3C4AA0C089DF7F5704F617BC5D46A1 /* Pods-iAlhanUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEA734DD4C34601BCDED1007AFD28BB7 /* Pods-iAlhan-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B5262124EBADF50D6403E7BFE1E73E /* Pods-iAlhan-dummy.m */; };
+		ECE0CF6791D08A31800D73800BB628B2 /* AudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901621761C9FB7902DE972A3CEB16F81 /* AudioItem.swift */; };
+		FC85954C63BB483A0643634FD141CFD0 /* Pods-iAlhanUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D14AFAA74FBF7523B097CECB18940E89 /* Pods-iAlhanUITests-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C0EC1C9D5892952C7B378CC501FAE47C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8EEB1DD6817D81959D6E18FE1D642CE3;
+			remoteInfo = KDEAudioPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		030F089B7869F8B9A058A748D0334788 /* Pods-iAlhanUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhanUITests.release.xcconfig"; sourceTree = "<group>"; };
+		03DFEA184B5000B77800E4F4BC612AE2 /* Pods-iAlhanTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iAlhanTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		06C54AA474AF631E9DC953537FB95CE7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		0FD9CA0761B423E92FD258057F846261 /* Pods-iAlhanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhanTests.release.xcconfig"; sourceTree = "<group>"; };
+		131DD17323C91202AED0083FAD97C289 /* Pods-iAlhanTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iAlhanTests-umbrella.h"; sourceTree = "<group>"; };
+		1567D9455DA6382FB5461DD5DA53ED51 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1B98A092507BF9E30B0E16E687BC55FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		1EADE1F5B7E20F4DF155FE773038CEEB /* KDEAudioPlayer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KDEAudioPlayer-umbrella.h"; sourceTree = "<group>"; };
+		1F840EA66E2BA6B91DA3C1A77094F0B5 /* Pods-iAlhanTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iAlhanTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		24ED30634AF2CE81840688CD41B7CE5E /* Pods-iAlhanTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iAlhanTests-dummy.m"; sourceTree = "<group>"; };
+		34AFA4ED0E6B048ED2A673C0DD3EEA31 /* Reachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = AudioPlayer/AudioPlayer/Reachability.swift; sourceTree = "<group>"; };
+		35B8A100C1DD31FFCEECC5F73C004AB2 /* Pods-iAlhan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-iAlhan.modulemap"; sourceTree = "<group>"; };
+		441D0F6E8F360DFFCE5E8C267C2BD9CA /* Pods-iAlhan-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhan-resources.sh"; sourceTree = "<group>"; };
+		44DBD7AC08DFB34DD5140F38C00221CD /* Pods-iAlhanTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhanTests-resources.sh"; sourceTree = "<group>"; };
+		4D163D78358439230068528BDA05946B /* Pods-iAlhanTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhanTests-frameworks.sh"; sourceTree = "<group>"; };
+		55022C1635491D9D11A2AD5FCFBFE14A /* Pods-iAlhan-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iAlhan-acknowledgements.markdown"; sourceTree = "<group>"; };
+		57F1B3DC2BC9027006264DC68AD2376F /* Pods_iAlhan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iAlhan.framework; path = "Pods-iAlhan.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A33C4AF666FB274320DA9CAEA8C22C9 /* KDEAudioPlayer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KDEAudioPlayer.xcconfig; sourceTree = "<group>"; };
+		6D4608B1BBC86992F6395FEA95E0AF0D /* Pods-iAlhanUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-iAlhanUITests.modulemap"; sourceTree = "<group>"; };
+		6D992F3D9129C17C815FA2EEF799B706 /* Pods-iAlhanUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iAlhanUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		726CF22662298C61B680591E975089E1 /* Pods-iAlhanUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhanUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		744CEEE1323D6F6193C2E68C834C2021 /* KDEAudioPlayer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = KDEAudioPlayer.modulemap; sourceTree = "<group>"; };
+		77F81B85A27FC42531636F71C9C20B7D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AC360B92B9B96E640CB466B23E85977 /* KDEAudioPlayer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KDEAudioPlayer-prefix.pch"; sourceTree = "<group>"; };
+		898F2440D12FCEAF95FFF75D4FDC1F05 /* Pods-iAlhanTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-iAlhanTests.modulemap"; sourceTree = "<group>"; };
+		8AE11093A4346E6417768CBF8BB9B136 /* Pods-iAlhanUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhanUITests-resources.sh"; sourceTree = "<group>"; };
+		8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		901621761C9FB7902DE972A3CEB16F81 /* AudioItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioItem.swift; path = AudioPlayer/AudioPlayer/AudioItem.swift; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		96A3B54625A54564CBBE65F53F07DD31 /* Pods-iAlhanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A2B0C99111511393094F4538E574E8AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A2E1B1F676EEB50C5B1E61176FDDAC41 /* Pods-iAlhan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhan.release.xcconfig"; sourceTree = "<group>"; };
+		AC4ED1E0A360D9D2BDF07FCD032A9AC4 /* Pods_iAlhanUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iAlhanUITests.framework; path = "Pods-iAlhanUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B46EE140E70CD9EF101648148ED3E929 /* Pods-iAlhan-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhan-frameworks.sh"; sourceTree = "<group>"; };
+		BC57FDB41A61F02ACD7B1A4B98038C78 /* KDEAudioPlayer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KDEAudioPlayer-dummy.m"; sourceTree = "<group>"; };
+		BFAB496519AEA8BF2C3324AEC34D74AB /* Pods-iAlhan-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iAlhan-acknowledgements.plist"; sourceTree = "<group>"; };
+		C20CE9534590C98E5065D08BEB1487E5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		C7D7DD8B9ADE8E8A6D87718C6B488B9B /* AudioPlayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = AudioPlayer/AudioPlayer/AudioPlayer.swift; sourceTree = "<group>"; };
+		CAB7791F0B076FB548DB9750CE945656 /* Pods-iAlhan-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iAlhan-umbrella.h"; sourceTree = "<group>"; };
+		CD501107B668A2F07361030A3F9DA28F /* KDEAudioPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KDEAudioPlayer.framework; path = KDEAudioPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE3C4AA0C089DF7F5704F617BC5D46A1 /* Pods-iAlhanUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iAlhanUITests-umbrella.h"; sourceTree = "<group>"; };
+		D14AFAA74FBF7523B097CECB18940E89 /* Pods-iAlhanUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iAlhanUITests-dummy.m"; sourceTree = "<group>"; };
+		D42D808D50ED8E2315F94882425C1F6D /* Pods-iAlhan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iAlhan.debug.xcconfig"; sourceTree = "<group>"; };
+		D7B5262124EBADF50D6403E7BFE1E73E /* Pods-iAlhan-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iAlhan-dummy.m"; sourceTree = "<group>"; };
+		D932E6F31D4D0CEB19864FB2F1BC3DE8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E29316BE223E431F64838A60A62EEF0F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5AA8FCF31168FA600E6E8E4BC3DEDF2 /* Pods-iAlhanUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iAlhanUITests-frameworks.sh"; sourceTree = "<group>"; };
+		E5B7072FC10F2D99194EBCE44DE6B8D3 /* Pods-iAlhanUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iAlhanUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		F1A9F9A6FBC0FC96FEE4582250D73FDC /* Pods_iAlhanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iAlhanTests.framework; path = "Pods-iAlhanTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		658F2E3B69626C4081E143275D96D08B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF03B2FC70D46CE7F6BC79E2E3421D36 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71ED92770B584B50C9D1D717D4C09EB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F34B6FD0A57580778D3377F7B238041 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92C84E9D30042561C7EE2A0CB4AAE516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				485BBE10949E4F76F9F643B71DB99FF5 /* AVFoundation.framework in Frameworks */,
+				A972E0F8B3EB6E1103D260F9691D3830 /* Foundation.framework in Frameworks */,
+				02B748C8BEF24678F327D34CA07937FD /* MediaPlayer.framework in Frameworks */,
+				744F58C1AF270BE3575B88D8FF8A4743 /* SystemConfiguration.framework in Frameworks */,
+				924255130F97BABF168D783CC22D074D /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D62E55D666A8C00A1CEF14C64B1B9C44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA7EF798DD95A8985AC83ECCFBD21994 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1CDAF87C1E86AB364D8A806A5EF6E691 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				499F82DA76CABC623571AEAB9303A80E /* Pods-iAlhan */,
+				C4F6833B16B4EBD84F67FDB5641D156A /* Pods-iAlhanTests */,
+				CB62B07EDE40BCDC9438C3436DD1C0F8 /* Pods-iAlhanUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		20B56609144CE204DFA8221F742B2D76 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				913CE58106A5DDA3F65CBAE2917395EB /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		499F82DA76CABC623571AEAB9303A80E /* Pods-iAlhan */ = {
+			isa = PBXGroup;
+			children = (
+				1567D9455DA6382FB5461DD5DA53ED51 /* Info.plist */,
+				35B8A100C1DD31FFCEECC5F73C004AB2 /* Pods-iAlhan.modulemap */,
+				55022C1635491D9D11A2AD5FCFBFE14A /* Pods-iAlhan-acknowledgements.markdown */,
+				BFAB496519AEA8BF2C3324AEC34D74AB /* Pods-iAlhan-acknowledgements.plist */,
+				D7B5262124EBADF50D6403E7BFE1E73E /* Pods-iAlhan-dummy.m */,
+				B46EE140E70CD9EF101648148ED3E929 /* Pods-iAlhan-frameworks.sh */,
+				441D0F6E8F360DFFCE5E8C267C2BD9CA /* Pods-iAlhan-resources.sh */,
+				CAB7791F0B076FB548DB9750CE945656 /* Pods-iAlhan-umbrella.h */,
+				D42D808D50ED8E2315F94882425C1F6D /* Pods-iAlhan.debug.xcconfig */,
+				A2E1B1F676EEB50C5B1E61176FDDAC41 /* Pods-iAlhan.release.xcconfig */,
+			);
+			name = "Pods-iAlhan";
+			path = "Target Support Files/Pods-iAlhan";
+			sourceTree = "<group>";
+		};
+		536D7A1CE3E55FD5BBC3590F8623E3F9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97808451C113AF9959C8A3DABC018E12 /* KDEAudioPlayer */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				20B56609144CE204DFA8221F742B2D76 /* Frameworks */,
+				536D7A1CE3E55FD5BBC3590F8623E3F9 /* Pods */,
+				9217A6A2AFA8AC5CFA4F319CC4064C13 /* Products */,
+				1CDAF87C1E86AB364D8A806A5EF6E691 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		913CE58106A5DDA3F65CBAE2917395EB /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1B98A092507BF9E30B0E16E687BC55FA /* AVFoundation.framework */,
+				8D781C2E71181E52FC95AB4546F1F957 /* Foundation.framework */,
+				C20CE9534590C98E5065D08BEB1487E5 /* MediaPlayer.framework */,
+				06C54AA474AF631E9DC953537FB95CE7 /* SystemConfiguration.framework */,
+				A2B0C99111511393094F4538E574E8AB /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		9217A6A2AFA8AC5CFA4F319CC4064C13 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD501107B668A2F07361030A3F9DA28F /* KDEAudioPlayer.framework */,
+				57F1B3DC2BC9027006264DC68AD2376F /* Pods_iAlhan.framework */,
+				F1A9F9A6FBC0FC96FEE4582250D73FDC /* Pods_iAlhanTests.framework */,
+				AC4ED1E0A360D9D2BDF07FCD032A9AC4 /* Pods_iAlhanUITests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97808451C113AF9959C8A3DABC018E12 /* KDEAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				901621761C9FB7902DE972A3CEB16F81 /* AudioItem.swift */,
+				C7D7DD8B9ADE8E8A6D87718C6B488B9B /* AudioPlayer.swift */,
+				34AFA4ED0E6B048ED2A673C0DD3EEA31 /* Reachability.swift */,
+				C0E54BE65D291A262835D67B9E789C2D /* Support Files */,
+			);
+			name = KDEAudioPlayer;
+			path = KDEAudioPlayer;
+			sourceTree = "<group>";
+		};
+		C0E54BE65D291A262835D67B9E789C2D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E29316BE223E431F64838A60A62EEF0F /* Info.plist */,
+				744CEEE1323D6F6193C2E68C834C2021 /* KDEAudioPlayer.modulemap */,
+				5A33C4AF666FB274320DA9CAEA8C22C9 /* KDEAudioPlayer.xcconfig */,
+				BC57FDB41A61F02ACD7B1A4B98038C78 /* KDEAudioPlayer-dummy.m */,
+				7AC360B92B9B96E640CB466B23E85977 /* KDEAudioPlayer-prefix.pch */,
+				1EADE1F5B7E20F4DF155FE773038CEEB /* KDEAudioPlayer-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/KDEAudioPlayer";
+			sourceTree = "<group>";
+		};
+		C4F6833B16B4EBD84F67FDB5641D156A /* Pods-iAlhanTests */ = {
+			isa = PBXGroup;
+			children = (
+				77F81B85A27FC42531636F71C9C20B7D /* Info.plist */,
+				898F2440D12FCEAF95FFF75D4FDC1F05 /* Pods-iAlhanTests.modulemap */,
+				03DFEA184B5000B77800E4F4BC612AE2 /* Pods-iAlhanTests-acknowledgements.markdown */,
+				1F840EA66E2BA6B91DA3C1A77094F0B5 /* Pods-iAlhanTests-acknowledgements.plist */,
+				24ED30634AF2CE81840688CD41B7CE5E /* Pods-iAlhanTests-dummy.m */,
+				4D163D78358439230068528BDA05946B /* Pods-iAlhanTests-frameworks.sh */,
+				44DBD7AC08DFB34DD5140F38C00221CD /* Pods-iAlhanTests-resources.sh */,
+				131DD17323C91202AED0083FAD97C289 /* Pods-iAlhanTests-umbrella.h */,
+				96A3B54625A54564CBBE65F53F07DD31 /* Pods-iAlhanTests.debug.xcconfig */,
+				0FD9CA0761B423E92FD258057F846261 /* Pods-iAlhanTests.release.xcconfig */,
+			);
+			name = "Pods-iAlhanTests";
+			path = "Target Support Files/Pods-iAlhanTests";
+			sourceTree = "<group>";
+		};
+		CB62B07EDE40BCDC9438C3436DD1C0F8 /* Pods-iAlhanUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D932E6F31D4D0CEB19864FB2F1BC3DE8 /* Info.plist */,
+				6D4608B1BBC86992F6395FEA95E0AF0D /* Pods-iAlhanUITests.modulemap */,
+				E5B7072FC10F2D99194EBCE44DE6B8D3 /* Pods-iAlhanUITests-acknowledgements.markdown */,
+				6D992F3D9129C17C815FA2EEF799B706 /* Pods-iAlhanUITests-acknowledgements.plist */,
+				D14AFAA74FBF7523B097CECB18940E89 /* Pods-iAlhanUITests-dummy.m */,
+				E5AA8FCF31168FA600E6E8E4BC3DEDF2 /* Pods-iAlhanUITests-frameworks.sh */,
+				8AE11093A4346E6417768CBF8BB9B136 /* Pods-iAlhanUITests-resources.sh */,
+				CE3C4AA0C089DF7F5704F617BC5D46A1 /* Pods-iAlhanUITests-umbrella.h */,
+				726CF22662298C61B680591E975089E1 /* Pods-iAlhanUITests.debug.xcconfig */,
+				030F089B7869F8B9A058A748D0334788 /* Pods-iAlhanUITests.release.xcconfig */,
+			);
+			name = "Pods-iAlhanUITests";
+			path = "Target Support Files/Pods-iAlhanUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		026607B41CFB820F947F0B9CF996851C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61B7C660A2DA99363C0F90D95EFB5D8F /* KDEAudioPlayer-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75019FB7790F7803BD0A51EADC8CFB8C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEC4522F69D18AFDE8DFFE43669878AF /* Pods-iAlhan-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BBFE37638F5AD83379D0FCC26F27C494 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AAA13DDA2491F6564D3F4DA67801873 /* Pods-iAlhanTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F83CCD54249B1C2C0763A40966907749 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D862F217FA6826A371D9CBAD8D1B956D /* Pods-iAlhanUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5135D56FC4FB965C70CED066B5CF907F /* Pods-iAlhanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5074D395BED4481B15732730B2A42BD3 /* Build configuration list for PBXNativeTarget "Pods-iAlhanTests" */;
+			buildPhases = (
+				1DA71D394070E16492E26457241DB79C /* Sources */,
+				D62E55D666A8C00A1CEF14C64B1B9C44 /* Frameworks */,
+				BBFE37638F5AD83379D0FCC26F27C494 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-iAlhanTests";
+			productName = "Pods-iAlhanTests";
+			productReference = F1A9F9A6FBC0FC96FEE4582250D73FDC /* Pods_iAlhanTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8EEB1DD6817D81959D6E18FE1D642CE3 /* KDEAudioPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF009AD96ECAA3E17719A0CE72F44750 /* Build configuration list for PBXNativeTarget "KDEAudioPlayer" */;
+			buildPhases = (
+				712AA4E9BB7EDDD97A0B5E518C520815 /* Sources */,
+				92C84E9D30042561C7EE2A0CB4AAE516 /* Frameworks */,
+				026607B41CFB820F947F0B9CF996851C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KDEAudioPlayer;
+			productName = KDEAudioPlayer;
+			productReference = CD501107B668A2F07361030A3F9DA28F /* KDEAudioPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D79B0292B14B3CAA6858300362D1716A /* Pods-iAlhan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F69049437450138AA9DC2F4CE401E479 /* Build configuration list for PBXNativeTarget "Pods-iAlhan" */;
+			buildPhases = (
+				3B8C58C7B19FC4991CCA8A5713C4B9CD /* Sources */,
+				658F2E3B69626C4081E143275D96D08B /* Frameworks */,
+				75019FB7790F7803BD0A51EADC8CFB8C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4BFD1083EBAB8798B8C92BCB7BC8A2E9 /* PBXTargetDependency */,
+			);
+			name = "Pods-iAlhan";
+			productName = "Pods-iAlhan";
+			productReference = 57F1B3DC2BC9027006264DC68AD2376F /* Pods_iAlhan.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E800288A86D42A07585F483BDAEE088B /* Pods-iAlhanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEF136AF8C02C98E83492C25A9F7BE60 /* Build configuration list for PBXNativeTarget "Pods-iAlhanUITests" */;
+			buildPhases = (
+				0CC1DBB051375BCBED483F062A11DDEC /* Sources */,
+				71ED92770B584B50C9D1D717D4C09EB4 /* Frameworks */,
+				F83CCD54249B1C2C0763A40966907749 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-iAlhanUITests";
+			productName = "Pods-iAlhanUITests";
+			productReference = AC4ED1E0A360D9D2BDF07FCD032A9AC4 /* Pods_iAlhanUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 9217A6A2AFA8AC5CFA4F319CC4064C13 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8EEB1DD6817D81959D6E18FE1D642CE3 /* KDEAudioPlayer */,
+				D79B0292B14B3CAA6858300362D1716A /* Pods-iAlhan */,
+				5135D56FC4FB965C70CED066B5CF907F /* Pods-iAlhanTests */,
+				E800288A86D42A07585F483BDAEE088B /* Pods-iAlhanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0CC1DBB051375BCBED483F062A11DDEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC85954C63BB483A0643634FD141CFD0 /* Pods-iAlhanUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DA71D394070E16492E26457241DB79C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AB7FC8F6831EF02F68894056A529C73 /* Pods-iAlhanTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B8C58C7B19FC4991CCA8A5713C4B9CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEA734DD4C34601BCDED1007AFD28BB7 /* Pods-iAlhan-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		712AA4E9BB7EDDD97A0B5E518C520815 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECE0CF6791D08A31800D73800BB628B2 /* AudioItem.swift in Sources */,
+				37094ECFAE5825701F2F2ABEBEF74C20 /* AudioPlayer.swift in Sources */,
+				3F11C5F1203F321EE5308E4FF4DA7201 /* KDEAudioPlayer-dummy.m in Sources */,
+				AE4FC8ABF9E742BDB13283926CCE0E1F /* Reachability.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4BFD1083EBAB8798B8C92BCB7BC8A2E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KDEAudioPlayer;
+			target = 8EEB1DD6817D81959D6E18FE1D642CE3 /* KDEAudioPlayer */;
+			targetProxy = C0EC1C9D5892952C7B378CC501FAE47C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		12914D756594D15C6F2CA12FE5F89F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		736DE31823404D634A5DDAB815F28547 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 726CF22662298C61B680591E975089E1 /* Pods-iAlhanUITests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhanUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhanUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8EA22CC00EA4C4C924BA4F96A1B63119 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 030F089B7869F8B9A058A748D0334788 /* Pods-iAlhanUITests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhanUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhanUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9EE0ED857C4EB8A4696627089CF601B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2E1B1F676EEB50C5B1E61176FDDAC41 /* Pods-iAlhan.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhan/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhan/Pods-iAlhan.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhan;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BECF303660BE7E53BF7388356B5189AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A33C4AF666FB274320DA9CAEA8C22C9 /* KDEAudioPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/KDEAudioPlayer/KDEAudioPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KDEAudioPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/KDEAudioPlayer/KDEAudioPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = KDEAudioPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C9C14AF4F6B23E7DC0C41BD039FD7A3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D42D808D50ED8E2315F94882425C1F6D /* Pods-iAlhan.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhan/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhan/Pods-iAlhan.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhan;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D3EE6165831DBDFD5218EE7C53293723 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A33C4AF666FB274320DA9CAEA8C22C9 /* KDEAudioPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/KDEAudioPlayer/KDEAudioPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KDEAudioPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/KDEAudioPlayer/KDEAudioPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = KDEAudioPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E691921751E308E3C039D7D6214497D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FD9CA0761B423E92FD258057F846261 /* Pods-iAlhanTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhanTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhanTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E72E7977875C2D251FC62736BBDDC389 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E9136B19CA7C196FE3EE4CA250F6BD45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96A3B54625A54564CBBE65F53F07DD31 /* Pods-iAlhanTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-iAlhanTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_iAlhanTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12914D756594D15C6F2CA12FE5F89F1B /* Debug */,
+				E72E7977875C2D251FC62736BBDDC389 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5074D395BED4481B15732730B2A42BD3 /* Build configuration list for PBXNativeTarget "Pods-iAlhanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9136B19CA7C196FE3EE4CA250F6BD45 /* Debug */,
+				E691921751E308E3C039D7D6214497D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF009AD96ECAA3E17719A0CE72F44750 /* Build configuration list for PBXNativeTarget "KDEAudioPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3EE6165831DBDFD5218EE7C53293723 /* Debug */,
+				BECF303660BE7E53BF7388356B5189AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F69049437450138AA9DC2F4CE401E479 /* Build configuration list for PBXNativeTarget "Pods-iAlhan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9C14AF4F6B23E7DC0C41BD039FD7A3D /* Debug */,
+				9EE0ED857C4EB8A4696627089CF601B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEF136AF8C02C98E83492C25A9F7BE60 /* Build configuration list for PBXNativeTarget "Pods-iAlhanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				736DE31823404D634A5DDAB815F28547 /* Debug */,
+				8EA22CC00EA4C4C924BA4F96A1B63119 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

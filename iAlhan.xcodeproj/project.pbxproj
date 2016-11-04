@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		823FB7B2E4ABEB2B18E85280 /* Pods_iAlhanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D280AC4678E56C2A4CA9605 /* Pods_iAlhanTests.framework */; };
 		AAA097631DC6A129002384D8 /* PlaylistDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */; };
+		B022FDB358C6FFEE5E9E4897 /* Pods_iAlhanUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B769A41F911B19B40720AA /* Pods_iAlhanUITests.framework */; };
+		D95716E6120B6E52EDB95CE1 /* Pods_iAlhan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD6EBBBF3788DE8B93CE437D /* Pods_iAlhan.framework */; };
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
@@ -22,7 +25,6 @@
 		F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F3C081DBA91660019153A /* AlhanPlayer.swift */; };
 		F0D656AF1DCAF6650083416A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656AE1DCAF6650083416A /* MediaPlayer.framework */; };
 		F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656B11DCB02780083416A /* AudioToolbox.framework */; };
-		F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D656B71DCD38980083416A /* AudioPLayer.swift */; };
 		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
 		F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3704E1DC425D700979B78 /* PlayListVC.swift */; };
 		F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370501DC42E7800979B78 /* PLAddVC.swift */; };
@@ -62,7 +64,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084F6A2094C46E9A6B832528 /* Pods-iAlhanUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhanUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests.release.xcconfig"; sourceTree = "<group>"; };
+		26B769A41F911B19B40720AA /* Pods_iAlhanUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlhanUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D280AC4678E56C2A4CA9605 /* Pods_iAlhanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlhanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8534D14639CEA81E58223EF5 /* Pods-iAlhan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhan/Pods-iAlhan.debug.xcconfig"; sourceTree = "<group>"; };
+		96B53407D885E9BE21472BA9 /* Pods-iAlhanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhanTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests.release.xcconfig"; sourceTree = "<group>"; };
 		AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistDetailVC.swift; sourceTree = "<group>"; };
+		B046438D211DEF50A5180795 /* Pods-iAlhan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhan.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhan/Pods-iAlhan.release.xcconfig"; sourceTree = "<group>"; };
+		B41928860A1819960C356DD5 /* Pods-iAlhanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhanTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD6EBBBF3788DE8B93CE437D /* Pods_iAlhan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlhan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7A1A347FB56E685F124C414 /* Pods-iAlhanUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlhanUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
 		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
@@ -76,7 +87,6 @@
 		F0D656AE1DCAF6650083416A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F0D656B01DCB02780083416A /* iAlhan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlhan.entitlements; sourceTree = SOURCE_ROOT; };
 		F0D656B11DCB02780083416A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		F0D656B71DCD38980083416A /* AudioPLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPLayer.swift; sourceTree = "<group>"; };
 		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		F0E3704E1DC425D700979B78 /* PlayListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		F0E370501DC42E7800979B78 /* PLAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddVC.swift; sourceTree = "<group>"; };
@@ -121,6 +131,7 @@
 				F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */,
 				F0E3E8131DADECC900174D91 /* libsqlite3.0.tbd in Frameworks */,
 				F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */,
+				D95716E6120B6E52EDB95CE1 /* Pods_iAlhan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				823FB7B2E4ABEB2B18E85280 /* Pods_iAlhanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,12 +147,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B022FDB358C6FFEE5E9E4897 /* Pods_iAlhanUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		825562D74318B19DC0F55468 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8534D14639CEA81E58223EF5 /* Pods-iAlhan.debug.xcconfig */,
+				B046438D211DEF50A5180795 /* Pods-iAlhan.release.xcconfig */,
+				B41928860A1819960C356DD5 /* Pods-iAlhanTests.debug.xcconfig */,
+				96B53407D885E9BE21472BA9 /* Pods-iAlhanTests.release.xcconfig */,
+				D7A1A347FB56E685F124C414 /* Pods-iAlhanUITests.debug.xcconfig */,
+				084F6A2094C46E9A6B832528 /* Pods-iAlhanUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F05826D61DB059D0001E6CA2 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,7 +177,6 @@
 				F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */,
 				F09F3C081DBA91660019153A /* AlhanPlayer.swift */,
 				F0E370541DC50F2A00979B78 /* PL_DBManager.swift */,
-				F0D656B71DCD38980083416A /* AudioPLayer.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -188,6 +213,9 @@
 				F0524DF91DB682EF0066B075 /* AVFoundation.framework */,
 				F0E3E8111DADEC9900174D91 /* libsqlite3.tbd */,
 				F0E3E8071DAC019100174D91 /* libsqlite3.0.tbd */,
+				BD6EBBBF3788DE8B93CE437D /* Pods_iAlhan.framework */,
+				7D280AC4678E56C2A4CA9605 /* Pods_iAlhanTests.framework */,
+				26B769A41F911B19B40720AA /* Pods_iAlhanUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,6 +246,7 @@
 				F0E65F991DA6FC2100A96A69 /* iAlhanNewUITests */,
 				F0E65F781DA6FC2000A96A69 /* Products */,
 				F0E3E8061DAC019100174D91 /* Frameworks */,
+				825562D74318B19DC0F55468 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,9 +304,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0E65F9F1DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhan" */;
 			buildPhases = (
+				B4574259177C91D3917F3321 /* [CP] Check Pods Manifest.lock */,
 				F0E65F731DA6FC2000A96A69 /* Sources */,
 				F0E65F741DA6FC2000A96A69 /* Frameworks */,
 				F0E65F751DA6FC2000A96A69 /* Resources */,
+				15DB8701B8D833950D1A4619 /* [CP] Embed Pods Frameworks */,
+				198B460A0599B92B03C1AD23 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -292,9 +324,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0E65FA21DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanTests" */;
 			buildPhases = (
+				1985CADF8CE2A98CCC7CBDCB /* [CP] Check Pods Manifest.lock */,
 				F0E65F871DA6FC2100A96A69 /* Sources */,
 				F0E65F881DA6FC2100A96A69 /* Frameworks */,
 				F0E65F891DA6FC2100A96A69 /* Resources */,
+				5671797478A57F51CEC94DDF /* [CP] Embed Pods Frameworks */,
+				32CA322D29D9AD26C09198D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -310,9 +345,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanUITests" */;
 			buildPhases = (
+				13C7762C24EF2B5335D3C96E /* [CP] Check Pods Manifest.lock */,
 				F0E65F921DA6FC2100A96A69 /* Sources */,
 				F0E65F931DA6FC2100A96A69 /* Frameworks */,
 				F0E65F941DA6FC2100A96A69 /* Resources */,
+				E8A4901DCA1486C7B17D0AF8 /* [CP] Embed Pods Frameworks */,
+				DFE3E20713AECF99EEB9D381 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -410,6 +448,144 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		13C7762C24EF2B5335D3C96E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		15DB8701B8D833950D1A4619 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhan/Pods-iAlhan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1985CADF8CE2A98CCC7CBDCB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		198B460A0599B92B03C1AD23 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhan/Pods-iAlhan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		32CA322D29D9AD26C09198D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5671797478A57F51CEC94DDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhanTests/Pods-iAlhanTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4574259177C91D3917F3321 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DFE3E20713AECF99EEB9D381 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8A4901DCA1486C7B17D0AF8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAlhanUITests/Pods-iAlhanUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F0E65F731DA6FC2000A96A69 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -418,7 +594,6 @@
 				F0E3E83A1DB03E5400174D91 /* FMDatabase.m in Sources */,
 				F07790331DB5A53E001B3376 /* Constants.swift in Sources */,
 				F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */,
-				F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */,
 				F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */,
 				F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */,
 				F0E370471DC301E900979B78 /* InfoVC.swift in Sources */,
@@ -578,6 +753,7 @@
 		};
 		F0E65FA01DA6FC2100A96A69 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8534D14639CEA81E58223EF5 /* Pods-iAlhan.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -596,6 +772,7 @@
 		};
 		F0E65FA11DA6FC2100A96A69 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B046438D211DEF50A5180795 /* Pods-iAlhan.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -613,6 +790,7 @@
 		};
 		F0E65FA31DA6FC2100A96A69 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B41928860A1819960C356DD5 /* Pods-iAlhanTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -627,6 +805,7 @@
 		};
 		F0E65FA41DA6FC2100A96A69 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96B53407D885E9BE21472BA9 /* Pods-iAlhanTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -641,6 +820,7 @@
 		};
 		F0E65FA61DA6FC2100A96A69 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7A1A347FB56E685F124C414 /* Pods-iAlhanUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
@@ -654,6 +834,7 @@
 		};
 		F0E65FA71DA6FC2100A96A69 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084F6A2094C46E9A6B832528 /* Pods-iAlhanUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
