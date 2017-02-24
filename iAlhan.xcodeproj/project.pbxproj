@@ -22,7 +22,6 @@
 		F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F3C081DBA91660019153A /* AlhanPlayer.swift */; };
 		F0D656AF1DCAF6650083416A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656AE1DCAF6650083416A /* MediaPlayer.framework */; };
 		F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656B11DCB02780083416A /* AudioToolbox.framework */; };
-		F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D656B71DCD38980083416A /* AudioPLayer.swift */; };
 		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
 		F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3704E1DC425D700979B78 /* PlayListVC.swift */; };
 		F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370501DC42E7800979B78 /* PLAddVC.swift */; };
@@ -76,7 +75,6 @@
 		F0D656AE1DCAF6650083416A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F0D656B01DCB02780083416A /* iAlhan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlhan.entitlements; sourceTree = SOURCE_ROOT; };
 		F0D656B11DCB02780083416A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		F0D656B71DCD38980083416A /* AudioPLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPLayer.swift; sourceTree = "<group>"; };
 		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		F0E3704E1DC425D700979B78 /* PlayListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		F0E370501DC42E7800979B78 /* PLAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddVC.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 				F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */,
 				F09F3C081DBA91660019153A /* AlhanPlayer.swift */,
 				F0E370541DC50F2A00979B78 /* PL_DBManager.swift */,
-				F0D656B71DCD38980083416A /* AudioPLayer.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -418,7 +415,6 @@
 				F0E3E83A1DB03E5400174D91 /* FMDatabase.m in Sources */,
 				F07790331DB5A53E001B3376 /* Constants.swift in Sources */,
 				F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */,
-				F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */,
 				F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */,
 				F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */,
 				F0E370471DC301E900979B78 /* InfoVC.swift in Sources */,
