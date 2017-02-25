@@ -189,6 +189,12 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         //print ("$$$ here is the current session desc \(AVAudioSession.sharedInstance().description)$$$$$")
         var isRunning = false
         
+        
+        // Pause player if running
+        if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
+            AlhanPlayer.sharedInstance.player.pause()
+        }
+        
         if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
             
             isRunning = true

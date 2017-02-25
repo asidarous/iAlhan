@@ -235,9 +235,12 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //            updater.preferredFramesPerSecond = 60
 //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
 //
-        let albumArtWork = MPMediaItemArtwork(image: UIImage (named: "photo")!)
-
+        let image:UIImage = UIImage(named: "photo")!
         
+        let albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+            return image
+
+        })
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnName)!)",
             MPMediaItemPropertyArtwork: albumArtWork,
@@ -287,6 +290,13 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         //print ("$$$ here is the current session desc \(AVAudioSession.sharedInstance().description)$$$$$")
         var isRunning = false
         
+        // Pause playlist if running
+        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+            print("### PlayList player is on")
+            AlhanPlayer.sharedInstance.queuePlayer.pause()
+        }
+        
+        // Check if runnning the same hymn
         if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
         
             //print("### player is on")
@@ -299,7 +309,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
                 print ("++ Playing the same hymn, then let's get to where it is")
                 //print ("+++ Here is where the hymn is \(AlhanPlayer.sharedInstance.player.currentTime().seconds)")
                 isRunning = true
-                //ProgressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
+                progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
             } else
             {
                 AlhanPlayer.sharedInstance.player.pause()
