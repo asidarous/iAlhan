@@ -338,7 +338,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = BGQNQ2M53K;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
 								enabled = 1;
@@ -347,12 +347,14 @@
 					};
 					F0E65F8A1DA6FC2100A96A69 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = BGQNQ2M53K;
+						ProvisioningStyle = Manual;
 						TestTargetID = F0E65F761DA6FC2000A96A69;
 					};
 					F0E65F951DA6FC2100A96A69 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = BGQNQ2M53K;
+						ProvisioningStyle = Manual;
 						TestTargetID = F0E65F761DA6FC2000A96A69;
 					};
 				};
@@ -588,6 +590,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "62a619a5-6a86-40b9-a4bd-72e6779708c9";
+				PROVISIONING_PROFILE_SPECIFIER = NewIphone7;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -606,6 +610,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "62a619a5-6a86-40b9-a4bd-72e6779708c9";
+				PROVISIONING_PROFILE_SPECIFIER = NewIphone7;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -616,6 +622,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
@@ -630,6 +637,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
@@ -643,10 +651,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
+				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = iAlhanNew;
 			};
@@ -656,10 +667,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
+				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = iAlhanNew;
 			};
