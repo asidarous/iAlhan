@@ -49,10 +49,17 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     //var updater : CADisplayLink! = nil
     
     var localDir: String!
+    var fileIsLocal: Bool!
     
     let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
     
+    // Internet alert box
+    @IBAction func showAlertButton() {
+    let alert = UIAlertController(title: "No Internet Connection", message: "Please make sure you are connected to the internet to  be able tp stream hymns. Meanwhile you can listen to downloaded content offline. ", preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +105,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         if FileManager.default.fileExists(atPath: destinationUrl.path){
             hymnAudioURL = destinationUrl
+            fileIsLocal = true
             // print("!!!!!! playing the local file - TOP")
         }
         
@@ -264,13 +272,18 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
     
     func playButtonTapped() {
+        
+         if (Reachability.isConnectedToNetwork() && !fileIsLocal){
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(pauseButton, at: 0)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         play()
         //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
-
+        }
+         else {
+            showAlertButton()
+        }
         
     }
     

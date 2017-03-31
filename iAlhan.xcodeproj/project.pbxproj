@@ -15,6 +15,7 @@
 		F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */; };
 		F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFD1DB837E60066B075 /* Main.storyboard */; };
 		F0524E021DB88F1B0066B075 /* AlhanSQL.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */; };
+		F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0604DBA1E8DC32B006DB46F /* Reachability.swift */; };
 		F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */; };
 		F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
@@ -68,6 +69,7 @@
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
 		F0524DFD1DB837E60066B075 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = AlhanSQL.sqlite; sourceTree = "<group>"; };
+		F0604DBA1E8DC32B006DB46F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonCollectionViewCell.swift; sourceTree = "<group>"; };
 		F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				F09F3C081DBA91660019153A /* AlhanPlayer.swift */,
 				F0E370541DC50F2A00979B78 /* PL_DBManager.swift */,
 				F0D656B71DCD38980083416A /* AudioPLayer.swift */,
+				F0604DBA1E8DC32B006DB46F /* Reachability.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
+				F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +626,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

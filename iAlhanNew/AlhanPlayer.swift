@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
+
 class AlhanPlayer {
     static let sharedInstance = AlhanPlayer()
     
@@ -19,7 +20,7 @@ class AlhanPlayer {
     
     func play() {
 
-       
+      
         
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
@@ -27,12 +28,13 @@ class AlhanPlayer {
         print("Duration of the hymn from inside the player class \(player.currentItem?.duration.seconds) -- END")
         player.play()
         //player.allowsExternalPlayback = true
-       
+
        
     }
     
     func playWithURL(playableURL : URL) {
-
+        
+       
         //let temp = "http://www.alhan.org/nativity/mp3/piouoiny2.mp3"
         let playerItem = AVPlayerItem(url: playableURL)
         player = AVPlayer(playerItem: playerItem)
