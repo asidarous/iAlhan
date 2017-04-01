@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+public var update: Bool = false
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,8 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     
+        if Reachability.isConnectedToNetwork(){
+            update = CheckVersion()
+        }
     
-    
+        
         
         // Register a UserDefaults Domain
         //UserDefaults.register("PlayListDomain")

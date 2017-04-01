@@ -33,6 +33,11 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // check version only if connected to Internet
+        //if Reachability.isConnectedToNetwork(){
+        //    update = CheckVersion()
+        //}
+        
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo")!)
         coverLayer = CALayer()
         
@@ -59,6 +64,17 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // if DB updated
+        if update{
+            
+            showUpdateAlertButton(in: self)
+            update=false
+        }
     }
 
     func updateUI()

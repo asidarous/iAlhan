@@ -20,6 +20,9 @@
 		F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */; };
 		F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */; };
 		F07790331DB5A53E001B3376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07790321DB5A53E001B3376 /* Constants.swift */; };
+		F09DD6C51E8F25450097F235 /* CheckVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09DD6C41E8F25450097F235 /* CheckVersion.swift */; };
+		F09DD6C71E8F27770097F235 /* dbversion3.txt in Resources */ = {isa = PBXBuildFile; fileRef = F09DD6C61E8F27770097F235 /* dbversion3.txt */; };
+		F09DD6C91E8F37D60097F235 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09DD6C81E8F37D60097F235 /* Downloader.swift */; };
 		F09F3C091DBA91660019153A /* AlhanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F3C081DBA91660019153A /* AlhanPlayer.swift */; };
 		F0D656AF1DCAF6650083416A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656AE1DCAF6650083416A /* MediaPlayer.framework */; };
 		F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656B11DCB02780083416A /* AudioToolbox.framework */; };
@@ -74,6 +77,9 @@
 		F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonDetailViewController.swift; sourceTree = "<group>"; };
 		F07790321DB5A53E001B3376 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F09DD6C41E8F25450097F235 /* CheckVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckVersion.swift; sourceTree = "<group>"; };
+		F09DD6C61E8F27770097F235 /* dbversion3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dbversion3.txt; sourceTree = "<group>"; };
+		F09DD6C81E8F37D60097F235 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F09F3C081DBA91660019153A /* AlhanPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlhanPlayer.swift; sourceTree = "<group>"; };
 		F0D656AE1DCAF6650083416A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F0D656B01DCB02780083416A /* iAlhan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlhan.entitlements; sourceTree = SOURCE_ROOT; };
@@ -155,6 +161,8 @@
 				F0E370541DC50F2A00979B78 /* PL_DBManager.swift */,
 				F0D656B71DCD38980083416A /* AudioPLayer.swift */,
 				F0604DBA1E8DC32B006DB46F /* Reachability.swift */,
+				F09DD6C41E8F25450097F235 /* CheckVersion.swift */,
+				F09DD6C81E8F37D60097F235 /* Downloader.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -177,6 +185,7 @@
 		F06927D81DA82E4500A94BB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F09DD6C61E8F27770097F235 /* dbversion3.txt */,
 				F0EFAFF21DC99FBE00EA4814 /* AlhanPL.sqlite */,
 				F0524E011DB88F1B0066B075 /* AlhanSQL.sqlite */,
 			);
@@ -390,6 +399,7 @@
 				F0EFAFF31DC99FBE00EA4814 /* AlhanPL.sqlite in Resources */,
 				F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */,
 				F0524E021DB88F1B0066B075 /* AlhanSQL.sqlite in Resources */,
+				F09DD6C71E8F27770097F235 /* dbversion3.txt in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
 				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
 				F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */,
@@ -435,11 +445,13 @@
 				F0E3E83C1DB03E5400174D91 /* FMDatabasePool.m in Sources */,
 				F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */,
 				F0E3E8391DB03E5400174D91 /* FMResultSet.m in Sources */,
+				F09DD6C51E8F25450097F235 /* CheckVersion.swift in Sources */,
 				F0E3E8381DB03E5400174D91 /* FMDatabaseQueue.m in Sources */,
 				F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */,
 				F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
+				F09DD6C91E8F37D60097F235 /* Downloader.swift in Sources */,
 				F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

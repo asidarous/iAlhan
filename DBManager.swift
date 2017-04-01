@@ -32,14 +32,14 @@ class DBManager: NSObject {
     var pl_databaseFileName = "AlhanPL"
     var pl_pathToDatabase: String!
     
-    let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+    let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
     
     
     override init() {
         super.init()
         
         pathToDatabase = Bundle.main.path(forResource: databaseFileName, ofType: "sqlite")
-        pl_pathToDatabase = doumentDirectoryPath.appendingPathComponent("LocalAlhanPL.sqlite")
+        pl_pathToDatabase = documentDirectoryPath.appendingPathComponent("LocalAlhanPL.sqlite")
 
 
     }
@@ -73,10 +73,10 @@ class DBManager: NSObject {
     func pl_openDatabase() -> Bool {
         if pl_database == nil {
             
-            print("***** Path to Db \(pl_pathToDatabase)")
+            //print("***** Path to Db \(pl_pathToDatabase)")
             
             if FileManager.default.fileExists(atPath: pl_pathToDatabase) {
-                print("Horray found file")
+                //print("Horray found file")
                 pl_database = FMDatabase(path: pl_pathToDatabase)
             } else
             {
@@ -93,6 +93,34 @@ class DBManager: NSObject {
         return false
     }
     
+    
+    // Get DB Version
+    func getDBVersion() -> Double {
+        var version: Double!
+        if openDatabase(){
+        let query = "select version from version"
+            
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: nil)
+                //print("Query result \(results)")
+                while results.next() {
+                    version = results.double(forColumn: "version")
+                    }
+
+               
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            database.close()
+            
+        }
+
+    
+        return version
+    }
     
     
     // Load Seasons

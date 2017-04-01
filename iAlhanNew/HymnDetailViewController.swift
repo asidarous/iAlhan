@@ -49,14 +49,14 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     //var updater : CADisplayLink! = nil
     
     var localDir: String!
-    var fileIsLocal: Bool!
+    var fileIsLocal: Bool = false
     
     let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
     
     // Internet alert box
     @IBAction func showAlertButton() {
-    let alert = UIAlertController(title: "No Internet Connection", message: "Please make sure you are connected to the internet to  be able tp stream hymns. Meanwhile you can listen to downloaded content offline. ", preferredStyle: UIAlertControllerStyle.alert)
+    let alert = UIAlertController(title: "No Internet Connection", message: "Please make sure you are connected to the internet to be able to stream hymns. Meanwhile you can listen to downloaded content offline. ", preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
     }
@@ -90,6 +90,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
 
         // file download handling
+        //print("8888888888" )
+        //print ((hymnDetail?[0].hymnAudio)!)
         localDir = getDirectory(url: (hymnDetail?[0].hymnAudio)!)
         //print("DIRECTORY \(localDir)")
         
@@ -114,25 +116,27 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         //Get progress bar width based on orientation
         var pbWidth: CGFloat!
-//        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
-//            // Compact
-//            print("%%%% I'm compact")
-//            
-//            pbWidth = ToolBar.frame.size.width * 0.65
-//            print("WIDTH: \(pbWidth)")
-//            
-//        } else {
-//            // Regular
-//            print("%%%% I'm regular")
-//           pbWidth = ToolBar.frame.size.width * 0.65
-//           print("WIDTH: \(pbWidth)") 
-//        }
+        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
+            // Compact
+            print("%%%% I'm compact")
+            
+            pbWidth = HymnDetailView.frame.width * 0.65
+            print("WIDTH: \(pbWidth)")
+            
+        } else {
+            // Regular
+            print("%%%% I'm regular")
+           pbWidth = HymnDetailView.frame.width * 0.82
+           print("WIDTH: \(pbWidth)") 
+        }
         
-        pbWidth = HymnDetailView.frame.width * 0.65
+        //pbWidth = HymnDetailView.frame.width * 0.85
         print("The width: \(pbWidth)")
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
         progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
+        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControlState.normal)
+        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControlState.highlighted)
         progressBar.isUserInteractionEnabled = true
         
         progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
@@ -250,7 +254,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
         })
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnName)!)",
+            MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnDescription)!)",
             MPMediaItemPropertyArtwork: albumArtWork,
             MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!),
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
@@ -272,8 +276,16 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
     
     func playButtonTapped() {
+        print ("Here is the fileIsLocal variable: \(fileIsLocal)")
+        print ("Here is the Reachability: \(Reachability.isConnectedToNetwork())")
         
-         if (Reachability.isConnectedToNetwork() && !fileIsLocal){
+        if (!Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+            
+             showAlertButton()
+           
+        
+        }else
+        {
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(pauseButton, at: 0)
@@ -281,9 +293,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         play()
         //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
         }
-         else {
-            showAlertButton()
-        }
+         
         
     }
     

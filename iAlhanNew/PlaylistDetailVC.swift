@@ -30,6 +30,15 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     var playButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
     
+    let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+    // Internet alert box
+    @IBAction func showAlertButton() {
+        let alert = UIAlertController(title: "No Internet Connection", message: "Only downloaded content will play offline. Please make sure you are connected to the internet to  be able to stream hymns.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -206,17 +215,50 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     
     func playButtonTapped() {
+        
+        /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+            
+            showAlertButton()
+            
+            
+        }else
+        {*/
         self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
         
        
-        
+     
         
         for hymnURL in playlistHymns{
+            
             //print("HYMN URL TO PLAY: \(hymnURL)")
-            AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
-           
+            var fileIsLocal = false
+            // check to see if the file is local and thus play from local
+            let localDir = getDirectory(url: String(describing: hymnURL.HymnURL))
+            let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
+            var hymnAudioURL = URL(string: (hymnURL.HymnURL))
+            let destinationUrl = localPath.appendingPathComponent((hymnAudioURL?.lastPathComponent)!)
+            
+            if FileManager.default.fileExists(atPath: destinationUrl.path){
+                hymnAudioURL = destinationUrl
+                fileIsLocal = true
+                // print("!!!!!! playing the local file - TOP")
+            }
+            
+            
+            if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+                
+                showAlertButton()
+                
+                
+            }else {
+            
+            
+            //AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
+            AlhanPlayer.sharedInstance.playQueue(playerURL: hymnAudioURL!)
+            print("****** HYMN URL TO PLAY: \(hymnAudioURL)")
             
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
+            }
         }
         AlhanPlayer.sharedInstance.queuePlayer.play()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
