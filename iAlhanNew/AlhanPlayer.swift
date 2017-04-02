@@ -24,8 +24,8 @@ class AlhanPlayer {
         
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
-        print("DESCRIPTION from inside the player \(player.currentItem?.description)")
-        print("Duration of the hymn from inside the player class \(player.currentItem?.duration.seconds) -- END")
+        print("DESCRIPTION from inside the player \(String(describing: player.currentItem?.description))")
+        print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
         player.play()
         //player.allowsExternalPlayback = true
 
@@ -40,8 +40,8 @@ class AlhanPlayer {
         player = AVPlayer(playerItem: playerItem)
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
-        print("DESCRIPTION from inside the player \(player.currentItem?.description)")
-        print("Duration of the hymn from inside the player class \(player.currentItem?.duration.seconds) -- END")
+        print("DESCRIPTION from inside the player \(String(describing: player.currentItem?.description))")
+        print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
         
         player.play()
         
@@ -61,9 +61,9 @@ class AlhanPlayer {
 //       let temp =  queuePlayer.currentItem?.asset
 //        if (temp?.isKind(of: AVURLAsset.self))!{
 //        
-            print("TEMP: \(temp)")
+            print("TEMP: \(String(describing: temp))")
        // }
-        return "\(temp)"
+        return "\(String(describing: temp))"
     }
     
     func pauseQueue(){

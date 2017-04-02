@@ -123,6 +123,36 @@ class DBManager: NSObject {
         return version
     }
     
+    // Get updates from DB
+    func getLatestUpdates() -> String {
+        var updates: String!
+        if openDatabase(){
+            let query = "select updates from version"
+            
+            do {
+                //print(database)
+                let results = try database.executeQuery(query, values: nil)
+                //print("Query result \(results)")
+                while results.next() {
+                    updates = results.string(forColumn: "updates")
+                }
+                
+                
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+            
+            database.close()
+            
+        }
+        
+        
+        return updates
+
+    
+    
+    }
     
     // Load Seasons
     func loadSeasons() -> [SeasonData]! {

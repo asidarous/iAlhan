@@ -57,7 +57,9 @@ import UIKit
 
 // Update alert box
 func showUpdateAlertButton(in vc: UIViewController) {
-    let alert = UIAlertController(title: "New Hymns Added", message: "The following hymns have been added:..... ", preferredStyle: UIAlertControllerStyle.alert)
+    let message = DBManager.shared.getLatestUpdates()
+    let newMessage = message.replacingOccurrences(of: ",", with: "\n")
+    let alert = UIAlertController(title: "New Hymns Added", message: newMessage, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
     vc.present(alert, animated: true, completion: nil)
 }

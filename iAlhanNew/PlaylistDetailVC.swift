@@ -181,7 +181,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     func highlightRow (hymnURL: URL){
         print ("Highlight hymn url \(hymnURL)")
         let row = hymnURLS.index(of: hymnURL)
-        print("ROW: \(row)")
+        print("ROW: \(String(describing: row))")
        // self.plDetail.cellForRow(at: IndexPath(row: row!, section: 0))?.contentView.backgroundColor = UIColor.gray
     
     
@@ -217,7 +217,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //            
             for hymnURL in playlistHymns{
                 //print("Now playing : \(AlhanPlayer.sharedInstance.player.currentItem?.description)")
-                print("DESCRIPTION: \(AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description)")
+                print("DESCRIPTION: \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description))")
                 print("\n")
                 print("HymnURL: \(hymnURL.HymnURL)")
                 print("===========================")
@@ -302,7 +302,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
             //AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
             AlhanPlayer.sharedInstance.playQueue(playerURL: hymnAudioURL!)
-            print("****** HYMN URL TO PLAY: \(hymnAudioURL)")
+            print("****** HYMN URL TO PLAY: \(String(describing: hymnAudioURL))")
             
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
             }
@@ -314,7 +314,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
         ]
-        print("TEST \(AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)")
+        print("TEST \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds))")
         
         //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem
         //print("TEST :\(test)")
@@ -364,11 +364,11 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         print("received remote control \(rc.rawValue)") // 101 = pause, 100 = play
         switch rc {
         case .remoteControlTogglePlayPause:
-            if p.rate == 1 { p.pause() } else { p.play() }
+            if p.rate == 1 { AlhanPlayer.sharedInstance.pauseQueue() } else { p.play() }
         case .remoteControlPlay:
             p.play()
         case .remoteControlPause:
-            p.pause()
+            AlhanPlayer.sharedInstance.pauseQueue()
         case .remoteControlNextTrack:
             AlhanPlayer.sharedInstance.nextHymnInQueue()
         default:break

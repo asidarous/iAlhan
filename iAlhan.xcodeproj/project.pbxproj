@@ -14,6 +14,7 @@
 		F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0524DF91DB682EF0066B075 /* AVFoundation.framework */; };
 		F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */; };
 		F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFD1DB837E60066B075 /* Main.storyboard */; };
+		F05E57101E90D69200F7A5DF /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E570F1E90D69200F7A5DF /* ContactVC.swift */; };
 		F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0604DBA1E8DC32B006DB46F /* Reachability.swift */; };
 		F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */; };
 		F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */; };
@@ -71,6 +72,7 @@
 		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
 		F0524DFD1DB837E60066B075 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
+		F05E570F1E90D69200F7A5DF /* ContactVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
 		F0604DBA1E8DC32B006DB46F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonCollectionViewCell.swift; sourceTree = "<group>"; };
 		F067AC3E1DB96A01005BDAD0 /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				F0E3704E1DC425D700979B78 /* PlayListVC.swift */,
 				F0E370501DC42E7800979B78 /* PLAddVC.swift */,
 				AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */,
+				F05E570F1E90D69200F7A5DF /* ContactVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				F0E3E83C1DB03E5400174D91 /* FMDatabasePool.m in Sources */,
 				F06927DC1DA86AD000A94BB9 /* SeasonDetailViewController.swift in Sources */,
 				F0E3E8391DB03E5400174D91 /* FMResultSet.m in Sources */,
+				F05E57101E90D69200F7A5DF /* ContactVC.swift in Sources */,
 				F09DD6C51E8F25450097F235 /* CheckVersion.swift in Sources */,
 				F0E3E8381DB03E5400174D91 /* FMDatabaseQueue.m in Sources */,
 				F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */,
