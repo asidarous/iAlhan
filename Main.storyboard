@@ -177,45 +177,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KuU-Gk-fjp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KuU-Gk-fjp">
                                 <rect key="frame" x="20" y="43" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="nkk-dY-2B9"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cNz-fr-3rd">
-                                <rect key="frame" x="20" y="72" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Name..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cNz-fr-3rd">
+                                <rect key="frame" x="20" y="72" width="374" height="23"/>
+                                <color key="tintColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="iAF-Ue-zZY" eventType="editingDidEndOnExit" id="VKS-Gg-mLM"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Email address ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W1u-Dc-CfU">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Email address ..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="W1u-Dc-CfU">
                                 <rect key="frame" x="20" y="163" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="iAF-Ue-zZY" eventType="editingDidEndOnExit" id="xzD-aI-l3R"/>
+                                </connections>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qIP-8p-Owg">
-                                <rect key="frame" x="20" y="261" width="374" height="222"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw8-3d-kDq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="241" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw8-3d-kDq">
                                 <rect key="frame" x="20" y="232" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="rm6-jr-hM1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ban-dF-DvW">
-                                <rect key="frame" x="112" y="491" width="176" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="241" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pme-9q-54R">
+                                <rect key="frame" x="20" y="134" width="374" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="A6M-GV-pXH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Message ..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3QY-RM-HEU">
+                                <rect key="frame" x="20" y="261" width="374" height="30"/>
+                                <color key="tintColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="iAF-Ue-zZY" eventType="editingDidEndOnExit" id="GdR-Y7-RBE"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KN-3z-di5">
+                                <rect key="frame" x="20" y="361" width="50" height="31"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                <inset key="titleEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="iAF-Ue-zZY" eventType="touchUpInside" id="UPJ-tN-ldH"/>
+                                    <action selector="sendEmail:" destination="iAF-Ue-zZY" eventType="touchUpInside" id="5U8-B6-oR7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ban-dF-DvW">
+                                <rect key="frame" x="325" y="367" width="69" height="19"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
                                 <state key="normal" title="Send">
                                     <color key="titleColor" red="0.27450980390000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -223,34 +257,44 @@
                                     <action selector="sendEmail:" destination="iAF-Ue-zZY" eventType="touchUpInside" id="dh7-oE-Lwj"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pme-9q-54R">
-                                <rect key="frame" x="20" y="134" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="WIf-wz-D3g" appends="YES" id="H5k-eE-Ajs"/>
-                        </connections>
+                        <constraints>
+                            <constraint firstItem="3QY-RM-HEU" firstAttribute="top" secondItem="WkP-d2-TKM" secondAttribute="top" constant="261" id="0A7-Ef-2sn"/>
+                            <constraint firstItem="Pme-9q-54R" firstAttribute="trailing" secondItem="W1u-Dc-CfU" secondAttribute="trailing" id="3Px-Ai-vnh"/>
+                            <constraint firstItem="cNz-fr-3rd" firstAttribute="trailing" secondItem="Pme-9q-54R" secondAttribute="trailing" id="4hX-SN-cTF"/>
+                            <constraint firstItem="5KN-3z-di5" firstAttribute="baseline" secondItem="ban-dF-DvW" secondAttribute="baseline" id="54w-Ru-G0e"/>
+                            <constraint firstItem="cNz-fr-3rd" firstAttribute="top" secondItem="KuU-Gk-fjp" secondAttribute="bottom" constant="8" symbolic="YES" id="94n-zR-mfE"/>
+                            <constraint firstItem="3QY-RM-HEU" firstAttribute="leading" secondItem="Qw8-3d-kDq" secondAttribute="leading" id="DCF-rP-6Od"/>
+                            <constraint firstItem="KuU-Gk-fjp" firstAttribute="leading" secondItem="WkP-d2-TKM" secondAttribute="leadingMargin" id="Dwp-8c-Imv"/>
+                            <constraint firstItem="3QY-RM-HEU" firstAttribute="trailing" secondItem="Qw8-3d-kDq" secondAttribute="trailing" id="EB1-01-XR3"/>
+                            <constraint firstItem="3QY-RM-HEU" firstAttribute="top" secondItem="Qw8-3d-kDq" secondAttribute="bottom" constant="8" symbolic="YES" id="G01-0L-Hq4"/>
+                            <constraint firstItem="Qw8-3d-kDq" firstAttribute="top" secondItem="W1u-Dc-CfU" secondAttribute="bottom" constant="39" id="QCu-Yh-5vZ"/>
+                            <constraint firstItem="KuU-Gk-fjp" firstAttribute="leading" secondItem="cNz-fr-3rd" secondAttribute="leading" id="Rpg-eR-H3j"/>
+                            <constraint firstItem="ban-dF-DvW" firstAttribute="trailing" secondItem="3QY-RM-HEU" secondAttribute="trailing" id="Ulo-pN-TwW"/>
+                            <constraint firstItem="W1u-Dc-CfU" firstAttribute="leading" secondItem="Qw8-3d-kDq" secondAttribute="leading" id="Upz-Aa-WbN"/>
+                            <constraint firstItem="KuU-Gk-fjp" firstAttribute="trailing" secondItem="WkP-d2-TKM" secondAttribute="trailingMargin" id="V6f-QU-1R9"/>
+                            <constraint firstItem="cNz-fr-3rd" firstAttribute="leading" secondItem="Pme-9q-54R" secondAttribute="leading" id="VBv-Qg-gBf"/>
+                            <constraint firstItem="W1u-Dc-CfU" firstAttribute="top" secondItem="Pme-9q-54R" secondAttribute="bottom" constant="8" symbolic="YES" id="bLE-SH-9HA"/>
+                            <constraint firstItem="Pme-9q-54R" firstAttribute="top" secondItem="cNz-fr-3rd" secondAttribute="bottom" constant="39" id="hgq-Ta-bEF"/>
+                            <constraint firstItem="Pme-9q-54R" firstAttribute="leading" secondItem="W1u-Dc-CfU" secondAttribute="leading" id="m7d-DS-0nd"/>
+                            <constraint firstItem="KuU-Gk-fjp" firstAttribute="top" secondItem="8Cr-qB-QUm" secondAttribute="bottom" constant="23" id="rNx-0t-Prx"/>
+                            <constraint firstItem="5KN-3z-di5" firstAttribute="top" secondItem="3QY-RM-HEU" secondAttribute="bottom" constant="70" id="v4w-Pc-f05"/>
+                            <constraint firstItem="KuU-Gk-fjp" firstAttribute="trailing" secondItem="cNz-fr-3rd" secondAttribute="trailing" id="wLO-Qt-SyX"/>
+                            <constraint firstItem="W1u-Dc-CfU" firstAttribute="trailing" secondItem="Qw8-3d-kDq" secondAttribute="trailing" id="xbc-v7-Moh"/>
+                            <constraint firstItem="5KN-3z-di5" firstAttribute="leading" secondItem="3QY-RM-HEU" secondAttribute="leading" id="zJm-Y1-FhC"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="emailField" destination="W1u-Dc-CfU" id="KAc-vE-wUs"/>
-                        <outlet property="messageField" destination="qIP-8p-Owg" id="qmm-rL-Ufc"/>
+                        <outlet property="messageField" destination="3QY-RM-HEU" id="iUk-XG-wbS"/>
                         <outlet property="nameField" destination="cNz-fr-3rd" id="MDS-Ea-fgu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9j-mR-hle" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="WIf-wz-D3g">
-                    <connections>
-                        <action selector="done:" destination="iAF-Ue-zZY" id="bxh-3i-bYc"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1065" y="792"/>
+            <point key="canvasLocation" x="-974" y="793"/>
         </scene>
         <!--InfoVC-->
         <scene sceneID="p9W-Mx-1dc">
@@ -742,7 +786,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sv2-4Z-BKR" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ezr-3O-BXv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Ezr-3O-BXv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.87526259470000001" blue="0.42019942560000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -774,4 +818,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="c7r-NI-iIj"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" white="1" alpha="0.60000002379999995" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
