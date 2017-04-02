@@ -24,7 +24,7 @@ class DBManager: NSObject {
     
 
     static let shared: DBManager = DBManager()
-    let databaseFileName = "AlhanSQL"
+    let databaseFileName = "AlhanSQL3"
     var pathToDatabase: String!
     var database: FMDatabase!
     var pl_database: FMDatabase!
@@ -49,6 +49,7 @@ class DBManager: NSObject {
     func openDatabase() -> Bool {
         if database == nil {
             
+            print(Bundle.main)
             print("***** Path to Db \(pathToDatabase)")
             
             if FileManager.default.fileExists(atPath: pathToDatabase) {

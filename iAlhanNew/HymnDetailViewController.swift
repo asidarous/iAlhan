@@ -19,6 +19,7 @@ struct HymnDetail {
     var hymnAudio: String!
 }
 
+var playlistInstructions: Bool = false
 class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnDetailView: UIView!
 
@@ -276,8 +277,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
     
     func playButtonTapped() {
-        print ("Here is the fileIsLocal variable: \(fileIsLocal)")
-        print ("Here is the Reachability: \(Reachability.isConnectedToNetwork())")
+        //print ("Here is the fileIsLocal variable: \(fileIsLocal)")
+        //print ("Here is the Reachability: \(Reachability.isConnectedToNetwork())")
         
         if (!Reachability.isConnectedToNetwork()) && fileIsLocal == false{
             
@@ -593,5 +594,45 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         default:break
         }
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let identifier = segue.identifier
+        {
+            switch identifier
+            {
+            case "PlayList":
+                print ("I'm going to add hymn to selected playlist")
+                let playlistVC = segue.destination as! PlayListVC
+                var hymnArrays: [PlayHymns]!
+                
+                
+                let hymnArray = PlayHymns(HymnName: hymnDetail?[0].hymnName, HymnID: hymnDetail?[0].hymnID, HymnURL: hymnDetail?[0].hymnAudio)
+                                            if hymnArrays == nil {
+                                                hymnArrays = [PlayHymns]()
+                                            }
+                hymnArrays.append(hymnArray)
+                
+                
+                playlistVC.plHymnsArray = hymnArrays
+                
+                playlistInstructions = true
+                
+                print ("Going into playlist I have: \(hymnArrays.count)")
+                
+                
+            default:
+                break
+                
+                
+                
+                
+            }
+        }
+    }
+    
+    
     
 }

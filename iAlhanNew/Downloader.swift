@@ -12,13 +12,13 @@ import UIKit
 
     func downloadDBFile(){
         // Create destination URL
-        let documentsUrl:URL = URL(string: Bundle.main.path(forResource: "AlhanSQL", ofType: "sqlite")!)! as URL
+        let documentsUrl:URL = URL(string: Bundle.main.path(forResource: "AlhanSQL3", ofType: "sqlite")!)! as URL
         print ("DOCUMENTS URL \(documentsUrl)---")
             //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
         //let destinationFileUrl = documentsUrl.appendingPathComponent("AlhanSQL.sqlite")
         
         //Create URL to the source file you want to download
-        let fileURL = URL(string: "http://www.alhan.org/ialhan/version3/AlhanSQL.sqlite")
+        let fileURL = URL(string: "http://www.alhan.org/ialhan/version3/AlhanSQL3.sqlite")
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)

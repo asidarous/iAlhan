@@ -297,7 +297,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
                     }
                     
                 playlistVC.plHymnsArray = hymnArrays
-                
+                playlistInstructions = true
                  //let newDict =
                     
                 }

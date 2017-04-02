@@ -29,7 +29,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
-    
+    var samePlaylist: Bool = false
     let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     // Internet alert box
@@ -86,11 +86,22 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         // Check Queue player status
         
         if checkPlayerRunning() == true {
-            self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
-            
-        } else {
-            self.navigationItem.setRightBarButton(playButton, animated: true)
+            print("PLAYER IS RUNNING......")
+            if samePlaylist == true {
+                
+                self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
+            } else {
+                //AlhanPlayer.sharedInstance.queuePlayer.pause()
+                self.navigationItem.setRightBarButton(playButton, animated: true)
+            }
         }
+            
+        else {
+            //AlhanPlayer.sharedInstance.queuePlayer.pause()
+            print("PLAYER IS NOT RUNNING......")
+            self.navigationItem.setRightBarButton(playButton, animated: true)
+            }
+        
         
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.pauseCommand.isEnabled = true
@@ -193,29 +204,52 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //    }
     
     func checkPlayerRunning() -> Bool{
-        //print ("@@@ player rate \(AlhanPlayer.sharedInstance.player.rate)")
+        print ("@@@ player rate \(AlhanPlayer.sharedInstance.player.rate)")
+        print ("@@@ QUEUE player rate \(AlhanPlayer.sharedInstance.queuePlayer.rate)")
         //print ("$$$ here is the current session mode \(AVAudioSession.sharedInstance().mode)")
         //print ("$$$ here is the current session desc \(AVAudioSession.sharedInstance().description)$$$$$")
         var isRunning = false
         
         
         // Pause player if running
-        if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
-            AlhanPlayer.sharedInstance.player.pause()
+        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+            // check to see if the hymn is part of the playlist
+//            
+            for hymnURL in playlistHymns{
+                //print("Now playing : \(AlhanPlayer.sharedInstance.player.currentItem?.description)")
+                print("DESCRIPTION: \(AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description)")
+                print("\n")
+                print("HymnURL: \(hymnURL.HymnURL)")
+                print("===========================")
+                if AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description.range(of: String(hymnURL.HymnURL)) != nil {
+                    print ("++ Playing the same hymn, then we're in the same playlist")
+                    //print ("+++ Here is where the hymn is \(AlhanPlayer.sharedInstance.player.currentTime().seconds)")
+                    samePlaylist = true
+                    break
+                    }
+            }
+            
+            if samePlaylist == false{
+                print ("++ Not in the same playlist")
+                AlhanPlayer.sharedInstance.pauseQueue()
+                AlhanPlayer.sharedInstance.queuePlayer.removeAllItems()
+            }
+
+//        //AlhanPlayer.sharedInstance.queuePlayer.pause()
+            isRunning = true
         }
         
-        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-            
-            isRunning = true
-           
-        }
+        
+       
+        
+       
         return isRunning
     }
     
 
     
     func playButtonTapped() {
-        
+        if playlistHymns.count > 0{
         /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
             
             showAlertButton()
@@ -223,10 +257,23 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
         }else
         {*/
+        
+//        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+//            print("********* IT WAS PLAYING ********")
+//            AlhanPlayer.sharedInstance.queuePlayer.pause()
+//        }
+        
+        
+       
         self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
         
        
-     
+            // Pause individual hymn if running
+            if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
+                print("### Hymn player was on")
+                AlhanPlayer.sharedInstance.player.pause()
+            }
+
         
         for hymnURL in playlistHymns{
             
@@ -274,7 +321,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         //play()
         //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
         
-        
+        }
+        else
+        {
+            let alert = UIAlertController(title: "No Hymns in Playlist", message: "Please add hymns to current playlist before pressing play.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func pauseButtonTapped() {
@@ -293,6 +346,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
         
     }
+    
     
     override var canBecomeFirstResponder : Bool {
         return true
