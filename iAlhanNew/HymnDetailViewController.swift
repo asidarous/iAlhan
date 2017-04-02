@@ -248,7 +248,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //            updater.preferredFramesPerSecond = 60
 //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
 //
-        let image:UIImage = UIImage(named: "photo")!
+        let image:UIImage = UIImage(named: "artworkCross")!
         
         let albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
             return image

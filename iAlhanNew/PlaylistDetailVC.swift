@@ -307,10 +307,16 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
             }
         }
+            
+            let image:UIImage = UIImage(named: "artworkCross")!
+            
+            let albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+                return image  })
+    
         AlhanPlayer.sharedInstance.queuePlayer.play()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: " \((playlistHymns[0].HymnName)!)",
-            //MPMediaItemPropertyArtwork: albumArtWork,
+            MPMediaItemPropertyArtwork: albumArtWork,
             MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
         ]
