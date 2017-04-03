@@ -80,7 +80,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         // handles audio when device is muted
         do {
             
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)//.mixWithOthers)
+            if #available(iOS 10.0, *) {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
+            } else {
+                // Fallback on earlier versions
+            }//.mixWithOthers)
             UIApplication.shared.beginReceivingRemoteControlEvents()
             try AVAudioSession.sharedInstance().setActive(true)
             
@@ -249,11 +253,15 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
 //
         let image:UIImage = UIImage(named: "artworkCross")!
-        
-        let albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-            return image
-
-        })
+        var albumArtWork: MPMediaItemArtwork!
+        if #available(iOS 10.0, *) {
+            albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+                return image
+                
+            })
+        } else {
+            // Fallback on earlier versions
+        }
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnDescription)!)",
             MPMediaItemPropertyArtwork: albumArtWork,

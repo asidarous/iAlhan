@@ -176,8 +176,13 @@ class PlayListVC: UITableViewController {
             switch identifier
             {
             case "Show Playlist Detail":
-                let playlistDetailVC = segue.destination as! PlaylistDetailVC
-                playlistDetailVC.title = sender as? String
+                if #available(iOS 10.0, *) {
+                    let playlistDetailVC = segue.destination as! PlaylistDetailVC
+                    playlistDetailVC.title = sender as? String
+                } else {
+                    // Fallback on earlier versions
+                }
+                
                 print ("I'm here")
                 
             

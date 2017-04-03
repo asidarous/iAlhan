@@ -17,6 +17,7 @@ struct PlaylistHymns{
     var HymnURL: String!
 }
 
+@available(iOS 10.0, *)
 class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet var PlayPauseButton: UIBarButtonItem!
