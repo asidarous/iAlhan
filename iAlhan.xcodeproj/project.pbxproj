@@ -43,7 +43,6 @@
 		F0E3E83C1DB03E5400174D91 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E3E8361DB03E5400174D91 /* FMDatabasePool.m */; };
 		F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */; };
 		F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E65F811DA6FC2100A96A69 /* Assets.xcassets */; };
-		F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0E65F831DA6FC2100A96A69 /* LaunchScreen.storyboard */; };
 		F0E65F901DA6FC2100A96A69 /* iAlhanNewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F8F1DA6FC2100A96A69 /* iAlhanNewTests.swift */; };
 		F0E65F9B1DA6FC2100A96A69 /* iAlhanNewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F9A1DA6FC2100A96A69 /* iAlhanNewUITests.swift */; };
 		F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */; };
@@ -112,7 +111,6 @@
 		F0E65F771DA6FC2000A96A69 /* iAlhan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlhan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0E65F811DA6FC2100A96A69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F0E65F841DA6FC2100A96A69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0E65F861DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F8F1DA6FC2100A96A69 /* iAlhanNewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlhanNewTests.swift; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 				F06927D71DA82E3000A94BB9 /* Controller */,
 				F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */,
 				F0E65F811DA6FC2100A96A69 /* Assets.xcassets */,
-				F0E65F831DA6FC2100A96A69 /* LaunchScreen.storyboard */,
 				F0E65F861DA6FC2100A96A69 /* Info.plist */,
 				F06927D81DA82E4500A94BB9 /* Model */,
 				F0E3E83D1DB03EE700174D91 /* iAlhanNew-Bridging-Header.h */,
@@ -404,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0EFAFF31DC99FBE00EA4814 /* AlhanPL.sqlite in Resources */,
-				F0E65F851DA6FC2100A96A69 /* LaunchScreen.storyboard in Resources */,
 				F09DD6C71E8F27770097F235 /* dbversion3.txt in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
 				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
@@ -494,17 +490,6 @@
 			targetProxy = F0E65F971DA6FC2100A96A69 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		F0E65F831DA6FC2100A96A69 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F0E65F841DA6FC2100A96A69 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F0E65F9D1DA6FC2100A96A69 /* Debug */ = {
@@ -615,8 +600,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "62a619a5-6a86-40b9-a4bd-72e6779708c9";
-				PROVISIONING_PROFILE_SPECIFIER = NewIphone7;
+				PROVISIONING_PROFILE = "ff12f134-8e6b-4fe7-9fb4-1a7274cd79dd";
+				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -636,8 +621,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "62a619a5-6a86-40b9-a4bd-72e6779708c9";
-				PROVISIONING_PROFILE_SPECIFIER = NewIphone7;
+				PROVISIONING_PROFILE = "ff12f134-8e6b-4fe7-9fb4-1a7274cd79dd";
+				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
