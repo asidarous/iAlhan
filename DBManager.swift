@@ -38,7 +38,8 @@ class DBManager: NSObject {
     override init() {
         super.init()
         
-        pathToDatabase = Bundle.main.path(forResource: databaseFileName, ofType: "sqlite")
+        //pathToDatabase = Bundle.main.path(forResource: databaseFileName, ofType: "sqlite")
+        pathToDatabase = documentDirectoryPath.appendingPathComponent("AlhanSQL3.sqlite")
         pl_pathToDatabase = documentDirectoryPath.appendingPathComponent("LocalAlhanPL.sqlite")
 
 

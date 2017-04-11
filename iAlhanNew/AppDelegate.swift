@@ -49,6 +49,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
         }
+        
+        // For the hymns DB
+        let destinationPathHymns = doumentDirectoryPath.appendingPathComponent("AlhanSQL3.sqlite")
+        let sourcePathHymns = Bundle.main.path(forResource: "AlhanSQL3", ofType: "sqlite")
+        
+        if FileManager.default.fileExists(atPath: destinationPathHymns) {
+            print("AlhanSQL3.sqlite already exists at path")
+            
+            // if the file doesn't exist
+        } else {
+            
+            
+            do{
+                try fileManger.copyItem(atPath: sourcePathHymns!, toPath: destinationPathHymns)
+                print("Copied AlhanSQL3 successfully to \(destinationPathHymns)")
+            }
+            catch let error as NSError {
+                NSLog("Unable to copy PlaylistDB to  directory \(error.debugDescription)")
+            }
+            
+        }
 
     
         if Reachability.isConnectedToNetwork(){

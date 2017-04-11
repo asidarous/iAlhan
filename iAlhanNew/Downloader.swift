@@ -17,6 +17,9 @@ import UIKit
             //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
         //let destinationFileUrl = documentsUrl.appendingPathComponent("AlhanSQL.sqlite")
         
+         let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+         let pathToDatabase = documentDirectoryPath.appendingPathComponent("AlhanSQL3.sqlite")
+        
         //Create URL to the source file you want to download
         let fileURL = URL(string: "http://www.alhan.org/ialhan/version3/AlhanSQL3.sqlite")
         
@@ -34,14 +37,15 @@ import UIKit
                 
                 // Delete existing file
                 do {
-                    try FileManager.default.removeItem(atPath: documentsUrl.path)
+                    print("@@@@@ Document URL Path: \(documentsUrl)")
+                    try FileManager.default.removeItem(atPath: pathToDatabase)
                 } catch (let writeError) {
                     print("Error deleting a file \(documentsUrl) : \(writeError)")
                 }
                 
                 // Copy the downloaded file
                 do {
-                    try FileManager.default.copyItem(atPath: tempLocalUrl.path, toPath: documentsUrl.path)
+                    try FileManager.default.copyItem(atPath: tempLocalUrl.path, toPath: pathToDatabase)
                     //copyItem(atPath: tempLocalUrl, toPath: documentsUrl)
                 } catch (let writeError) {
                     print("Error creating a file \(documentsUrl) : \(writeError)")

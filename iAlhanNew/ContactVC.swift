@@ -36,7 +36,7 @@ class ContactVC: UIViewController, MFMailComposeViewControllerDelegate {
         
         mc.setToRecipients(toRecepients)
         mc.setSubject("iAlhan message from: \(nameField.text!)")
-        mc.setMessageBody("Name: \(nameField.text!)\n\n Email: \(emailField.text!) \n\n Message: \(messageField.text!)", isHTML: true)
+        mc.setMessageBody("Name: \(nameField.text!)<br/> Message: \(messageField.text!)", isHTML: true)
         
         self.present(mc,animated: true, completion: nil)
         }else {
