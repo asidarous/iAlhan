@@ -20,6 +20,7 @@ class PlayListVC: UITableViewController {
     var plArray: [String]!
 
     var plHymnsArray: [PlayHymns] = []
+    var disalert: Bool  = UserDefaults.standard.bool(forKey: "disalert");
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +34,14 @@ class PlayListVC: UITableViewController {
         self.clearsSelectionOnViewWillAppear = true
 
         
-        if playlistInstructions == true {
+        if (playlistInstructions == true && !disalert){
             let alert = UIAlertController(title: "Add to playlist", message: "Please select an exiting playlist, or click + to create a new playlist.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default, handler: { (action) in
+                //execute some code when this option is selected
+                UserDefaults.standard.set(true, forKey: "disalert")
+                //print("77777777 DISALERT \(UserDefaults.standard.bool(forKey: "disalert"))")
+            }))
             self.present(alert, animated: true, completion: nil)
             playlistInstructions = false
         }
@@ -98,6 +104,7 @@ class PlayListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if plHymnsArray.isEmpty {
         performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
+            plHymnsArray.removeAll()
         }
         else
         {
@@ -168,6 +175,10 @@ class PlayListVC: UITableViewController {
     }
     */
     
+    override func viewDidDisappear(_ animated: Bool) {
+        plHymnsArray.removeAll()
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
@@ -176,14 +187,11 @@ class PlayListVC: UITableViewController {
             switch identifier
             {
             case "Show Playlist Detail":
-                if #available(iOS 10.0, *) {
+
                     let playlistDetailVC = segue.destination as! PlaylistDetailVC
                     playlistDetailVC.title = sender as? String
-                } else {
-                    // Fallback on earlier versions
-                }
                 
-                print ("I'm here")
+                    print ("I'm here")
                 
             
             default:

@@ -17,7 +17,7 @@ struct PlaylistHymns{
     var HymnURL: String!
 }
 
-@available(iOS 10.0, *)
+//@available(iOS 10.0, *)
 class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet var PlayPauseButton: UIBarButtonItem!
@@ -71,7 +71,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         // handles audio when device is muted
         do {
             
+             if #available(iOS 10.0, *) {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
+             }else{
+            
+             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            }
+            
+                
             try AVAudioSession.sharedInstance().setActive(true)
             
         }
@@ -311,8 +318,15 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
             let image:UIImage = UIImage(named: "artworkCross")!
             
-            let albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-                return image  })
+            var albumArtWork:MPMediaItemArtwork!
+            
+            if #available(iOS 10.0, *) {
+                albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+                    return image  })
+            }else{
+                albumArtWork = MPMediaItemArtwork.init(image: image)
+
+            }
     
         AlhanPlayer.sharedInstance.queuePlayer.play()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [

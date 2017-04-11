@@ -33,7 +33,7 @@ class PLAddVC: UIViewController {
     
     @IBAction func AddPL(_ sender: AnyObject) {
         
-        if plText.text != nil {
+        if plText.text != "" {
             PL_DBManager.shared.createPL(playlist: plText.text!)
             self.dismiss(animated: true, completion: nil)
         }

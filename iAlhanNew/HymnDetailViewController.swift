@@ -84,6 +84,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
             } else {
                 // Fallback on earlier versions
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                
             }//.mixWithOthers)
             UIApplication.shared.beginReceivingRemoteControlEvents()
             try AVAudioSession.sharedInstance().setActive(true)
@@ -261,6 +263,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             })
         } else {
             // Fallback on earlier versions
+            albumArtWork = MPMediaItemArtwork.init(image: image)
         }
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnDescription)!)",
@@ -295,6 +298,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         }else
         {
+            // Stop PlayList if playing
+            if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+                print("### Playlist player was on")
+                AlhanPlayer.sharedInstance.queuePlayer.pause()
+            }
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(pauseButton, at: 0)
@@ -322,11 +330,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         //print ("$$$ here is the current session desc \(AVAudioSession.sharedInstance().description)$$$$$")
         var isRunning = false
         
-        // Pause playlist if running
-        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-            print("### PlayList player is on")
-            AlhanPlayer.sharedInstance.queuePlayer.pause()
-        }
+//        // Pause playlist if running --- used it in PlayButtonTapped
+//        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+//            print("### PlayList player is on")
+//            AlhanPlayer.sharedInstance.queuePlayer.pause()
+//        }
         
         // Check if runnning the same hymn
         if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
