@@ -18,8 +18,8 @@ import UIKit
         let arrayCount = tempArray.count
         let fileName = tempArray[arrayCount-1]
         let prefix = tempArray[0]+"//"+tempArray[2]+"/"
-        let start = url.index((url.startIndex), offsetBy: prefix.characters.count)
-        let end = url.index((url.endIndex), offsetBy: -(fileName.characters.count))
+        let start = url.index((url.startIndex), offsetBy: prefix.count)
+        let end = url.index((url.endIndex), offsetBy: -(fileName.count))
         let range = start..<end
         let directory = url.substring(with: range)
         return directory
