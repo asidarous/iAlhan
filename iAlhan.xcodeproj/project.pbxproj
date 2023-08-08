@@ -353,7 +353,7 @@
 					F0E65F761DA6FC2000A96A69 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = BGQNQ2M53K;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
@@ -364,12 +364,14 @@
 					F0E65F8A1DA6FC2100A96A69 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = BGQNQ2M53K;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 						TestTargetID = F0E65F761DA6FC2000A96A69;
 					};
 					F0E65F951DA6FC2100A96A69 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = BGQNQ2M53K;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 						TestTargetID = F0E65F761DA6FC2000A96A69;
 					};
@@ -618,7 +620,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -640,7 +643,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -655,7 +659,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
 			};
 			name = Debug;
@@ -670,7 +675,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
 			};
 			name = Release;
@@ -686,7 +692,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
 				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = iAlhanNew;
 			};
 			name = Debug;
@@ -702,7 +709,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
 				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = iAlhanNew;
 			};
 			name = Release;

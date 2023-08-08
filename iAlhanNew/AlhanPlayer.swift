@@ -77,7 +77,7 @@ class AlhanPlayer {
     }
     
     func resetTimer(){
-        AlhanPlayer.sharedInstance.player.currentItem?.seek(to: CMTimeMake(0,1))
+        AlhanPlayer.sharedInstance.player.currentItem?.seek(to: CMTimeMake(value: 0,timescale: 1))
         //ProgressBar.value = Float(0)
         
     }

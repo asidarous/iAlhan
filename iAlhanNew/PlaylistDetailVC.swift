@@ -35,8 +35,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
     // Internet alert box
     @IBAction func showAlertButton() {
-        let alert = UIAlertController(title: "No Internet Connection", message: "Only downloaded content will play offline. Please make sure you are connected to the internet to  be able to stream hymns.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "No Internet Connection", message: "Only downloaded content will play offline. Please make sure you are connected to the internet to  be able to stream hymns.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -72,10 +72,10 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         do {
             
              if #available(iOS 10.0, *) {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
+            try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: AVAudioSession.CategoryOptions.allowAirPlay)
              }else{
             
-             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+             try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback))
             }
             
                 
@@ -87,9 +87,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         }
         
         // Define buttons
-        pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
-        playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(PlaylistDetailVC.playButtonTapped))
-        nextButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fastForward, target: self, action: #selector(PlaylistDetailVC.nextButtonTapped))
+        pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
+        playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(PlaylistDetailVC.playButtonTapped))
+        nextButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fastForward, target: self, action: #selector(PlaylistDetailVC.nextButtonTapped))
         
         // Check Queue player status
         
@@ -167,7 +167,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //        return [delete]
 //    }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let row = indexPath.row
         
@@ -256,7 +256,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
 
     
-    func playButtonTapped() {
+    @objc func playButtonTapped() {
         if playlistHymns.count > 0{
         /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
             
@@ -345,13 +345,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         }
         else
         {
-            let alert = UIAlertController(title: "No Hymns in Playlist", message: "Please add hymns to current playlist before pressing play.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            let alert = UIAlertController(title: "No Hymns in Playlist", message: "Please add hymns to current playlist before pressing play.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func pauseButtonTapped() {
+    @objc func pauseButtonTapped() {
             self.navigationItem.setRightBarButtonItems([playButton], animated: true)
         
            AlhanPlayer.sharedInstance.pauseQueue()
@@ -360,7 +360,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
     }
     
-    func nextButtonTapped() {
+    @objc func nextButtonTapped() {
         
         AlhanPlayer.sharedInstance.nextHymnInQueue()
         
@@ -398,4 +398,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
 
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

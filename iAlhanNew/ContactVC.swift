@@ -41,8 +41,8 @@ class ContactVC: UIViewController, MFMailComposeViewControllerDelegate {
         self.present(mc,animated: true, completion: nil)
         }else {
         
-            let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send Email.  Please check Email configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
-            sendMailErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send Email.  Please check Email configuration and try again.", preferredStyle: UIAlertController.Style.alert)
+            sendMailErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
              self.present(sendMailErrorAlert, animated: true, completion: nil)
             
 

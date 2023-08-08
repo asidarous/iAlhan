@@ -194,7 +194,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
-    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+    @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
         self.performSegue(withIdentifier: "Go To Playlist Segue", sender: self)
     }
     

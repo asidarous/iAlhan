@@ -63,8 +63,8 @@ import UIKit
 func showUpdateAlertButton(in vc: UIViewController) {
     let message = DBManager.shared.getLatestUpdates()
     let newMessage = message.replacingOccurrences(of: ",", with: "\n")
-    let alert = UIAlertController(title: "New Hymns Added", message: newMessage, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+    let alert = UIAlertController(title: "New Hymns Added", message: newMessage, preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
     vc.present(alert, animated: true, completion: nil)
 }
 

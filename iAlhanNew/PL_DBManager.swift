@@ -140,7 +140,7 @@ class PL_DBManager: NSObject {
                     
                     let alertWindow = UIWindow(frame: UIScreen.main.bounds)
                     alertWindow.rootViewController = UIViewController()
-                    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+                    alertWindow.windowLevel = UIWindow.Level.alert + 1;
                     alertWindow.makeKeyAndVisible()
                     alertWindow.rootViewController?.present(alert, animated: true, completion: nil)
 

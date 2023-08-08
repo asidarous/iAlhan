@@ -320,7 +320,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     
-    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+    @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
         self.performSegue(withIdentifier: "Season Detail to Playlist", sender: self)
     }
 }

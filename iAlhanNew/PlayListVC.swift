@@ -35,9 +35,9 @@ class PlayListVC: UITableViewController {
 
         
         if (playlistInstructions == true && !disalert){
-            let alert = UIAlertController(title: "Add to playlist", message: "Please select an exiting playlist, or click + to create a new playlist.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Do Not Show Again", style: UIAlertActionStyle.default, handler: { (action) in
+            let alert = UIAlertController(title: "Add to playlist", message: "Please select an exiting playlist, or click + to create a new playlist.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Do Not Show Again", style: UIAlertAction.Style.default, handler: { (action) in
                 //execute some code when this option is selected
                 UserDefaults.standard.set(true, forKey: "disalert")
                 //print("77777777 DISALERT \(UserDefaults.standard.bool(forKey: "disalert"))")
@@ -56,7 +56,7 @@ class PlayListVC: UITableViewController {
     }
 
     
-    func loadList(notification: NSNotification){
+    @objc func loadList(notification: NSNotification){
         //load data here
         //print("HHHHHHHHERE")
         plArray = PL_DBManager.shared.getPL()
@@ -130,7 +130,7 @@ class PlayListVC: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let row = indexPath.row
         let cell = self.tableView.cellForRow(at: indexPath)

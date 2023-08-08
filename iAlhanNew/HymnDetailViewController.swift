@@ -57,8 +57,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     // Internet alert box
     @IBAction func showAlertButton() {
-    let alert = UIAlertController(title: "No Internet Connection", message: "Please make sure you are connected to the internet to be able to stream hymns. Meanwhile you can listen to downloaded content offline. ", preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+    let alert = UIAlertController(title: "No Internet Connection", message: "Please make sure you are connected to the internet to be able to stream hymns. Meanwhile you can listen to downloaded content offline. ", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
     }
     
@@ -81,10 +81,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         do {
             
             if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.allowAirPlay)
+                try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: AVAudioSession.CategoryOptions.allowAirPlay)
             } else {
                 // Fallback on earlier versions
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback))
                 
             }//.mixWithOthers)
             UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -142,8 +142,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
         progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
-        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControlState.normal)
-        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControlState.highlighted)
+        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControl.State.normal)
+        progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControl.State.highlighted)
         progressBar.isUserInteractionEnabled = true
         
         progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
@@ -154,10 +154,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
         //print("PLAYER ITEM At view Did Load : -- \(playerItem)")
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
-        pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
-        playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
+        pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
+        playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
         saveButton = UIBarButtonItem(image: UIImage(named: "download"), landscapeImagePhone: nil, style: .done, target: self, action: #selector(HymnDetailViewController.saveFile))
-        deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action: #selector(HymnDetailViewController.deleteFile))
+        deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: self, action: #selector(HymnDetailViewController.deleteFile))
         
         let flexible = UIBarButtonItem(customView: progressBar)
         progressBarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
@@ -233,7 +233,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
     // MARK: Audio controls
     
-    func finishedPlaying(myNotification: Notification ){
+    @objc func finishedPlaying(myNotification: Notification ){
         
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
@@ -279,7 +279,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
          }
     
     
-    func pause() {
+    @objc func pause() {
 
             AlhanPlayer.sharedInstance.player.volume = 1.0
             AlhanPlayer.sharedInstance.player.pause()
@@ -287,7 +287,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
 
     
-    func playButtonTapped() {
+    @objc func playButtonTapped() {
         //print ("Here is the fileIsLocal variable: \(fileIsLocal)")
         //print ("Here is the Reachability: \(Reachability.isConnectedToNetwork())")
         
@@ -314,7 +314,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
     }
     
-    func pauseButtonTapped() {
+    @objc func pauseButtonTapped() {
         arrayOfButtons = self.ToolBar.items!
         arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
         arrayOfButtons.insert(playButton, at: 0)
@@ -359,7 +359,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     }
     
     // MARK: tracking audio
-    func trackAudio() {
+    @objc func trackAudio() {
 
         progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
         //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
@@ -372,7 +372,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
     }
     
-    func Seek(_ sender: UISlider) {
+    @objc func Seek(_ sender: UISlider) {
         
         AlhanPlayer.sharedInstance.player.pause()
         
@@ -381,7 +381,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         arrayOfButtons.insert(playButton, at: 0)
         self.ToolBar.setItems(arrayOfButtons, animated: false)
         
-        AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(( Int64(progressBar.value)), 1) )
+        AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(value: ( Int64(progressBar.value)), timescale: 1) )
         //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
         let minutes = Int(floor(progressBar.value / 60))
         let seconds = Int(round(progressBar.value.truncatingRemainder(dividingBy: 60)))
@@ -402,7 +402,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     // MARK: file handling
     
-    func saveFile(){
+    @objc func saveFile(){
         if let audioUrl = URL(string:  (hymnDetail?[0].hymnAudio)!) {
             
             // then lets create your document folder url
@@ -451,7 +451,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     }
 
    
-    func deleteFile(){
+    @objc func deleteFile(){
         let audioUrl = URL(string:  (hymnDetail?[0].hymnAudio)!)
         let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
         let destinationUrl = localPath.appendingPathComponent((audioUrl?.lastPathComponent)!)
@@ -496,10 +496,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         
         
-        originalStyle = navigationController?.navigationBar.titleTextAttributes?.lazy.elements
+        originalStyle = convertFromOptionalNSAttributedStringKeyDictionary(navigationController?.navigationBar.titleTextAttributes)?.lazy.elements
         //print(originalStyle)
         
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "copt", size: 24)!, NSForegroundColorAttributeName: GlobalConstants.kColor_GoldColor]
+        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.font.rawValue: UIFont(name: "copt", size: 24)!, NSAttributedString.Key.foregroundColor.rawValue: GlobalConstants.kColor_GoldColor])
         
         NotificationCenter.default.addObserver(self, selector: #selector(HymnDetailViewController.finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
 
@@ -512,7 +512,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        navigationController?.navigationBar.titleTextAttributes = originalStyle
+        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(originalStyle)
         NotificationCenter.default.removeObserver(self)
         
 //        if (updater != nil) {
@@ -546,7 +546,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     func audioPlayerEndInterruption(player: AVAudioPlayer, withOptions flags: Int) {
         print("--- audioPlayerEndInterruption")
         guard
-            AVAudioSessionInterruptionOptions(rawValue: UInt(flags)) == .shouldResume
+            AVAudioSession.InterruptionOptions(rawValue: UInt(flags)) == .shouldResume
                 && interruptedOnPlayback
         else { return }
         if activateSession() {
@@ -579,7 +579,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
     }
     
-    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+    @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
         self.performSegue(withIdentifier: "Hymn Detail to Playlist", sender: self)
     }
     
@@ -651,4 +651,21 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]?) -> [String: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }
