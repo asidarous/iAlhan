@@ -51,14 +51,14 @@ class DBManager: NSObject {
         if database == nil {
             
             print(Bundle.main)
-            print("***** Path to Db \(pathToDatabase)")
+            print("***** Path to Db \(String(describing: pathToDatabase))")
             
             if FileManager.default.fileExists(atPath: pathToDatabase) {
                 //print("Horray found file")
                 database = FMDatabase(path: pathToDatabase)
             } else
             {
-                print ("Cen't find file \(pathToDatabase)")
+                print ("Cen't find file \(String(describing: pathToDatabase))")
             }
         }
         
@@ -82,7 +82,7 @@ class DBManager: NSObject {
                 pl_database = FMDatabase(path: pl_pathToDatabase)
             } else
             {
-                print ("Cen't find file \(pl_pathToDatabase)")
+                print ("Cen't find file \(String(describing: pl_pathToDatabase))")
             }
         }
         

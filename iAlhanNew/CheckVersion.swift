@@ -22,7 +22,7 @@ func CheckVersion () -> Bool {
     do {
         // Get the contents
         internetContent = try String(contentsOf: url!)
-        print("Here is the version from the web: \(internetContent)")
+        print("Here is the version from the web: \(String(describing: internetContent))")
     }
     catch let error as NSError {
         print("Ooops! Something went wrong: \(error)")

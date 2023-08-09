@@ -3,14 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		AAA097631DC6A129002384D8 /* PlaylistDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */; };
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
-		F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0524DF91DB682EF0066B075 /* AVFoundation.framework */; };
 		F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */; };
 		F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0524DFD1DB837E60066B075 /* Main.storyboard */; };
@@ -44,20 +43,12 @@
 		F0E65F7B1DA6FC2000A96A69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F7A1DA6FC2000A96A69 /* AppDelegate.swift */; };
 		F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E65F811DA6FC2100A96A69 /* Assets.xcassets */; };
 		F0E65F901DA6FC2100A96A69 /* iAlhanNewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F8F1DA6FC2100A96A69 /* iAlhanNewTests.swift */; };
-		F0E65F9B1DA6FC2100A96A69 /* iAlhanNewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65F9A1DA6FC2100A96A69 /* iAlhanNewUITests.swift */; };
 		F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */; };
 		F0EFAFF31DC99FBE00EA4814 /* AlhanPL.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F0EFAFF21DC99FBE00EA4814 /* AlhanPL.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		F0E65F8C1DA6FC2100A96A69 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F0E65F6F1DA6FC2000A96A69 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F0E65F761DA6FC2000A96A69;
-			remoteInfo = iAlhanNew;
-		};
-		F0E65F971DA6FC2100A96A69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F0E65F6F1DA6FC2000A96A69 /* Project object */;
 			proxyType = 1;
@@ -115,7 +106,6 @@
 		F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F8F1DA6FC2100A96A69 /* iAlhanNewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlhanNewTests.swift; sourceTree = "<group>"; };
 		F0E65F911DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlhanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E65F9A1DA6FC2100A96A69 /* iAlhanNewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlhanNewUITests.swift; sourceTree = "<group>"; };
 		F0E65F9C1DA6FC2100A96A69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeasonViewController.swift; path = ../SeasonViewController.swift; sourceTree = "<group>"; };
@@ -136,13 +126,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F0E65F881DA6FC2100A96A69 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0E65F931DA6FC2100A96A69 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,7 +226,6 @@
 			children = (
 				F0E65F771DA6FC2000A96A69 /* iAlhan.app */,
 				F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */,
-				F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -322,39 +304,20 @@
 			productReference = F0E65F8B1DA6FC2100A96A69 /* iAlhanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F0E65F951DA6FC2100A96A69 /* iAlhanUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanUITests" */;
-			buildPhases = (
-				F0E65F921DA6FC2100A96A69 /* Sources */,
-				F0E65F931DA6FC2100A96A69 /* Frameworks */,
-				F0E65F941DA6FC2100A96A69 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F0E65F981DA6FC2100A96A69 /* PBXTargetDependency */,
-			);
-			name = iAlhanUITests;
-			productName = iAlhanNewUITests;
-			productReference = F0E65F961DA6FC2100A96A69 /* iAlhanUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		F0E65F6F1DA6FC2000A96A69 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = alhan.org;
 				TargetAttributes = {
 					F0E65F761DA6FC2000A96A69 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = BGQNQ2M53K;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = "";
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
 								enabled = 1;
@@ -364,14 +327,7 @@
 					F0E65F8A1DA6FC2100A96A69 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = BGQNQ2M53K;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Manual;
-						TestTargetID = F0E65F761DA6FC2000A96A69;
-					};
-					F0E65F951DA6FC2100A96A69 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = BGQNQ2M53K;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Manual;
 						TestTargetID = F0E65F761DA6FC2000A96A69;
 					};
@@ -379,7 +335,7 @@
 			};
 			buildConfigurationList = F0E65F721DA6FC2000A96A69 /* Build configuration list for PBXProject "iAlhan" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -392,7 +348,6 @@
 			targets = (
 				F0E65F761DA6FC2000A96A69 /* iAlhan */,
 				F0E65F8A1DA6FC2100A96A69 /* iAlhanTests */,
-				F0E65F951DA6FC2100A96A69 /* iAlhanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -417,14 +372,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0E65F941DA6FC2100A96A69 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F0485A2B1DB1353900DBCFE2 /* copt.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,14 +417,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F0E65F921DA6FC2100A96A69 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F0E65F9B1DA6FC2100A96A69 /* iAlhanNewUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -486,11 +425,6 @@
 			target = F0E65F761DA6FC2000A96A69 /* iAlhan */;
 			targetProxy = F0E65F8C1DA6FC2100A96A69 /* PBXContainerItemProxy */;
 		};
-		F0E65F981DA6FC2100A96A69 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F0E65F761DA6FC2000A96A69 /* iAlhan */;
-			targetProxy = F0E65F971DA6FC2100A96A69 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -498,6 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -507,6 +442,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -514,8 +450,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -541,7 +479,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -555,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -564,6 +503,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -571,8 +511,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -592,10 +534,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -608,12 +551,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -621,7 +567,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -632,19 +578,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -656,11 +605,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
 			};
 			name = Debug;
@@ -672,46 +625,16 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNewTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlhan.app/iAlhan";
-			};
-			name = Release;
-		};
-		F0E65FA61DA6FC2100A96A69 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = BGQNQ2M53K;
-				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
-				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
-				TEST_TARGET_NAME = iAlhanNew;
-			};
-			name = Debug;
-		};
-		F0E65FA71DA6FC2100A96A69 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = BGQNQ2M53K;
-				INFOPLIST_FILE = iAlhanNewUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alhan.org.iAlhanNewUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b65dc9db-f3db-4234-a0e9-45fa230987d0";
-				PROVISIONING_PROFILE_SPECIFIER = iPhone7All;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
-				TEST_TARGET_NAME = iAlhanNew;
 			};
 			name = Release;
 		};
@@ -741,15 +664,6 @@
 			buildConfigurations = (
 				F0E65FA31DA6FC2100A96A69 /* Debug */,
 				F0E65FA41DA6FC2100A96A69 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F0E65FA51DA6FC2100A96A69 /* Build configuration list for PBXNativeTarget "iAlhanUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F0E65FA61DA6FC2100A96A69 /* Debug */,
-				F0E65FA71DA6FC2100A96A69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

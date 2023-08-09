@@ -21,7 +21,7 @@ import UIKit
         let start = url.index((url.startIndex), offsetBy: prefix.count)
         let end = url.index((url.endIndex), offsetBy: -(fileName.count))
         let range = start..<end
-        let directory = url.substring(with: range)
+        let directory = String(url[range])
         return directory
     
     }
