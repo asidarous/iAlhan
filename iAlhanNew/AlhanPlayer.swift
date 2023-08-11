@@ -25,7 +25,9 @@ class AlhanPlayer {
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
         print("DESCRIPTION from inside the player \(String(describing: player.currentItem?.description))")
-        print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
+        let durationInSecs = CMTimeGetSeconds(player.currentItem!.duration)
+        print("Duration of the hymn from inside the player class \(String(durationInSecs)) -- END")
+       // print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
         player.play()
         //player.allowsExternalPlayback = true
 
@@ -41,7 +43,9 @@ class AlhanPlayer {
         player.volume = 1.0
         //print("------ \(alhanPlayer.currentItem?.duration.seconds)")
         print("DESCRIPTION from inside the player \(String(describing: player.currentItem?.description))")
-        print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
+        let durationInSecs = CMTimeGetSeconds(playerItem.duration)
+        print("Duration of the hymn from inside the player class \(String(durationInSecs)) -- END")
+       // print("Duration of the hymn from inside the player class \(String(describing: player.currentItem?.duration.seconds)) -- END")
         
         player.play()
         
@@ -77,7 +81,7 @@ class AlhanPlayer {
     }
     
     func resetTimer(){
-        AlhanPlayer.sharedInstance.player.currentItem?.seek(to: CMTimeMake(value: 0,timescale: 1))
+      AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(value: 0,timescale: 1))
         //ProgressBar.value = Float(0)
         
     }

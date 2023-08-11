@@ -94,8 +94,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         catch {
             print(error)
         }
-
-
+        
+        
         // file download handling
         //print("8888888888" )
         //print ((hymnDetail?[0].hymnAudio)!)
@@ -104,7 +104,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         HymnTextEnglish.delegate = self
         HymnTextCoptic.delegate = self
-
+        
         title = hymnDetail?[0].hymnName
         hymnAudioURL = URL(string: (hymnDetail?[0].hymnAudio)!)
         
@@ -133,12 +133,13 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         } else {
             // Regular
             print("%%%% I'm regular")
-           pbWidth = HymnDetailView.frame.width * 0.82
-            print("WIDTH: \(String(describing: pbWidth))") 
+            pbWidth = HymnDetailView.frame.width * 0.82
+            print("WIDTH: \(String(describing: pbWidth))")
         }
         
         //pbWidth = HymnDetailView.frame.width * 0.85
         print("The width: \(String(describing: pbWidth))")
+        
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
         progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
@@ -151,8 +152,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         //progressBar.sizeToFit()
         
         
-
-        //print("PLAYER ITEM At view Did Load : -- \(playerItem)")
+        
+        print("PLAYER ITEM At view Did Load : -- \(String(describing: playerItem))")
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
@@ -166,34 +167,34 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         let sliderLabel = UIBarButtonItem(customView: progressBarLabel)
         
         
-        progressBar.minimumValue = 0
+        //progressBar.minimumValue = 0
         
         //*******
         //*** check to see if there is a hymn playing
         //*******
         if checkPlayerRunning(audioString: "\(hymnAudioURL!)") == false {
-
+            
             playerItem = AVPlayerItem(url: hymnAudioURL)
             //self.alhanPlayer = AVPlayer(playerItem: playerItem)
             AlhanPlayer.sharedInstance.player = AVPlayer(playerItem: playerItem)
             //AlhanPlayer.sharedInstance.player.replaceCurrentItem(with: playerItem)
             
             
-        arrayOfButtons = self.ToolBar.items!
-        arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
-        arrayOfButtons.insert(flexible, at: 1)
-        arrayOfButtons.insert(sliderLabel, at: 2)
-        // check if file is local
-        if FileManager.default.fileExists(atPath: destinationUrl.path){
-            arrayOfButtons.insert(deleteButton, at: 3)
-        }else {
-            arrayOfButtons.insert(saveButton, at: 3)
-        }
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
-       
+            arrayOfButtons = self.ToolBar.items!
+            arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
+            arrayOfButtons.insert(flexible, at: 1)
+            arrayOfButtons.insert(sliderLabel, at: 2)
+            // check if file is local
+            if FileManager.default.fileExists(atPath: destinationUrl.path){
+                arrayOfButtons.insert(deleteButton, at: 3)
+            }else {
+                arrayOfButtons.insert(saveButton, at: 3)
+            }
+            self.ToolBar.setItems(arrayOfButtons, animated: false)
+            
         } else //*** if it is playing the hymn *****
         {
-        
+            
             arrayOfButtons = self.ToolBar.items!
             arrayOfButtons.insert(pauseButton, at: 0) // change index to wherever you'd like the button
             arrayOfButtons.insert(flexible, at: 1)
@@ -207,18 +208,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             self.ToolBar.setItems(arrayOfButtons, animated: false)
             
             // get the bar to the playing position
-            progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
-//            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-//            updater.preferredFramesPerSecond = 60
-//            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//        
+            progressBar.maximumValue = Float(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds ?? 0)
+            //            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+            //            updater.preferredFramesPerSecond = 60
+            //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+            //
         }
         
         // Media Info Center
         
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget(self, action: #selector(HymnDetailViewController.pause))
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pauseCommandHandler(_:)))
+        //commandCenter.pauseCommand.addTarget(self, action: #selector(HymnDetailViewController.pause), return .success)
     }
     
     // MARK: Scroll control
@@ -231,6 +233,14 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
     }
 
+    @objc func pauseCommandHandler(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+            // Perform your pause logic here
+            // For example, pause your audio playback
+        pause()
+        //#selector(HymnDetailViewController.pause)
+            // Return appropriate status
+            return .success
+        }
     // MARK: Audio controls
     
     @objc func finishedPlaying(myNotification: Notification ){
@@ -249,18 +259,16 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     }
     
     func play() {
-
-//            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-//            updater.preferredFramesPerSecond = 60
-//            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//
+        
+        //            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
+        //            updater.preferredFramesPerSecond = 60
+        //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        //
         let image:UIImage = UIImage(named: "artworkCross")!
         var albumArtWork: MPMediaItemArtwork!
         if #available(iOS 10.0, *) {
             albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-                return image
-                
-            })
+                return image})
         } else {
             // Fallback on earlier versions
             albumArtWork = MPMediaItemArtwork.init(image: image)
@@ -271,18 +279,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!),
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
         ]
-            AlhanPlayer.sharedInstance.play()
-            // print("MAX VALUE: \(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds) --DONE")
-            progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
+        AlhanPlayer.sharedInstance.play()
+        print("MAX VALUE: \(String(describing: AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)) --DONE")
+        progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
         
         
-         }
+    }
     
     
     @objc func pause() {
 
             AlhanPlayer.sharedInstance.player.volume = 1.0
             AlhanPlayer.sharedInstance.player.pause()
+            print("Pausing line 294")
     }
     
 
@@ -298,32 +307,56 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         }else
         {
-            // Stop PlayList if playing
-            if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-                print("### Playlist player was on")
-                AlhanPlayer.sharedInstance.queuePlayer.pause()
+            if activateSession() {
+                // Stop PlayList if playing
+                if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+                    print("### Playlist player was on")
+                    AlhanPlayer.sharedInstance.queuePlayer.pause()
+                }
+                arrayOfButtons = self.ToolBar.items!
+                arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+                arrayOfButtons.insert(pauseButton, at: 0)
+                self.ToolBar.setItems(arrayOfButtons, animated: false)
+                play()
+                //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
             }
-        arrayOfButtons = self.ToolBar.items!
-        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-        arrayOfButtons.insert(pauseButton, at: 0)
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
-        play()
-        //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
+            
         }
-         
-        
     }
     
     @objc func pauseButtonTapped() {
-        arrayOfButtons = self.ToolBar.items!
-        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-        arrayOfButtons.insert(playButton, at: 0)
-        
-        pause()
-       
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        if deactivateSession() {
+            arrayOfButtons = self.ToolBar.items!
+            arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
+            arrayOfButtons.insert(playButton, at: 0)
+            self.ToolBar.setItems(arrayOfButtons, animated: false)
+            pause()
+            
+            
+        }
     }
-
+    
+    func activateSession() -> Bool {
+        do {
+                try AVAudioSession.sharedInstance().setActive(true)
+                return true
+            } catch let error as NSError {
+                print(error.localizedDescription)
+                return false
+            }
+    }
+    
+    
+    func deactivateSession() -> Bool {
+        do {
+                try AVAudioSession.sharedInstance().setActive(false)
+                return true
+            } catch let error as NSError {
+                print(error.localizedDescription)
+                return false
+            }
+    }
+    
     func checkPlayerRunning(audioString: String) -> Bool{
         //print ("@@@ player rate \(AlhanPlayer.sharedInstance.player.rate)")
         //print ("$$$ here is the current session mode \(AVAudioSession.sharedInstance().mode)")
@@ -538,7 +571,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         print("audioPlayer.playing", player.isPlaying)
         interruptedOnPlayback = true
         
-        if deActivateSession() {
+        if deactivateSession() {
             print("AVAudioSession is inactive")
         }
     }
@@ -558,26 +591,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
        
     }
     
-    func activateSession() -> Bool {
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-            print("AVAudioSession is inactive")
-            return true
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return false
-        }
-    }
-    func deActivateSession() -> Bool {
-        do {
-            try AVAudioSession.sharedInstance().setActive(false)
-            print("AVAudioSession is inactive")
-            return true
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return false
-        }
-    }
+    
     
     @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
         self.performSegue(withIdentifier: "Hymn Detail to Playlist", sender: self)

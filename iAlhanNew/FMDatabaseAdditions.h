@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "FMDatabase.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
-/** Category of additions for `<FMDatabase>` class.
+/** Category of additions for @c FMDatabase  class.
  
- ### See also
+ See also
 
- - `<FMDatabase>`
+ - @c FMDatabase 
  */
 
 @interface FMDatabase (FMDatabaseAdditions)
@@ -23,89 +24,82 @@
 /// @name Return results of SQL to variable
 ///----------------------------------------
 
-/** Return `int` value for query
+/** Return @c int  value for query
  
- @param query The SQL query to be performed. 
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
- @return `int` value.
+ @return @c int  value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
 - (int)intForQuery:(NSString*)query, ...;
 
-/** Return `long` value for query
+/** Return @c long  value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
- @return `long` value.
+ @return @c long  value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
 - (long)longForQuery:(NSString*)query, ...;
 
 /** Return `BOOL` value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `BOOL` value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
 - (BOOL)boolForQuery:(NSString*)query, ...;
 
 /** Return `double` value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
  @return `double` value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
 - (double)doubleForQuery:(NSString*)query, ...;
 
-/** Return `NSString` value for query
+/** Return @c NSString  value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
- @return `NSString` value.
+ @return @c NSString  value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
-- (NSString*)stringForQuery:(NSString*)query, ...;
+- (NSString * _Nullable)stringForQuery:(NSString*)query, ...;
 
-/** Return `NSData` value for query
+/** Return @c NSData  value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
- @return `NSData` value.
+ @return @c NSData  value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
-- (NSData*)dataForQuery:(NSString*)query, ...;
+- (NSData * _Nullable)dataForQuery:(NSString*)query, ...;
 
-/** Return `NSDate` value for query
+/** Return @c NSDate  value for query
 
- @param query The SQL query to be performed.
- @param ... A list of parameters that will be bound to the `?` placeholders in the SQL query.
+ @param query The SQL query to be performed, followed by a list of parameters that will be bound to the `?` placeholders in the SQL query.
 
- @return `NSDate` value.
+ @return @c NSDate  value.
  
- @note To use this method from Swift, you must include `FMDatabaseAdditionsVariadic.swift` in your project.
+ @note This is not available from Swift.
  */
 
-- (NSDate*)dateForQuery:(NSString*)query, ...;
+- (NSDate * _Nullable)dateForQuery:(NSString*)query, ...;
 
 
 // Notice that there's no dataNoCopyForQuery:.
@@ -121,7 +115,7 @@
 
  @param tableName The name of the table being looked for.
 
- @return `YES` if table found; `NO` if not found.
+ @return @c YES if table found; @c NO if not found.
  */
 
 - (BOOL)tableExists:(NSString*)tableName;
@@ -136,12 +130,12 @@
  - `rootpage` - The page number of the root b-tree page for tables and indices
  - `sql` - The SQL that created the entity
 
- @return `FMResultSet` of schema; `nil` on error.
+ @return `FMResultSet` of schema; @c nil  on error.
  
- @see [SQLite File Format](http://www.sqlite.org/fileformat.html)
+ @see [SQLite File Format](https://sqlite.org/fileformat.html)
  */
 
-- (FMResultSet*)getSchema;
+- (FMResultSet * _Nullable)getSchema;
 
 /** The schema of the database.
 
@@ -160,12 +154,12 @@
 
  @param tableName The name of the table for whom the schema will be returned.
  
- @return `FMResultSet` of schema; `nil` on error.
+ @return `FMResultSet` of schema; @c nil  on error.
  
- @see [table_info](http://www.sqlite.org/pragma.html#pragma_table_info)
+ @see [table_info](https://sqlite.org/pragma.html#pragma_table_info)
  */
 
-- (FMResultSet*)getTableSchema:(NSString*)tableName;
+- (FMResultSet * _Nullable)getTableSchema:(NSString*)tableName;
 
 /** Test to see if particular column exists for particular table in database
  
@@ -173,7 +167,7 @@
  
  @param tableName The name of the table.
  
- @return `YES` if column exists in table in question; `NO` otherwise.
+ @return @c YES if column exists in table in question; @c NO otherwise.
  */
 
 - (BOOL)columnExists:(NSString*)columnName inTableWithName:(NSString*)tableName;
@@ -184,14 +178,14 @@
 
  @param tableName The name of the table.
 
- @return `YES` if column exists in table in question; `NO` otherwise.
+ @return @c YES if column exists in table in question; @c NO otherwise.
  
  @see columnExists:inTableWithName:
  
  @warning Deprecated - use `<columnExists:inTableWithName:>` instead.
  */
 
-- (BOOL)columnExists:(NSString*)tableName columnName:(NSString*)columnName __attribute__ ((deprecated));
+- (BOOL)columnExists:(NSString*)tableName columnName:(NSString*)columnName __deprecated_msg("Use columnExists:inTableWithName: instead");
 
 
 /** Validate SQL statement
@@ -200,13 +194,13 @@
  
  @param sql The SQL statement being validated.
  
- @param error This is a pointer to a `NSError` object that will receive the autoreleased `NSError` object if there was any error. If this is `nil`, no `NSError` result will be returned.
+ @param error This is a pointer to a @c NSError  object that will receive the autoreleased @c NSError  object if there was any error. If this is @c nil , no @c NSError  result will be returned.
  
- @return `YES` if validation succeeded without incident; `NO` otherwise.
+ @return @c YES if validation succeeded without incident; @c NO otherwise.
  
  */
 
-- (BOOL)validateSQL:(NSString*)sql error:(NSError**)error;
+- (BOOL)validateSQL:(NSString*)sql error:(NSError * _Nullable __autoreleasing *)error;
 
 
 ///-----------------------------------
@@ -220,36 +214,16 @@
  @see setApplicationID:
  */
 
-- (uint32_t)applicationID;
-
-/** Set the application ID
-
- @param appID The `uint32_t` numeric value of the application ID.
- 
- @see applicationID
- */
-
-- (void)setApplicationID:(uint32_t)appID;
+@property (nonatomic) uint32_t applicationID;
 
 #if TARGET_OS_MAC && !TARGET_OS_IPHONE
-/** Retrieve application ID string
 
- @return The `NSString` value of the application ID.
+/** Retrieve application ID string
 
  @see setApplicationIDString:
  */
 
-
-- (NSString*)applicationIDString;
-
-/** Set the application ID string
-
- @param string The `NSString` value of the application ID.
-
- @see applicationIDString
- */
-
-- (void)setApplicationIDString:(NSString*)string;
+@property (nonatomic, retain) NSString *applicationIDString;
 
 #endif
 
@@ -259,20 +233,11 @@
 
 /** Retrieve user version
  
- @return The `uint32_t` numeric value of the user version.
- 
  @see setUserVersion:
  */
 
-- (uint32_t)userVersion;
-
-/** Set the user-version
- 
- @param version The `uint32_t` numeric value of the user version.
- 
- @see userVersion
- */
-
-- (void)setUserVersion:(uint32_t)version;
+@property (nonatomic) uint32_t userVersion;
 
 @end
+
+NS_ASSUME_NONNULL_END
