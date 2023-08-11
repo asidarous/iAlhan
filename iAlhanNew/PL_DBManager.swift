@@ -73,7 +73,7 @@ class PL_DBManager: NSObject {
                 while results.next() {
                     //print("!!!!!!!!!!!!")
                     //print(results.string(forColumn: "ListName"))
-                    playLists.append(results.string(forColumn: "ListName"))
+                    playLists.append(results.string(forColumn: "ListName")!)
                     
                 }
                 //print (seasons.count)
@@ -145,7 +145,7 @@ class PL_DBManager: NSObject {
                     alertWindow.rootViewController?.present(alert, animated: true, completion: nil)
 
                 }else {
-                    if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                    if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
                         throw error!}
                 }
                 //print (seasons.count)
@@ -182,7 +182,7 @@ class PL_DBManager: NSObject {
                 print("QUERY")
                 print(query)
                 do {
-                    if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                    if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
                         throw error!}
                     
                     print ("Updated!!!")
@@ -203,7 +203,7 @@ class PL_DBManager: NSObject {
             
             print(query)
             do {
-                if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
                     throw error!}
                 
                 print ("Hymn Successfully Deleted!!!")
@@ -225,7 +225,7 @@ class PL_DBManager: NSObject {
             // TODO: delete all hymns pertaining to the deleted playlist
             print(query)
             do {
-                if ( database.executeUpdate(query, withArgumentsIn: nil) ) != true {
+                if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
                     throw error!}
                 
                 print ("Deleted!!!")

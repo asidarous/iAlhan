@@ -254,7 +254,7 @@ class DBManager: NSObject {
         // Due to the fact that we're making this call inside another DB connection
         // let's check if a connection exists, otherwise initiate it
         
-        if !database.goodConnection() {
+        if !database.goodConnection {
             
             if  openDatabase() {
             dbOpen = true
