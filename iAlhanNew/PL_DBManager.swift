@@ -36,14 +36,14 @@ class PL_DBManager: NSObject {
     func pl_openDatabase() -> Bool {
         if database == nil {
             
-            print("***** Path to Db \(pl_pathToDatabase)")
+            print("***** Path to Db \(String(describing: pl_pathToDatabase))")
             
             if FileManager.default.fileExists(atPath: pl_pathToDatabase) {
                 print("Horray found file")
                 database = FMDatabase(path: pl_pathToDatabase)
             } else
             {
-                print ("Cen't find file \(pl_pathToDatabase)")
+                print ("Cen't find file \(String(describing: pl_pathToDatabase))")
             }
         }
         

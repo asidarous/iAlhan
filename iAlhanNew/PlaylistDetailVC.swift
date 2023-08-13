@@ -72,10 +72,10 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         do {
             
              if #available(iOS 10.0, *) {
-            try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: AVAudioSession.CategoryOptions.allowAirPlay)
+                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) , options: AVAudioSession.CategoryOptions.allowAirPlay)
              }else{
             
-             try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback))
+                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) )
             }
             
                 
@@ -173,7 +173,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
         if editingStyle == .delete {
             // Delete the row from the data source
-            print("I'm about to delete the following: \(self.playlistHymns[row].HymnID)")
+            print("I'm about to delete the following: \(String(describing: self.playlistHymns[row].HymnID))")
             PL_DBManager.shared.removeHymnsFromPL(hymnID: self.playlistHymns[row].HymnID)
             self.playlistHymns.remove(at: row)
             tableView.deleteRows (at: [indexPath], with: .fade)
@@ -227,7 +227,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
                 //print("Now playing : \(AlhanPlayer.sharedInstance.player.currentItem?.description)")
                 print("DESCRIPTION: \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description))")
                 print("\n")
-                print("HymnURL: \(hymnURL.HymnURL)")
+                print("HymnURL: \(String(describing: hymnURL.HymnURL))")
                 print("===========================")
                 if AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description.range(of: String(hymnURL.HymnURL)) != nil {
                     print ("++ Playing the same hymn, then we're in the same playlist")

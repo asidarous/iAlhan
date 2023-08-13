@@ -81,10 +81,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         do {
             
             if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: AVAudioSession.CategoryOptions.allowAirPlay)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) , options: AVAudioSession.CategoryOptions.allowAirPlay)
             } else {
                 // Fallback on earlier versions
-                try AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback))
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) )
                 
             }//.mixWithOthers)
             UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -128,17 +128,17 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             print("%%%% I'm compact")
             
             pbWidth = HymnDetailView.frame.width * 0.65
-            print("WIDTH: \(pbWidth)")
+            print("WIDTH: \(String(describing: pbWidth))")
             
         } else {
             // Regular
             print("%%%% I'm regular")
            pbWidth = HymnDetailView.frame.width * 0.82
-           print("WIDTH: \(pbWidth)") 
+            print("WIDTH: \(String(describing: pbWidth))")
         }
         
         //pbWidth = HymnDetailView.frame.width * 0.85
-        print("The width: \(pbWidth)")
+        print("The width: \(String(describing: pbWidth))")
         progressBar = UISlider(frame:CGRect(x: 10, y: 100, width: pbWidth, height: 20))
         progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
         progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
