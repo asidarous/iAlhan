@@ -311,6 +311,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				KnownAssetTags = (
+					"Header View",
+				);
 				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = alhan.org;
