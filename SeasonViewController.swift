@@ -108,7 +108,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
       //print("+++++++ User clicked on index \(indexPath.row)")
       //print("$$$ here is the season \(seasonsData[indexPath.row].seasonID)")
-        performSegue(withIdentifier: "Show Season Detail", sender: [seasonsData[indexPath.row].seasonID, seasonsData[indexPath.row].title] as [Any] )
+        performSegue(withIdentifier: "Show Season Detail", sender: [seasonsData[indexPath.row].seasonID as Any, seasonsData[indexPath.row].title as Any] as [Any] )
 
     }
 

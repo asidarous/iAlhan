@@ -28,6 +28,7 @@
 		F0D656AF1DCAF6650083416A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656AE1DCAF6650083416A /* MediaPlayer.framework */; };
 		F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656B11DCB02780083416A /* AudioToolbox.framework */; };
 		F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D656B71DCD38980083416A /* AudioPLayer.swift */; };
+		F0DDC66D2A8B0497004D4EF1 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0DDC66C2A8B0497004D4EF1 /* Launch.storyboard */; };
 		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
 		F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3704E1DC425D700979B78 /* PlayListVC.swift */; };
 		F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370501DC42E7800979B78 /* PLAddVC.swift */; };
@@ -79,6 +80,7 @@
 		F0D656B01DCB02780083416A /* iAlhan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlhan.entitlements; sourceTree = SOURCE_ROOT; };
 		F0D656B11DCB02780083416A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F0D656B71DCD38980083416A /* AudioPLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPLayer.swift; sourceTree = "<group>"; };
+		F0DDC66C2A8B0497004D4EF1 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		F0E3704E1DC425D700979B78 /* PlayListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		F0E370501DC42E7800979B78 /* PLAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddVC.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				F0D656B01DCB02780083416A /* iAlhan.entitlements */,
 				F0524DFD1DB837E60066B075 /* Main.storyboard */,
+				F0DDC66C2A8B0497004D4EF1 /* Launch.storyboard */,
 				F05826D61DB059D0001E6CA2 /* Util */,
 				F0E3E8161DAF1B4700174D91 /* FMDB */,
 				F06927D71DA82E3000A94BB9 /* Controller */,
@@ -363,6 +366,7 @@
 				F0EFAFF31DC99FBE00EA4814 /* AlhanPL.sqlite in Resources */,
 				F09DD6C71E8F27770097F235 /* dbversion3.txt in Resources */,
 				F0E65F821DA6FC2100A96A69 /* Assets.xcassets in Resources */,
+				F0DDC66D2A8B0497004D4EF1 /* Launch.storyboard in Resources */,
 				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
 				F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */,
 				F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */,
@@ -556,21 +560,29 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2023;
 				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iAlhan;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -583,20 +595,28 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2023;
 				DEVELOPMENT_TEAM = BGQNQ2M53K;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iAlhan;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iAlhanNew/iAlhanNew-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
