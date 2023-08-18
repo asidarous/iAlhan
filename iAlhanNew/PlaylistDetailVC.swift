@@ -113,8 +113,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget(self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
-
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pauseCommandHandler(_:)))
+        //commandCenter.pauseCommand.addTarget(self, action: #selector(HymnDetailViewController.pause), return .success)
+        
         
         
     }
@@ -211,6 +212,15 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //        
 //    }
     
+    @objc func pauseCommandHandler(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+            // Perform your pause logic here
+            // For example, pause your audio playback
+        pause()
+        //#selector(HymnDetailViewController.pause)
+            // Return appropriate status
+            return .success
+        }
+    
     func checkPlayerRunning() -> Bool{
         print ("@@@ player rate \(AlhanPlayer.sharedInstance.player.rate)")
         print ("@@@ QUEUE player rate \(AlhanPlayer.sharedInstance.queuePlayer.rate)")
@@ -256,65 +266,65 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
 
     
-    @objc func playButtonTapped() {
+    @objc func playButtonTapped(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         if playlistHymns.count > 0{
-        /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+            /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+             
+             showAlertButton()
+             
+             
+             }else
+             {*/
             
-            showAlertButton()
+            //        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
+            //            print("********* IT WAS PLAYING ********")
+            //            AlhanPlayer.sharedInstance.queuePlayer.pause()
+            //        }
             
             
-        }else
-        {*/
-        
-//        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-//            print("********* IT WAS PLAYING ********")
-//            AlhanPlayer.sharedInstance.queuePlayer.pause()
-//        }
-        
-        
-       
-        self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
-        
-       
+            
+            self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
+            
+            
             // Pause individual hymn if running
             if (AlhanPlayer.sharedInstance.player.rate == 1.0 ) {
                 print("### Hymn player was on")
                 AlhanPlayer.sharedInstance.player.pause()
             }
-
-        
-        for hymnURL in playlistHymns{
             
-            //print("HYMN URL TO PLAY: \(hymnURL)")
-            var fileIsLocal = false
-            // check to see if the file is local and thus play from local
-            let localDir = getDirectory(url: String(describing: hymnURL.HymnURL))
-            let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
-            var hymnAudioURL = URL(string: (hymnURL.HymnURL))
-            let destinationUrl = localPath.appendingPathComponent((hymnAudioURL?.lastPathComponent)!)
             
-            if FileManager.default.fileExists(atPath: destinationUrl.path){
-                hymnAudioURL = destinationUrl
-                fileIsLocal = true
-                // print("!!!!!! playing the local file - TOP")
+            for hymnURL in playlistHymns{
+                
+                //print("HYMN URL TO PLAY: \(hymnURL)")
+                var fileIsLocal = false
+                // check to see if the file is local and thus play from local
+                let localDir = getDirectory(url: String(describing: hymnURL.HymnURL))
+                let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
+                var hymnAudioURL = URL(string: (hymnURL.HymnURL))
+                let destinationUrl = localPath.appendingPathComponent((hymnAudioURL?.lastPathComponent)!)
+                
+                if FileManager.default.fileExists(atPath: destinationUrl.path){
+                    hymnAudioURL = destinationUrl
+                    fileIsLocal = true
+                    // print("!!!!!! playing the local file - TOP")
+                }
+                
+                
+                if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
+                    
+                    showAlertButton()
+                    
+                    
+                }else {
+                    
+                    
+                    //AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
+                    AlhanPlayer.sharedInstance.playQueue(playerURL: hymnAudioURL!)
+                    print("****** HYMN URL TO PLAY: \(String(describing: hymnAudioURL))")
+                    
+                    //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
+                }
             }
-            
-            
-            if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
-                
-                showAlertButton()
-                
-                
-            }else {
-            
-            
-            //AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
-            AlhanPlayer.sharedInstance.playQueue(playerURL: hymnAudioURL!)
-            print("****** HYMN URL TO PLAY: \(String(describing: hymnAudioURL))")
-            
-            //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
-            }
-        }
             
             let image:UIImage = UIImage(named: "artworkCross")!
             
@@ -325,23 +335,23 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
                     return image  })
             }else{
                 albumArtWork = MPMediaItemArtwork.init(image: image)
-
+                
             }
-    
-        AlhanPlayer.sharedInstance.queuePlayer.play()
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: " \((playlistHymns[0].HymnName)!)",
-            MPMediaItemPropertyArtwork: albumArtWork as Any,
-            MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
-            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
-        ]
-        print("TEST \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds))")
-        
-        //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem
-        //print("TEST :\(test)")
-        //play()
-        //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
-        
+            
+            AlhanPlayer.sharedInstance.queuePlayer.play()
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyTitle: " \((playlistHymns[0].HymnName)!)",
+                MPMediaItemPropertyArtwork: albumArtWork as Any,
+                MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
+                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
+            ]
+            print("TEST \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds))")
+            
+            //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem
+            //print("TEST :\(test)")
+            //play()
+            //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
+            
         }
         else
         {
@@ -349,22 +359,25 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+        return .success
     }
     
-    @objc func pauseButtonTapped() {
+    @objc func pauseButtonTapped(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
             self.navigationItem.setRightBarButtonItems([playButton], animated: true)
         
            AlhanPlayer.sharedInstance.pauseQueue()
             
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
+        return .success
         
     }
     
-    @objc func nextButtonTapped() {
+    @objc func nextButtonTapped(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         
         AlhanPlayer.sharedInstance.nextHymnInQueue()
         
         //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
+        return .success
         
     }
     

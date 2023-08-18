@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -142,7 +141,7 @@
                     <navigationItem key="navigationItem" title="iAlhan" id="J7H-b1-bM5">
                         <barButtonItem key="rightBarButtonItem" id="6rU-Lt-yXi">
                             <view key="customView" contentMode="scaleToFill" id="NiP-Op-DQc">
-                                <rect key="frame" x="921" y="8.5" width="83" height="33"/>
+                                <rect key="frame" x="921" y="9" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfT-ID-Fos">
@@ -262,7 +261,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="3QY-RM-HEU" firstAttribute="top" secondItem="WkP-d2-TKM" secondAttribute="top" constant="261" id="0A7-Ef-2sn"/>
@@ -374,8 +373,8 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="u26-t4-2Sx" secondAttribute="trailing" id="Lre-4r-1XA"/>
                             <constraint firstItem="ieQ-Zx-9Xb" firstAttribute="top" secondItem="u26-t4-2Sx" secondAttribute="bottom" id="eac-JH-3nV"/>
@@ -567,7 +566,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zgc-Rg-gCY">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playlistCell" id="wAi-sJ-Rem">
                                 <rect key="frame" x="0.0" y="50" width="1024" height="44"/>
@@ -611,11 +610,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PbM-b2-aNn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="pVK-5N-0G5" userLabel="Header View">
-                    <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
             </objects>
             <point key="canvasLocation" x="1559" y="-654"/>
         </scene>
@@ -682,7 +676,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="H4e-jP-fCp" firstAttribute="leading" secondItem="JlI-K3-mva" secondAttribute="leading" constant="20" id="Jdx-FV-C0s"/>
                                     <constraint firstItem="H4e-jP-fCp" firstAttribute="top" secondItem="JlI-K3-mva" secondAttribute="top" constant="100" id="ns7-eM-77h"/>
@@ -690,7 +684,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="JlI-K3-mva" firstAttribute="leading" secondItem="lpS-jk-Br6" secondAttribute="leadingMargin" id="Anr-zF-uk9"/>
                             <constraint firstItem="JlI-K3-mva" firstAttribute="top" secondItem="1N5-yp-dku" secondAttribute="bottom" id="MUt-8J-wv1"/>
@@ -721,7 +715,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3VU-gU-CYP">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.062745098040000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hymnCell" textLabel="Zdd-cx-qay" style="IBUITableViewCellStyleDefault" id="og1-wS-yjR">
                                         <rect key="frame" x="0.0" y="50" width="1024" height="44"/>
@@ -828,15 +822,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6bS-Xr-0eG"/>
+        <segue reference="B3d-Cf-eFN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="add_to_playlist_icon" width="50" height="50"/>
         <image name="icon-play-128" width="128" height="128"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="viewFlipsideBackgroundColor">
             <color red="0.1215686274509804" green="0.12941176470588239" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
