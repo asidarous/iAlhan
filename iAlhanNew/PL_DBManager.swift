@@ -10,6 +10,7 @@ import UIKit
 
 
 
+@MainActor
 class PL_DBManager: NSObject {
     
     static let shared: PL_DBManager = PL_DBManager()

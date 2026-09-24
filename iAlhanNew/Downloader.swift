@@ -60,6 +60,7 @@ import UIKit
     }
 
 // Update alert box
+@MainActor
 func showUpdateAlertButton(in vc: UIViewController) {
     let message = DBManager.shared.getLatestUpdates()
     let newMessage = message.replacingOccurrences(of: ",", with: "\n")

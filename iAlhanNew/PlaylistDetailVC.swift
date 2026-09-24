@@ -30,8 +30,17 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
+    var shuffleButton = UIBarButtonItem()
     var samePlaylist: Bool = false
     let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+    private let miniPlayer = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+    private let nowPlayingLabel = UILabel()
+    private let trackTitleLabel = UILabel()
+    private let miniPlayPauseButton = UIButton(type: .system)
+    private let miniNextButton = UIButton(type: .system)
+    private let playbackProgress = UIProgressView(progressViewStyle: .default)
+    private var playbackTimeObserver: Any?
     
     // Internet alert box
     @IBAction func showAlertButton() {
@@ -43,8 +52,16 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBarAppearance()
+        configurePlaylistAppearance()
         plDetail.delegate = self
         plDetail.dataSource = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(currentTrackDidChange),
+            name: .alhanPlayerCurrentTrackDidChange,
+            object: AlhanPlayer.sharedInstance
+        )
         
         if (self.canBecomeFirstResponder){
             self.becomeFirstResponder()
@@ -58,6 +75,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             playlistHymns = array
 
         }
+        configureMiniPlayer()
             //print("\(playlistHymns.count)")
         // Do any additional setup after loading the view.
         
@@ -90,6 +108,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(PlaylistDetailVC.playButtonTapped))
         nextButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fastForward, target: self, action: #selector(PlaylistDetailVC.nextButtonTapped))
+        shuffleButton = UIBarButtonItem(image: UIImage(systemName: "shuffle"), style: .plain, target: self, action: #selector(shuffleButtonTapped))
+        shuffleButton.accessibilityLabel = "Shuffle playlist"
         
         // Check Queue player status
         
@@ -97,26 +117,192 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             print("PLAYER IS RUNNING......")
             if samePlaylist == true {
                 
-                self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
+                self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
             } else {
                 //AlhanPlayer.sharedInstance.queuePlayer.pause()
-                self.navigationItem.setRightBarButton(playButton, animated: true)
+                self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
             }
         }
             
         else {
             //AlhanPlayer.sharedInstance.queuePlayer.pause()
             print("PLAYER IS NOT RUNNING......")
-            self.navigationItem.setRightBarButton(playButton, animated: true)
+            self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
             }
         
         
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget(self, action: #selector(PlaylistDetailVC.pauseButtonTapped))
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pauseCommandHandler(_:)))
 
         
         
+    }
+
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = GlobalConstants.kColor_DarkColor
+        appearance.titleTextAttributes = [
+            .foregroundColor: GlobalConstants.kColor_GoldColor,
+            .font: UIFont.preferredFont(forTextStyle: .headline)
+        ]
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+    }
+
+    private func configurePlaylistAppearance() {
+        plDetail.rowHeight = 62
+        plDetail.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        plDetail.backgroundColor = .systemGroupedBackground
+        plDetail.contentInset.bottom = 108
+        plDetail.verticalScrollIndicatorInsets.bottom = 108
+    }
+
+    private func configureMiniPlayer() {
+        miniPlayer.translatesAutoresizingMaskIntoConstraints = false
+        miniPlayer.layer.cornerRadius = 22
+        miniPlayer.layer.cornerCurve = .continuous
+        miniPlayer.clipsToBounds = true
+        miniPlayer.layer.borderWidth = 0.5
+        miniPlayer.layer.borderColor = UIColor.separator.cgColor
+        view.addSubview(miniPlayer)
+
+        nowPlayingLabel.text = "NOW PLAYING"
+        nowPlayingLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
+        nowPlayingLabel.adjustsFontForContentSizeCategory = true
+        nowPlayingLabel.textColor = .secondaryLabel
+
+        trackTitleLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(
+            for: UIFont(name: "COPT", size: 18) ?? UIFont.preferredFont(forTextStyle: .headline)
+        )
+        trackTitleLabel.adjustsFontForContentSizeCategory = true
+        trackTitleLabel.textColor = GlobalConstants.kColor_DarkColor
+        trackTitleLabel.lineBreakMode = .byTruncatingTail
+
+        let labels = UIStackView(arrangedSubviews: [nowPlayingLabel, trackTitleLabel])
+        labels.axis = .vertical
+        labels.spacing = 2
+
+        configureMiniPlayerButton(
+            miniPlayPauseButton,
+            symbolName: "play.fill",
+            accessibilityLabel: "Play playlist",
+            prominent: true,
+            action: #selector(miniPlayPauseTapped)
+        )
+        configureMiniPlayerButton(
+            miniNextButton,
+            symbolName: "forward.end.fill",
+            accessibilityLabel: "Next hymn",
+            prominent: false,
+            action: #selector(miniNextTapped)
+        )
+
+        let controls = UIStackView(arrangedSubviews: [labels, miniNextButton, miniPlayPauseButton])
+        controls.translatesAutoresizingMaskIntoConstraints = false
+        controls.axis = .horizontal
+        controls.alignment = .center
+        controls.spacing = 10
+        miniPlayer.contentView.addSubview(controls)
+
+        playbackProgress.translatesAutoresizingMaskIntoConstraints = false
+        playbackProgress.trackTintColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.12)
+        playbackProgress.progressTintColor = GlobalConstants.kColor_DarkColor
+        miniPlayer.contentView.addSubview(playbackProgress)
+
+        NSLayoutConstraint.activate([
+            miniPlayer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+            miniPlayer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            miniPlayer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            miniPlayer.heightAnchor.constraint(equalToConstant: 82),
+            controls.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 16),
+            controls.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -12),
+            controls.topAnchor.constraint(equalTo: miniPlayer.contentView.topAnchor, constant: 10),
+            playbackProgress.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 16),
+            playbackProgress.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -16),
+            playbackProgress.bottomAnchor.constraint(equalTo: miniPlayer.contentView.bottomAnchor, constant: -10),
+            miniPlayPauseButton.widthAnchor.constraint(equalToConstant: 46),
+            miniPlayPauseButton.heightAnchor.constraint(equalToConstant: 46),
+            miniNextButton.widthAnchor.constraint(equalToConstant: 38),
+            miniNextButton.heightAnchor.constraint(equalToConstant: 38)
+        ])
+
+        startMiniPlayerUpdates()
+        updateMiniPlayer()
+    }
+
+    private func startMiniPlayerUpdates() {
+        guard playbackTimeObserver == nil else { return }
+        playbackTimeObserver = AlhanPlayer.sharedInstance.queuePlayer.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.updateMiniPlayer() }
+        }
+    }
+
+    private func stopMiniPlayerUpdates() {
+        guard let playbackTimeObserver else { return }
+        AlhanPlayer.sharedInstance.queuePlayer.removeTimeObserver(playbackTimeObserver)
+        self.playbackTimeObserver = nil
+    }
+
+    private func configureMiniPlayerButton(
+        _ button: UIButton,
+        symbolName: String,
+        accessibilityLabel: String,
+        prominent: Bool,
+        action: Selector
+    ) {
+        var configuration = prominent
+            ? UIButton.Configuration.filled()
+            : UIButton.Configuration.tinted()
+        configuration.image = UIImage(systemName: symbolName)
+        configuration.cornerStyle = .capsule
+        configuration.baseForegroundColor = prominent ? .white : GlobalConstants.kColor_DarkColor
+        configuration.baseBackgroundColor = prominent
+            ? GlobalConstants.kColor_DarkColor
+            : GlobalConstants.kColor_GoldColor.withAlphaComponent(0.32)
+        button.configuration = configuration
+        button.accessibilityLabel = accessibilityLabel
+        button.addTarget(self, action: action, for: .touchUpInside)
+    }
+
+    private func updateMiniPlayer() {
+        let player = AlhanPlayer.sharedInstance
+        trackTitleLabel.text = player.currentTrackTitle ?? "Choose a hymn"
+        miniPlayPauseButton.isEnabled = !playlistHymns.isEmpty
+        miniNextButton.isEnabled = player.queuePlayer.items().count > 1
+
+        var configuration = miniPlayPauseButton.configuration
+        configuration?.image = UIImage(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+        miniPlayPauseButton.configuration = configuration
+        miniPlayPauseButton.accessibilityLabel = player.isPlaying ? "Pause" : "Play"
+
+        let duration = player.duration
+        playbackProgress.progress = duration > 0
+            ? Float(player.currentTime / duration)
+            : 0
+    }
+
+    @objc private func miniPlayPauseTapped() {
+        let player = AlhanPlayer.sharedInstance
+        if player.currentTrackURL == nil {
+            playButtonTapped()
+        } else {
+            player.togglePlayback()
+            updateMiniPlayer()
+        }
+    }
+
+    @objc private func miniNextTapped() {
+        nextButtonTapped()
+        updateMiniPlayer()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -145,14 +331,67 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         if ((playlistHymns.count) > 0)
         {
             //print("Got in")
-            cell.textLabel?.text = playlistHymns[row].HymnName
+            var content = cell.defaultContentConfiguration()
+            content.text = playlistHymns[row].HymnName
+            content.textProperties.font = UIFontMetrics(forTextStyle: .headline).scaledFont(
+                for: UIFont(name: "COPT", size: 19) ?? UIFont.preferredFont(forTextStyle: .headline)
+            )
+            content.textProperties.color = GlobalConstants.kColor_DarkColor
+            content.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                top: 10,
+                leading: 20,
+                bottom: 10,
+                trailing: 12
+            )
+            cell.contentConfiguration = content
+            cell.selectionStyle = .none
+            configurePlaybackAppearance(for: cell, at: indexPath)
         }
-        
-        
         
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        startPlayback(shuffled: false, startingAt: indexPath.row)
+    }
+
+    private func configurePlaybackAppearance(for cell: UITableViewCell, at indexPath: IndexPath) {
+        let isCurrentTrack = isPlayingHymn(at: indexPath.row)
+        cell.backgroundColor = isCurrentTrack
+            ? GlobalConstants.kColor_GoldColor.withAlphaComponent(0.28)
+            : .clear
+        cell.accessibilityTraits = isCurrentTrack
+            ? [.button, .selected]
+            : [.button]
+
+        if isCurrentTrack {
+            let imageView = UIImageView(image: UIImage(systemName: "speaker.wave.2.fill"))
+            imageView.tintColor = GlobalConstants.kColor_DarkColor
+            imageView.isAccessibilityElement = false
+            cell.accessoryView = imageView
+        } else {
+            cell.accessoryView = nil
+        }
+    }
+
+    private func isPlayingHymn(at row: Int) -> Bool {
+        guard playlistHymns.indices.contains(row),
+              let playlistURL = URL(string: playlistHymns[row].HymnURL),
+              let currentURL = AlhanPlayer.sharedInstance.currentTrackURL else { return false }
+        return playlistURL == currentURL
+            || playlistURL.lastPathComponent == currentURL.lastPathComponent
+    }
+
+    @objc private func currentTrackDidChange() {
+        updateMiniPlayer()
+        plDetail.reloadData()
+        guard let currentRow = playlistHymns.indices.first(where: { isPlayingHymn(at: $0) }) else { return }
+        plDetail.scrollToRow(
+            at: IndexPath(row: currentRow, section: 0),
+            at: .none,
+            animated: true
+        )
+    }
 
 //    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 //        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
@@ -257,6 +496,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     
     @objc func playButtonTapped() {
+        startPlayback(shuffled: false, startingAt: nil)
+    }
+
+    @objc private func shuffleButtonTapped() {
+        startPlayback(shuffled: true, startingAt: nil)
+    }
+
+    private func startPlayback(shuffled: Bool, startingAt startIndex: Int?) {
         if playlistHymns.count > 0{
         /*if !(Reachability.isConnectedToNetwork()) && fileIsLocal == false{
             
@@ -273,7 +520,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
         
        
-        self.navigationItem.setRightBarButtonItems([pauseButton, nextButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
         
        
             // Pause individual hymn if running
@@ -283,7 +530,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             }
 
         
-        for hymnURL in playlistHymns{
+        var playableTracks = [AlhanPlayer.Track]()
+        let hymnsToPlay: [PlaylistHymns]
+        if let startIndex, playlistHymns.indices.contains(startIndex) {
+            hymnsToPlay = Array(playlistHymns[startIndex...])
+        } else {
+            hymnsToPlay = playlistHymns
+        }
+        for hymnURL in hymnsToPlay {
             
             //print("HYMN URL TO PLAY: \(hymnURL)")
             var fileIsLocal = false
@@ -308,34 +562,23 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             }else {
             
             
-            //AlhanPlayer.sharedInstance.playQueue(playerURL: URL(string: hymnURL.HymnURL)!)
-            AlhanPlayer.sharedInstance.playQueue(playerURL: hymnAudioURL!)
+            playableTracks.append(
+                .init(
+                    url: hymnAudioURL!,
+                    title: hymnURL.HymnName ?? "iAlhan",
+                    albumTitle: title
+                )
+            )
             print("****** HYMN URL TO PLAY: \(String(describing: hymnAudioURL))")
             
             //AlhanPlayer.sharedInstance.playWithURL(playableURL: hymnURL)
             }
         }
             
-            let image:UIImage = UIImage(named: "artworkCross")!
-            
-            var albumArtWork:MPMediaItemArtwork!
-            
-            if #available(iOS 10.0, *) {
-                albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-                    return image  })
-            }else{
-                albumArtWork = MPMediaItemArtwork.init(image: image)
-
-            }
-    
-        AlhanPlayer.sharedInstance.queuePlayer.play()
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: " \((playlistHymns[0].HymnName)!)",
-            MPMediaItemPropertyArtwork: albumArtWork as Any,
-            MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds)!),
-            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
-        ]
-        print("TEST \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.duration.seconds))")
+        if !playableTracks.isEmpty {
+            let queuedTracks = shuffled ? playableTracks.shuffled() : playableTracks
+            AlhanPlayer.sharedInstance.loadQueue(queuedTracks, autoplay: true)
+        }
         
         //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem
         //print("TEST :\(test)")
@@ -351,8 +594,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
+    @objc private func pauseCommandHandler(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        pauseButtonTapped()
+        return .success
+    }
+
     @objc func pauseButtonTapped() {
-            self.navigationItem.setRightBarButtonItems([playButton], animated: true)
+            self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
         
            AlhanPlayer.sharedInstance.pauseQueue()
             
@@ -369,16 +617,27 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override var canBecomeFirstResponder : Bool {
         return true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        startMiniPlayerUpdates()
+        updateMiniPlayer()
         self.becomeFirstResponder()
         UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMiniPlayerUpdates()
+    }
+
     override func remoteControlReceived(with event: UIEvent?) { // *
         let rc = event!.subtype
         let p = AlhanPlayer.sharedInstance.queuePlayer

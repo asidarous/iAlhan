@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class ContactVC: UIViewController, MFMailComposeViewControllerDelegate {
+class ContactVC: UIViewController, @preconcurrency MFMailComposeViewControllerDelegate {
 
     @IBOutlet var nameField: UITextField!
 

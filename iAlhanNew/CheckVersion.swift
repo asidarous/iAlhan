@@ -9,6 +9,7 @@
 import Foundation
 
 
+@MainActor
 func CheckVersion () -> Bool {
     
     var internetContent: String!
@@ -19,6 +20,7 @@ func CheckVersion () -> Bool {
     
     // internet version
     let url = URL(string: "http://www.alhan.org/ialhan/version3/dbversion3.txt")
+    
     do {
         // Get the contents
         internetContent = try String(contentsOf: url!)

@@ -7,8 +7,12 @@
 //
 
 import AVFoundation
-import MediaPlayer
+@preconcurrency import MediaPlayer
 import UIKit
+
+extension Notification.Name {
+    static let alhanPlayerCurrentTrackDidChange = Notification.Name("AlhanPlayerCurrentTrackDidChange")
+}
 
 @MainActor
 final class AlhanPlayer: NSObject {
@@ -34,6 +38,8 @@ final class AlhanPlayer: NSObject {
     var isPlaying: Bool { queuePlayer.timeControlStatus == .playing }
     var currentTime: TimeInterval { queuePlayer.currentTime().seconds.finiteValue }
     var duration: TimeInterval { queuePlayer.currentItem?.duration.seconds.finiteValue ?? 0 }
+    var currentTrackURL: URL? { currentTrack?.url }
+    var currentTrackTitle: String? { currentTrack?.title }
     var playbackRate: Float = 1 {
         didSet {
             guard playbackRate > 0 else {
@@ -48,6 +54,7 @@ final class AlhanPlayer: NSObject {
     }
 
     private var tracksByItem = [ObjectIdentifier: Track]()
+    private var lastNotifiedTrackURL: URL?
     private var timeObserver: Any?
     private var notificationTokens = [NSObjectProtocol]()
     private var remoteCommandTargets = [(MPRemoteCommand, Any)]()
@@ -59,16 +66,6 @@ final class AlhanPlayer: NSObject {
         configureAudioSession()
         configureObservers()
         configureRemoteCommands()
-    }
-
-    deinit {
-        if let timeObserver {
-            queuePlayer.removeTimeObserver(timeObserver)
-        }
-        notificationTokens.forEach(NotificationCenter.default.removeObserver)
-        remoteCommandTargets.forEach { command, target in
-            command.removeTarget(target)
-        }
     }
 
     func load(_ track: Track, autoplay: Bool = false) {
@@ -245,14 +242,17 @@ final class AlhanPlayer: NSObject {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            Task { @MainActor in self?.handleInterruption(notification) }
+            let type = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt
+            let options = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt
+            Task { @MainActor in self?.handleInterruption(type: type, options: options) }
         })
         notificationTokens.append(center.addObserver(
             forName: AVAudioSession.routeChangeNotification,
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            Task { @MainActor in self?.handleRouteChange(notification) }
+            let reason = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt
+            Task { @MainActor in self?.handleRouteChange(reason: reason) }
         })
         notificationTokens.append(center.addObserver(
             forName: .AVPlayerItemDidPlayToEndTime,
@@ -273,25 +273,24 @@ final class AlhanPlayer: NSObject {
         }
     }
 
-    private func handleInterruption(_ notification: Notification) {
+    private func handleInterruption(type rawType: UInt?, options rawOptions: UInt?) {
         guard
-            let rawType = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let rawType,
             let type = AVAudioSession.InterruptionType(rawValue: rawType)
         else { return }
 
         if type == .began {
             pause()
         } else {
-            let rawOptions = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
-            if AVAudioSession.InterruptionOptions(rawValue: rawOptions).contains(.shouldResume) {
+            if AVAudioSession.InterruptionOptions(rawValue: rawOptions ?? 0).contains(.shouldResume) {
                 play()
             }
         }
     }
 
-    private func handleRouteChange(_ notification: Notification) {
+    private func handleRouteChange(reason rawReason: UInt?) {
         guard
-            let rawReason = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let rawReason,
             AVAudioSession.RouteChangeReason(rawValue: rawReason) == .oldDeviceUnavailable
         else { return }
         pause()
@@ -364,6 +363,12 @@ final class AlhanPlayer: NSObject {
     }
 
     private func updateNowPlayingInfo() {
+        let trackURL = currentTrack?.url
+        if trackURL != lastNotifiedTrackURL {
+            lastNotifiedTrackURL = trackURL
+            NotificationCenter.default.post(name: .alhanPlayerCurrentTrackDidChange, object: self)
+        }
+
         guard queuePlayer.currentItem != nil else {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
             MPNowPlayingInfoCenter.default().playbackState = .stopped
@@ -379,12 +384,16 @@ final class AlhanPlayer: NSObject {
         info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = playbackRate
 
         if info[MPMediaItemPropertyArtwork] == nil, let image = UIImage(named: "artworkCross") {
-            info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+            info[MPMediaItemPropertyArtwork] = makeNowPlayingArtwork(from: image)
         }
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
         MPNowPlayingInfoCenter.default().playbackState = isPlaying ? .playing : .paused
     }
+}
+
+private nonisolated func makeNowPlayingArtwork(from image: UIImage) -> MPMediaItemArtwork {
+    MPMediaItemArtwork(boundsSize: image.size) { _ in image }
 }
 
 private extension Double {

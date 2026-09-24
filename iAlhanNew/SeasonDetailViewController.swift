@@ -87,6 +87,22 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         
         //print ("Label Text \(labelText)")
         title = labelText
+        configureNavigationBarAppearance()
+    }
+
+    private func configureNavigationBarAppearance() {
+        let darkBackgroundColor = UIColor(red: 0.2745, green: 0.0, blue: 0.0, alpha: 1.0)
+        let goldColor = UIColor(red: 1.0, green: 0.8753, blue: 0.4202, alpha: 1.0)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = darkBackgroundColor
+        appearance.titleTextAttributes = [.foregroundColor: goldColor]
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = goldColor
     }
     
     
@@ -255,24 +271,17 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
             switch identifier
             {
             case "Show Hymn Detail":
-                //print ("I'm here")
-                let hymnDetailVC = segue.destination as! HymnDetailViewController
-                let indexPath = tableView.indexPathForSelectedRow
-                
-                let row = indexPath?.row
-                let section = indexPath?.section
-                
-                let tempDict = seasonHymns![section!].seasonSections
-                
-                for (_, v) in tempDict!{
-                    //print ("k & V: \(k) -- > \(v) ")
-                    //hymnDetailTemp = v
-                    //print ("Number of hymns in section: \(v.count)")
-                    //print("+++++ hymn ID \(v[row!].hymnID)")
-                    //print(v[row!])
-                    
-                    hymnDetailVC.hymnDetail = [v[row!]]
-                }
+                guard let hymnDetailVC = segue.destination as? HymnDetailViewController else { return }
+
+                let senderCell = sender as? UITableViewCell
+                guard let indexPath = senderCell.flatMap({ tableView.indexPath(for: $0) })
+                        ?? tableView.indexPathForSelectedRow,
+                      let sections = seasonHymns,
+                      sections.indices.contains(indexPath.section),
+                      let hymns = sections[indexPath.section].seasonSections?.values.first,
+                      hymns.indices.contains(indexPath.row) else { return }
+
+                hymnDetailVC.hymnDetail = [hymns[indexPath.row]]
                 
             case "Add to Playlist":
                 print ("I'm going to add hymns to selected playlist")

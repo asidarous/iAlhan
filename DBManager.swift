@@ -10,6 +10,7 @@ import UIKit
 
 
 
+@MainActor
 class DBManager: NSObject {
     
     // declare fields in Season table

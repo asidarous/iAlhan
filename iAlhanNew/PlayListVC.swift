@@ -24,6 +24,7 @@ class PlayListVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBarAppearance()
 
         
         NotificationCenter.default.addObserver(self, selector: #selector (loadList(notification:)),name:NSNotification.Name(rawValue: "load"), object: nil)
@@ -49,6 +50,22 @@ class PlayListVC: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = GlobalConstants.kColor_DarkColor
+        appearance.titleTextAttributes = [
+            .foregroundColor: GlobalConstants.kColor_GoldColor,
+            .font: UIFont.preferredFont(forTextStyle: .headline)
+        ]
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -1,3 +1,12 @@
+//
+//  SceneDelegate.swift
+//  iAlhan
+//
+//  Created by ARSANI SIDAROUS on 9/23/26.
+//  Copyright © 2026 alhan.org. All rights reserved.
+//
+
+
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

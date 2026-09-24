@@ -19,7 +19,7 @@ struct HymnDetail {
     var hymnAudio: String!
 }
 
-var playlistInstructions: Bool = false
+@MainActor var playlistInstructions: Bool = false
 class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnDetailView: UIView!
 
@@ -27,8 +27,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnTextEnglish: UITextView!
     @IBOutlet var HymnTextCoptic: UITextView!
     
-    var progressBar: UISlider!
-    var progressBarLabel: UILabel!
+    private let progressBar = UISlider()
+    private let elapsedTimeLabel = UILabel()
+    private let durationTimeLabel = UILabel()
+    private var progressBarItem = UIBarButtonItem()
+    private var playbackTimeObserver: Any?
+    private var isSeeking = false
+    private var displayedDuration: TimeInterval = 0
+    private var alignedTextWidth: CGFloat = 0
+    private let columnDivider = UIView()
+    private var sideBySideColumnConstraints = [NSLayoutConstraint]()
+    private var stackedColumnConstraints = [NSLayoutConstraint]()
+    private var sideBySideDividerConstraints = [NSLayoutConstraint]()
+    private var stackedDividerConstraints = [NSLayoutConstraint]()
 
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
@@ -64,6 +75,9 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if playerItem != nil {
+            guard playerItem.status.rawValue == AVPlayerItem.Status.readyToPlay.rawValue else {return}
+        }
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
         
         
@@ -77,36 +91,34 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         
         
-        // handles audio when device is muted
-        do {
-            
-            if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) , options: AVAudioSession.CategoryOptions.allowAirPlay)
-            } else {
-                // Fallback on earlier versions
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) )
-                
-            }//.mixWithOthers)
-            UIApplication.shared.beginReceivingRemoteControlEvents()
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-        }
-        catch {
-            print(error)
-        }
+        // Initialize the shared playback service. It owns the audio session,
+        // interruption handling, and lock-screen controls for the whole app.
+        _ = AlhanPlayer.sharedInstance
         
         
         // file download handling
         //print("8888888888" )
         //print ((hymnDetail?[0].hymnAudio)!)
-        localDir = getDirectory(url: (hymnDetail?[0].hymnAudio)!)
+        guard let hymn = hymnDetail?.first,
+              let audioString = hymn.hymnAudio,
+              let audioURL = URL(string: audioString) else {
+            print("HymnDetailViewController requires a hymn with a valid audio URL")
+            navigationController?.popViewController(animated: true)
+            return
+        }
+
+        localDir = getDirectory(url: audioString)
         //print("DIRECTORY \(localDir)")
         
         HymnTextEnglish.delegate = self
         HymnTextCoptic.delegate = self
+        configureHymnText()
+        configureColumnLayout()
+        configureAddButton()
         
-        title = hymnDetail?[0].hymnName
-        hymnAudioURL = URL(string: (hymnDetail?[0].hymnAudio)!)
+        title = hymn.hymnName
+        configureNavigationBarAppearance()
+        hymnAudioURL = audioURL
         
         // check to see if the file is local and thus play from local
         let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
@@ -117,7 +129,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             fileIsLocal = true
             // print("!!!!!! playing the local file - TOP")
         }
-        
+        /**
         //new progress bar
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(HymnDetailViewController.trackAudio), userInfo: nil, repeats: true)
         
@@ -147,82 +159,444 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         progressBar.setThumbImage(UIImage(named: "thumb"), for: UIControl.State.highlighted)
         progressBar.isUserInteractionEnabled = true
         
+        // Add observer to update the slider as the player progresses
+            AlhanPlayer.sharedInstance.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { [weak self] time in
+                    if let duration = self?.playerItem.duration {
+                        let totalSeconds = CMTimeGetSeconds(duration)
+                        let currentSeconds = CMTimeGetSeconds(time)
+                        self!.progressBar.value = Float(currentSeconds / totalSeconds)
+                    }
+                }
+        
+        
         progressBar.addTarget(self, action: #selector(HymnDetailViewController.Seek), for: .allEvents)
         //progressBar.autoresizingMask = .flexibleWidth
         //progressBar.sizeToFit()
+        **/
         
         
-        
-        print("PLAYER ITEM At view Did Load : -- \(String(describing: playerItem))")
+        print("PLAYER ITEM At view Did Load : -- \(String(describing: hymnAudioURL))")
         ToolBar.tintColor = GlobalConstants.kColor_DarkColor
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
-        saveButton = UIBarButtonItem(image: UIImage(named: "download"), landscapeImagePhone: nil, style: .done, target: self, action: #selector(HymnDetailViewController.saveFile))
+        saveButton = UIBarButtonItem(image: UIImage(systemName: "arrow.down.circle"), landscapeImagePhone: nil, style: .done, target: self, action: #selector(HymnDetailViewController.saveFile))
+        saveButton.accessibilityLabel = "Download"
         deleteButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: self, action: #selector(HymnDetailViewController.deleteFile))
-        
-        let flexible = UIBarButtonItem(customView: progressBar)
-        progressBarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
-        progressBarLabel.adjustsFontSizeToFitWidth = true
-        progressBarLabel.text = "00.00"
-        let sliderLabel = UIBarButtonItem(customView: progressBarLabel)
-        
-        
-        //progressBar.minimumValue = 0
+        configureProgressBar()
         
         //*******
         //*** check to see if there is a hymn playing
         //*******
-        if checkPlayerRunning(audioString: "\(hymnAudioURL!)") == false {
+        let isCurrentHymnPlaying = checkPlayerRunning(audioString: hymnAudioURL.absoluteString)
+        if isCurrentHymnPlaying == false {
             
             playerItem = AVPlayerItem(url: hymnAudioURL)
-            //self.alhanPlayer = AVPlayer(playerItem: playerItem)
-            AlhanPlayer.sharedInstance.player = AVPlayer(playerItem: playerItem)
-            //AlhanPlayer.sharedInstance.player.replaceCurrentItem(with: playerItem)
+            AlhanPlayer.sharedInstance.load(
+                .init(
+                    url: hymnAudioURL,
+                    title: hymnDetail?[0].hymnDescription ?? hymnDetail?[0].hymnName ?? "iAlhan"
+                )
+            )
             
             
-            arrayOfButtons = self.ToolBar.items!
-            arrayOfButtons.insert(playButton, at: 0) // change index to wherever you'd like the button
-            arrayOfButtons.insert(flexible, at: 1)
-            arrayOfButtons.insert(sliderLabel, at: 2)
-            // check if file is local
-            if FileManager.default.fileExists(atPath: destinationUrl.path){
-                arrayOfButtons.insert(deleteButton, at: 3)
-            }else {
-                arrayOfButtons.insert(saveButton, at: 3)
-            }
-            self.ToolBar.setItems(arrayOfButtons, animated: false)
+            updateToolbar(isPlaying: false)
             
         } else //*** if it is playing the hymn *****
         {
             
-            arrayOfButtons = self.ToolBar.items!
-            arrayOfButtons.insert(pauseButton, at: 0) // change index to wherever you'd like the button
-            arrayOfButtons.insert(flexible, at: 1)
-            arrayOfButtons.insert(sliderLabel, at: 2)
-            // check if file is local
-            if FileManager.default.fileExists(atPath: destinationUrl.path){
-                arrayOfButtons.insert(deleteButton, at: 3)
-            }else {
-                arrayOfButtons.insert(saveButton, at: 3)
-            }
-            self.ToolBar.setItems(arrayOfButtons, animated: false)
-            
-            // get the bar to the playing position
-            progressBar.maximumValue = Float(AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds ?? 0)
+            updateToolbar(isPlaying: true)
             //            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
             //            updater.preferredFramesPerSecond = 60
             //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             //
         }
         
-        // Media Info Center
-        
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget(self, action: #selector(pauseCommandHandler(_:)))
-        //commandCenter.pauseCommand.addTarget(self, action: #selector(HymnDetailViewController.pause), return .success)
+    }
+
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = GlobalConstants.kColor_DarkColor
+        let titleFont = UIFont(name: "COPT", size: 22)
+            ?? UIFont.preferredFont(forTextStyle: .headline)
+        appearance.titleTextAttributes = [
+            .foregroundColor: GlobalConstants.kColor_GoldColor,
+            .font: titleFont
+        ]
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+    }
+
+    private func configureHymnText() {
+        HymnTextEnglish.font = UIFont.preferredFont(forTextStyle: .body)
+        HymnTextEnglish.adjustsFontForContentSizeCategory = true
+
+        let copticBaseFont = UIFont(name: "copt", size: 21)
+            ?? UIFont.preferredFont(forTextStyle: .title3)
+        HymnTextCoptic.font = UIFontMetrics(forTextStyle: .body).scaledFont(
+            for: copticBaseFont
+        )
+        HymnTextCoptic.adjustsFontForContentSizeCategory = true
+    }
+
+    private func alignHymnParagraphs() {
+        guard let hymn = hymnDetail?.first,
+              let copticText = hymn.hymnCoptic,
+              let englishText = hymn.hymnEnglish,
+              let copticFont = HymnTextCoptic.font,
+              let englishFont = HymnTextEnglish.font else { return }
+
+        let copticWidth = usableTextWidth(in: HymnTextCoptic)
+        let englishWidth = usableTextWidth(in: HymnTextEnglish)
+        guard copticWidth > 0, englishWidth > 0 else { return }
+
+        let currentWidth = copticWidth + englishWidth
+        guard abs(currentWidth - alignedTextWidth) > 0.5
+                || HymnTextCoptic.attributedText.length == 0 else { return }
+        alignedTextWidth = currentWidth
+
+        let copticParagraphs = lines(in: copticText)
+        let englishParagraphs = lines(in: englishText)
+        let paragraphCount = max(copticParagraphs.count, englishParagraphs.count)
+        let sharedLineHeight = max(copticFont.lineHeight, englishFont.lineHeight)
+        let copticAdvances = renderedLineAdvances(
+            copticParagraphs,
+            font: copticFont,
+            width: copticWidth,
+            lineHeight: sharedLineHeight
+        )
+        let englishAdvances = renderedLineAdvances(
+            englishParagraphs,
+            font: englishFont,
+            width: englishWidth,
+            lineHeight: sharedLineHeight
+        )
+        let copticResult = NSMutableAttributedString()
+        let englishResult = NSMutableAttributedString()
+
+        for index in 0..<paragraphCount {
+            let copticParagraph = index < copticParagraphs.count ? copticParagraphs[index] : ""
+            let englishParagraph = index < englishParagraphs.count ? englishParagraphs[index] : ""
+            let copticAdvance = index < copticAdvances.count ? copticAdvances[index] : sharedLineHeight
+            let englishAdvance = index < englishAdvances.count ? englishAdvances[index] : sharedLineHeight
+            let rowAdvance = max(copticAdvance, englishAdvance)
+
+            appendParagraph(
+                copticParagraph,
+                to: copticResult,
+                font: copticFont,
+                lineHeight: sharedLineHeight,
+                paragraphSpacing: rowAdvance - copticAdvance,
+                includesSeparator: index < paragraphCount - 1
+            )
+            appendParagraph(
+                englishParagraph,
+                to: englishResult,
+                font: englishFont,
+                lineHeight: sharedLineHeight,
+                paragraphSpacing: rowAdvance - englishAdvance,
+                includesSeparator: index < paragraphCount - 1
+            )
+        }
+
+        HymnTextCoptic.attributedText = copticResult
+        HymnTextEnglish.attributedText = englishResult
+    }
+
+    private func lines(in text: String) -> [String] {
+        text.replacingOccurrences(of: "\r\n", with: "\n")
+            .components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+    }
+
+    private func usableTextWidth(in textView: UITextView) -> CGFloat {
+        textView.bounds.width
+            - textView.textContainerInset.left
+            - textView.textContainerInset.right
+            - (textView.textContainer.lineFragmentPadding * 2)
+    }
+
+    private func renderedLineAdvances(
+        _ lines: [String],
+        font: UIFont,
+        width: CGFloat,
+        lineHeight: CGFloat
+    ) -> [CGFloat] {
+        guard !lines.isEmpty else { return [] }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = lineHeight
+        paragraphStyle.maximumLineHeight = lineHeight
+        let joinedText = lines.joined(separator: "\n")
+        let textStorage = NSTextStorage(
+            string: joinedText,
+            attributes: [.font: font, .paragraphStyle: paragraphStyle]
+        )
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(
+            size: CGSize(width: width, height: .greatestFiniteMagnitude)
+        )
+        textContainer.lineFragmentPadding = 0
+        textContainer.lineBreakMode = .byWordWrapping
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        layoutManager.ensureLayout(for: textContainer)
+
+        var characterIndex = 0
+        var startPositions = [CGFloat]()
+        for line in lines {
+            let safeIndex = min(characterIndex, max(0, textStorage.length - 1))
+            let glyphIndex = layoutManager.glyphIndexForCharacter(at: safeIndex)
+            startPositions.append(
+                layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil).minY
+            )
+            characterIndex += (line as NSString).length + 1
+        }
+
+        let documentHeight = layoutManager.usedRect(for: textContainer).maxY
+        return startPositions.enumerated().map { index, position in
+            let nextPosition = index + 1 < startPositions.count
+                ? startPositions[index + 1]
+                : documentHeight
+            return max(lineHeight, nextPosition - position)
+        }
+    }
+
+    private func appendParagraph(
+        _ text: String,
+        to result: NSMutableAttributedString,
+        font: UIFont,
+        lineHeight: CGFloat,
+        paragraphSpacing: CGFloat,
+        includesSeparator: Bool
+    ) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = lineHeight
+        paragraphStyle.maximumLineHeight = lineHeight
+        paragraphStyle.paragraphSpacing = includesSeparator ? paragraphSpacing : 0
+        let value = text + (includesSeparator ? "\n" : "")
+        result.append(NSAttributedString(
+            string: value,
+            attributes: [
+                .font: font,
+                .foregroundColor: GlobalConstants.kColor_DarkColor,
+                .paragraphStyle: paragraphStyle
+            ]
+        ))
+    }
+
+    private func configureColumnLayout() {
+        let constraints = view.constraints
+        guard
+            let equalWidth = constraints.first(where: {
+                $0.firstItem === HymnTextCoptic
+                    && $0.firstAttribute == .width
+                    && $0.secondItem === HymnTextEnglish
+            }),
+            let englishLeading = constraints.first(where: {
+                $0.firstItem === HymnTextEnglish
+                    && $0.firstAttribute == .leading
+                    && $0.secondItem === HymnTextCoptic
+            }),
+            let englishTop = constraints.first(where: {
+                $0.firstItem === HymnTextEnglish && $0.firstAttribute == .top
+            }),
+            let copticBottom = constraints.first(where: {
+                $0.firstItem === ToolBar
+                    && $0.firstAttribute == .top
+                    && $0.secondItem === HymnTextCoptic
+            })
+        else { return }
+
+        englishLeading.constant = 16
+        sideBySideColumnConstraints = [
+            equalWidth,
+            englishLeading,
+            englishTop,
+            copticBottom
+        ]
+
+        stackedColumnConstraints = [
+            HymnTextCoptic.trailingAnchor.constraint(equalTo: HymnTextEnglish.trailingAnchor),
+            HymnTextEnglish.leadingAnchor.constraint(equalTo: HymnTextCoptic.leadingAnchor),
+            HymnTextEnglish.topAnchor.constraint(equalTo: HymnTextCoptic.bottomAnchor, constant: 16),
+            HymnTextCoptic.heightAnchor.constraint(equalTo: HymnTextEnglish.heightAnchor)
+        ]
+
+        columnDivider.translatesAutoresizingMaskIntoConstraints = false
+        columnDivider.backgroundColor = .separator
+        columnDivider.isAccessibilityElement = false
+        view.addSubview(columnDivider)
+
+        sideBySideDividerConstraints = [
+            columnDivider.widthAnchor.constraint(equalToConstant: 1),
+            columnDivider.centerXAnchor.constraint(
+                equalTo: HymnTextCoptic.trailingAnchor,
+                constant: 8
+            ),
+            columnDivider.topAnchor.constraint(equalTo: HymnTextCoptic.topAnchor, constant: 8),
+            columnDivider.bottomAnchor.constraint(equalTo: HymnTextCoptic.bottomAnchor, constant: -8)
+        ]
+        stackedDividerConstraints = [
+            columnDivider.heightAnchor.constraint(equalToConstant: 1),
+            columnDivider.leadingAnchor.constraint(equalTo: HymnTextCoptic.leadingAnchor, constant: 8),
+            columnDivider.trailingAnchor.constraint(equalTo: HymnTextCoptic.trailingAnchor, constant: -8),
+            columnDivider.centerYAnchor.constraint(
+                equalTo: HymnTextCoptic.bottomAnchor,
+                constant: 8
+            )
+        ]
+
+        updateColumnLayout()
+    }
+
+    private func updateColumnLayout() {
+        guard !sideBySideColumnConstraints.isEmpty else { return }
+
+        let usesStackedLayout = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        NSLayoutConstraint.deactivate(sideBySideColumnConstraints + stackedColumnConstraints)
+        NSLayoutConstraint.deactivate(sideBySideDividerConstraints + stackedDividerConstraints)
+
+        if usesStackedLayout {
+            NSLayoutConstraint.activate(stackedColumnConstraints + stackedDividerConstraints)
+        } else {
+            NSLayoutConstraint.activate(sideBySideColumnConstraints + sideBySideDividerConstraints)
+        }
+    }
+
+    private func configureAddButton() {
+        let addButton = UIButton(type: .system)
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.tintColor = .label
+        addButton.accessibilityLabel = "Add to playlist"
+        addButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        addButton.imageView?.isAccessibilityElement = false
+        addButton.addTarget(self, action: #selector(addToPlaylistTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+    }
+
+    @objc private func addToPlaylistTapped() {
+        performSegue(withIdentifier: "PlayList", sender: self)
     }
     
+    private func configureProgressBar() {
+        let availableWidth = max(180, min(260, view.bounds.width - 140))
+        progressBar.minimumValue = 0
+        progressBar.maximumValue = 1
+        progressBar.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
+        progressBar.thumbTintColor = GlobalConstants.kColor_DarkColor
+        let thumbConfiguration = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+        let thumbImage = UIImage(systemName: "circle.fill", withConfiguration: thumbConfiguration)
+        progressBar.setThumbImage(thumbImage, for: .normal)
+        progressBar.setThumbImage(thumbImage, for: .highlighted)
+        progressBar.accessibilityLabel = "Playback position"
+        progressBar.addTarget(self, action: #selector(beginSeeking), for: .touchDown)
+        progressBar.addTarget(self, action: #selector(progressBarValueChanged), for: .valueChanged)
+        progressBar.addTarget(self, action: #selector(endSeeking), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+
+        configureTimeLabel(elapsedTimeLabel, alignment: .right)
+        configureTimeLabel(durationTimeLabel, alignment: .left)
+
+        let progressControls = UIStackView(arrangedSubviews: [
+            elapsedTimeLabel,
+            progressBar,
+            durationTimeLabel
+        ])
+        progressControls.axis = .horizontal
+        progressControls.alignment = .center
+        progressControls.spacing = 4
+        progressControls.frame = CGRect(x: 0, y: 0, width: availableWidth, height: 32)
+        elapsedTimeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        durationTimeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+        progressBarItem = UIBarButtonItem(customView: progressControls)
+        updateProgressAccessibilityValue()
+    }
+
+    private func configureTimeLabel(_ label: UILabel, alignment: NSTextAlignment) {
+        let baseFont = UIFont.monospacedDigitSystemFont(ofSize: 11, weight: .regular)
+        label.font = UIFontMetrics(forTextStyle: .caption2).scaledFont(
+            for: baseFont
+        )
+        label.adjustsFontForContentSizeCategory = true
+        label.textColor = GlobalConstants.kColor_DarkColor
+        label.textAlignment = alignment
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
+        label.isAccessibilityElement = false
+    }
+
+    private func updateToolbar(isPlaying: Bool) {
+        let playbackButton = isPlaying ? pauseButton : playButton
+        let fileButton = fileIsLocal ? deleteButton : saveButton
+        arrayOfButtons = [playbackButton, progressBarItem, fileButton]
+        ToolBar.setItems(arrayOfButtons, animated: false)
+    }
+
+    private func startPlaybackTimeObserver() {
+        guard playbackTimeObserver == nil else { return }
+
+        playbackTimeObserver = AlhanPlayer.sharedInstance.player.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
+            queue: .main
+        ) { [weak self] time in
+            Task { @MainActor [weak self] in
+                guard let self, !isSeeking else { return }
+
+                let duration = AlhanPlayer.sharedInstance.duration
+                guard duration > 0 else { return }
+
+                displayedDuration = duration
+                progressBar.maximumValue = Float(duration)
+                progressBar.value = Float(time.seconds.isFinite ? time.seconds : 0)
+                updateProgressAccessibilityValue()
+            }
+        }
+    }
+
+    private func stopPlaybackTimeObserver() {
+        guard let playbackTimeObserver else { return }
+        AlhanPlayer.sharedInstance.player.removeTimeObserver(playbackTimeObserver)
+        self.playbackTimeObserver = nil
+    }
+
+    private func updateProgressAccessibilityValue() {
+        let elapsed = max(0, TimeInterval(progressBar.value))
+        elapsedTimeLabel.text = formattedTime(elapsed)
+        durationTimeLabel.text = displayedDuration > 0 ? formattedTime(displayedDuration) : "--:--"
+        progressBar.accessibilityValue = displayedDuration > 0
+            ? "\(formattedTime(elapsed)) of \(formattedTime(displayedDuration))"
+            : formattedTime(elapsed)
+    }
+
+    private func formattedTime(_ time: TimeInterval) -> String {
+        let totalSeconds = Int(time.rounded())
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        return hours > 0
+            ? String(format: "%d:%02d:%02d", hours, minutes, seconds)
+            : String(format: "%d:%02d", minutes, seconds)
+    }
+
+    @objc private func beginSeeking() {
+        isSeeking = true
+    }
+
+    @objc private func progressBarValueChanged() {
+        updateProgressAccessibilityValue()
+    }
+
+    @objc private func endSeeking() {
+        AlhanPlayer.sharedInstance.seek(to: TimeInterval(progressBar.value))
+        isSeeking = false
+    }
+
     // MARK: Scroll control
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -243,55 +617,20 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
     // MARK: Audio controls
     
-    @objc func finishedPlaying(myNotification: Notification ){
-        
-        arrayOfButtons = self.ToolBar.items!
-        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-        //print("IMGONACHANGEIT------------")
-        arrayOfButtons.insert(playButton, at: 0)
-        //self.ProgressBar.value = 0.0
-        
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
-        //updater!.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
-        
+    @objc func finishedPlaying(myNotification: Notification) {
+        progressBar.value = 0
+        updateProgressAccessibilityValue()
+        updateToolbar(isPlaying: false)
         AlhanPlayer.sharedInstance.resetTimer()
-        
     }
     
     func play() {
-        
-        //            updater = CADisplayLink(target: self, selector: #selector(HymnDetailViewController.trackAudio))
-        //            updater.preferredFramesPerSecond = 60
-        //            updater.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-        //
-        let image:UIImage = UIImage(named: "artworkCross")!
-        var albumArtWork: MPMediaItemArtwork!
-        if #available(iOS 10.0, *) {
-            albumArtWork = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-                return image})
-        } else {
-            // Fallback on earlier versions
-            albumArtWork = MPMediaItemArtwork.init(image: image)
-        }
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: " \((hymnDetail?[0].hymnDescription)!)",
-            MPMediaItemPropertyArtwork: albumArtWork as Any,
-            MPMediaItemPropertyPlaybackDuration: NSNumber(value: (AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!),
-            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1)
-        ]
         AlhanPlayer.sharedInstance.play()
-        print("MAX VALUE: \(String(describing: AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)) --DONE")
-        progressBar.maximumValue = Float((AlhanPlayer.sharedInstance.player.currentItem?.duration.seconds)!)
-        
-        
     }
     
     
     @objc func pause() {
-
-            AlhanPlayer.sharedInstance.player.volume = 1.0
-            AlhanPlayer.sharedInstance.player.pause()
-            print("Pausing line 294")
+        AlhanPlayer.sharedInstance.pause()
     }
     
 
@@ -305,56 +644,66 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
              showAlertButton()
            
         
-        }else
-        {
-            if activateSession() {
-                // Stop PlayList if playing
-                if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-                    print("### Playlist player was on")
-                    AlhanPlayer.sharedInstance.queuePlayer.pause()
-                }
-                arrayOfButtons = self.ToolBar.items!
-                arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-                arrayOfButtons.insert(pauseButton, at: 0)
-                self.ToolBar.setItems(arrayOfButtons, animated: false)
-                play()
-                //print("%%% from PLAY \(AlhanPlayer.sharedInstance.player.rate)")
-            }
-            
+        } else {
+            updateToolbar(isPlaying: true)
+            play()
         }
     }
     
     @objc func pauseButtonTapped() {
-        if deactivateSession() {
-            arrayOfButtons = self.ToolBar.items!
-            arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-            arrayOfButtons.insert(playButton, at: 0)
-            self.ToolBar.setItems(arrayOfButtons, animated: false)
-            pause()
-            
-            
+        updateToolbar(isPlaying: false)
+        pause()
+    }
+    
+    func activateSession(completion: @escaping @MainActor @Sendable (Bool) -> Void = { _ in }) {
+        let audioSession = AVAudioSession.sharedInstance()
+
+        if #available(iOS 27.0, *) {
+            audioSession.activate { success, error in
+                if let error {
+                    print(error.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    completion(success)
+                }
+            }
+        } else {
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try audioSession.setActive(true)
+                    DispatchQueue.main.async { completion(true) }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async { completion(false) }
+                }
+            }
         }
     }
     
-    func activateSession() -> Bool {
-        do {
-                try AVAudioSession.sharedInstance().setActive(true)
-                return true
-            } catch let error as NSError {
-                print(error.localizedDescription)
-                return false
-            }
-    }
     
-    
-    func deactivateSession() -> Bool {
-        do {
-                try AVAudioSession.sharedInstance().setActive(false)
-                return true
-            } catch let error as NSError {
-                print(error.localizedDescription)
-                return false
+    func deactivateSession(completion: @escaping @MainActor @Sendable (Bool) -> Void = { _ in }) {
+        let audioSession = AVAudioSession.sharedInstance()
+
+        if #available(iOS 27.0, *) {
+            audioSession.deactivate { success, error in
+                if let error {
+                    print(error.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    completion(success)
+                }
             }
+        } else {
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try audioSession.setActive(false)
+                    DispatchQueue.main.async { completion(true) }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async { completion(false) }
+                }
+            }
+        }
     }
     
     func checkPlayerRunning(audioString: String) -> Bool{
@@ -382,7 +731,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
                 print ("++ Playing the same hymn, then let's get to where it is")
                 //print ("+++ Here is where the hymn is \(AlhanPlayer.sharedInstance.player.currentTime().seconds)")
                 isRunning = true
-                progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
+              //  progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
             } else
             {
                 AlhanPlayer.sharedInstance.player.pause()
@@ -390,48 +739,6 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }
         return isRunning
     }
-    
-    // MARK: tracking audio
-    @objc func trackAudio() {
-
-        progressBar.value = Float((AlhanPlayer.sharedInstance.player.currentTime().seconds))
-        //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
-
-        let minutes = Int(floor(progressBar.value / 60))
-        let seconds = Int(round(progressBar.value.truncatingRemainder(dividingBy: 60)))
-        let timeString = NSString(format: "%02d:%02d", minutes, seconds)
-        //print("****** ProgressBar VALUE: \(timeString) ***")
-        progressBarLabel.text = "\(timeString)"
-        
-    }
-    
-    @objc func Seek(_ sender: UISlider) {
-        
-        AlhanPlayer.sharedInstance.player.pause()
-        
-        arrayOfButtons = self.ToolBar.items!
-        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-        arrayOfButtons.insert(playButton, at: 0)
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
-        
-        AlhanPlayer.sharedInstance.player.seek(to: CMTimeMake(value: ( Int64(progressBar.value)), timescale: 1) )
-        //progressBarLabel.text = NSString(format: "%04.2f", progressBar.value) as String
-        let minutes = Int(floor(progressBar.value / 60))
-        let seconds = Int(round(progressBar.value.truncatingRemainder(dividingBy: 60)))
-        let timeString = NSString(format: "%02d:%02d", minutes, seconds)
-        //print("****** ProgressBar VALUE: \(timeString) ***")
-        progressBarLabel.text = "\(timeString)"
-        //alhanPlayer.play()
-        play()
-        
-        arrayOfButtons.remove(at: 0) // change index to correspond to where your button is
-        arrayOfButtons.insert(pauseButton, at: 0)
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
-        
-    }
-    
-    
-
     
     // MARK: file handling
     
@@ -477,10 +784,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             }
         }
         
-        // change the button to delete
-        arrayOfButtons.remove(at: 3) // change index to correspond to where your button is
-        arrayOfButtons.insert(deleteButton, at: 3)
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        fileIsLocal = true
+        updateToolbar(isPlaying: AlhanPlayer.sharedInstance.isPlaying)
     }
 
    
@@ -502,10 +807,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         catch let error as NSError {
             print("An error took place: \(error)")
         }
-        // change the button to save
-        arrayOfButtons.remove(at: 3) // change index to correspond to where your button is
-        arrayOfButtons.insert(saveButton, at: 3)
-        self.ToolBar.setItems(arrayOfButtons, animated: false)
+        fileIsLocal = false
+        updateToolbar(isPlaying: AlhanPlayer.sharedInstance.isPlaying)
         
         
     }
@@ -515,28 +818,55 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     // MARK: View Functions
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-         HymnTextCoptic.setContentOffset(CGPoint.zero, animated: false)
-        HymnTextEnglish.setContentOffset(CGPoint.zero, animated: false)
-        
+        alignHymnParagraphs()
     }
 
     var originalStyle: [String: Any]!
     
     override func viewWillAppear(_ animated: Bool) {
-        HymnTextCoptic.text = hymnDetail?[0].hymnCoptic
-        HymnTextEnglish.text = hymnDetail?[0].hymnEnglish
-        
-        
-        
-        
-        originalStyle = convertFromOptionalNSAttributedStringKeyDictionary(navigationController?.navigationBar.titleTextAttributes)?.lazy.elements
-        //print(originalStyle)
-        
-        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.font.rawValue: UIFont(name: "copt", size: 24)!, NSAttributedString.Key.foregroundColor.rawValue: GlobalConstants.kColor_GoldColor])
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(HymnDetailViewController.finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+        super.viewWillAppear(animated)
+        startPlaybackTimeObserver()
 
-           }
+        alignedTextWidth = 0
+        alignHymnParagraphs()
+        HymnTextCoptic.setContentOffset(.zero, animated: false)
+        HymnTextEnglish.setContentOffset(.zero, animated: false)
+
+        originalStyle = convertFromOptionalNSAttributedStringKeyDictionary(
+            navigationController?.navigationBar.titleTextAttributes
+        )?.lazy.elements
+
+        let titleBaseFont = UIFont(name: "copt", size: 24)
+            ?? UIFont.preferredFont(forTextStyle: .headline)
+        let titleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBaseFont)
+        navigationController?.navigationBar.titleTextAttributes =
+            convertToOptionalNSAttributedStringKeyDictionary([
+                NSAttributedString.Key.font.rawValue: titleFont,
+                NSAttributedString.Key.foregroundColor.rawValue: UIColor.label
+            ])
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(HymnDetailViewController.finishedPlaying),
+            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+            object: AlhanPlayer.sharedInstance.player.currentItem
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handlePreferredContentSizeChange),
+            name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
+    }
+
+    @objc private func handlePreferredContentSizeChange() {
+        configureHymnText()
+        alignedTextWidth = 0
+        alignHymnParagraphs()
+        configureTimeLabel(elapsedTimeLabel, alignment: .right)
+        configureTimeLabel(durationTimeLabel, alignment: .left)
+        updateColumnLayout()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -544,7 +874,9 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
+        super.viewWillDisappear(animated)
+        stopPlaybackTimeObserver()
+
         navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(originalStyle)
         NotificationCenter.default.removeObserver(self)
         
@@ -571,8 +903,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         print("audioPlayer.playing", player.isPlaying)
         interruptedOnPlayback = true
         
-        if deactivateSession() {
-            print("AVAudioSession is inactive")
+        deactivateSession { success in
+            if success {
+                print("AVAudioSession is inactive")
+            }
         }
     }
     
@@ -582,11 +916,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             AVAudioSession.InterruptionOptions(rawValue: UInt(flags)) == .shouldResume
                 && interruptedOnPlayback
         else { return }
-        if activateSession() {
+        activateSession { [weak self] success in
+            guard let self, success else { return }
             print("AVAudioSession is Active again")
             interruptedOnPlayback = false
-        DispatchQueue.main.async(execute: {
-            self.playButtonTapped() })
+            playButtonTapped()
         }
        
     }
