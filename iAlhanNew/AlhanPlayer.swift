@@ -36,10 +36,13 @@ final class AlhanPlayer: NSObject {
     let queuePlayer = AVQueuePlayer()
 
     var isPlaying: Bool { queuePlayer.timeControlStatus == .playing }
+    private(set) var intendsToPlay = false
     var currentTime: TimeInterval { queuePlayer.currentTime().seconds.finiteValue }
     var duration: TimeInterval { queuePlayer.currentItem?.duration.seconds.finiteValue ?? 0 }
     var currentTrackURL: URL? { currentTrack?.url }
     var currentTrackTitle: String? { currentTrack?.title }
+    var hasCurrentItem: Bool { queuePlayer.currentItem != nil }
+    var canAdvance: Bool { queuePlayer.items().count > 1 }
     var playbackRate: Float = 1 {
         didSet {
             guard playbackRate > 0 else {
@@ -55,6 +58,7 @@ final class AlhanPlayer: NSObject {
 
     private var tracksByItem = [ObjectIdentifier: Track]()
     private var lastNotifiedTrackURL: URL?
+    private var artworkTrackURL: URL?
     private var timeObserver: Any?
     private var notificationTokens = [NSObjectProtocol]()
     private var remoteCommandTargets = [(MPRemoteCommand, Any)]()
@@ -92,6 +96,7 @@ final class AlhanPlayer: NSObject {
     }
 
     func play() {
+        intendsToPlay = true
         activateSession { [weak self] success in
             guard let self, success, queuePlayer.currentItem != nil else { return }
             queuePlayer.playImmediately(atRate: playbackRate)
@@ -100,6 +105,7 @@ final class AlhanPlayer: NSObject {
     }
 
     func pause() {
+        intendsToPlay = false
         queuePlayer.pause()
         updateNowPlayingInfo()
     }
@@ -111,6 +117,16 @@ final class AlhanPlayer: NSObject {
     func stop() {
         pause()
         seek(to: 0)
+        deactivateSession()
+    }
+
+    func clear() {
+        intendsToPlay = false
+        queuePlayer.pause()
+        queuePlayer.removeAllItems()
+        tracksByItem.removeAll()
+        updateNowPlayingInfo()
+        updateRemoteCommandAvailability()
         deactivateSession()
     }
 
@@ -383,8 +399,12 @@ final class AlhanPlayer: NSObject {
         info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? playbackRate : 0
         info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = playbackRate
 
-        if info[MPMediaItemPropertyArtwork] == nil, let image = UIImage(named: "artworkCross") {
-            info[MPMediaItemPropertyArtwork] = makeNowPlayingArtwork(from: image)
+        if artworkTrackURL != trackURL, let image = UIImage(named: "artworkCross") {
+            artworkTrackURL = trackURL
+            info[MPMediaItemPropertyArtwork] = makeNowPlayingArtwork(
+                from: image,
+                title: currentTrack?.title ?? "iAlhan"
+            )
         }
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
@@ -392,8 +412,51 @@ final class AlhanPlayer: NSObject {
     }
 }
 
-private nonisolated func makeNowPlayingArtwork(from image: UIImage) -> MPMediaItemArtwork {
-    MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+private func makeNowPlayingArtwork(from image: UIImage, title: String) -> MPMediaItemArtwork {
+    let artworkSize = CGSize(width: 1024, height: 1024)
+    let renderedImage = UIGraphicsImageRenderer(size: artworkSize).image { context in
+        let canvas = CGRect(origin: .zero, size: artworkSize)
+        UIColor(red: 70 / 255, green: 0, blue: 0, alpha: 1).setFill()
+        context.fill(canvas)
+
+        let imageScale = max(artworkSize.width / image.size.width, artworkSize.height / image.size.height)
+        let imageSize = CGSize(width: image.size.width * imageScale, height: image.size.height * imageScale)
+        let imageRect = CGRect(
+            x: (artworkSize.width - imageSize.width) / 2,
+            y: (artworkSize.height - imageSize.height) / 2,
+            width: imageSize.width,
+            height: imageSize.height
+        )
+        image.draw(in: imageRect)
+
+        let titlePanel = CGRect(x: 56, y: 706, width: 912, height: 246)
+        UIColor.black.withAlphaComponent(0.62).setFill()
+        UIBezierPath(roundedRect: titlePanel, cornerRadius: 36).fill()
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        let font = UIFont(name: "COPT", size: 72) ?? UIFont.systemFont(ofSize: 64, weight: .semibold)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor(red: 1, green: 223 / 255, blue: 107 / 255, alpha: 1),
+            .paragraphStyle: paragraphStyle
+        ]
+        let textRect = titlePanel.insetBy(dx: 38, dy: 32)
+        (title as NSString).draw(
+            with: textRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],
+            attributes: attributes,
+            context: nil
+        )
+    }
+
+    return MPMediaItemArtwork(boundsSize: artworkSize) { requestedSize in
+        guard requestedSize.width > 0, requestedSize.height > 0 else { return renderedImage }
+        return UIGraphicsImageRenderer(size: requestedSize).image { _ in
+            renderedImage.draw(in: CGRect(origin: .zero, size: requestedSize))
+        }
+    }
 }
 
 private extension Double {

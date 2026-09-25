@@ -25,6 +25,7 @@ class PlayListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBarAppearance()
+        AppAppearance.configureTable(tableView)
 
         
         NotificationCenter.default.addObserver(self, selector: #selector (loadList(notification:)),name:NSNotification.Name(rawValue: "load"), object: nil)
@@ -52,19 +53,7 @@ class PlayListVC: UITableViewController {
 
 
     private func configureNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = GlobalConstants.kColor_DarkColor
-        appearance.titleTextAttributes = [
-            .foregroundColor: GlobalConstants.kColor_GoldColor,
-            .font: UIFont.preferredFont(forTextStyle: .headline)
-        ]
-
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactAppearance = appearance
-        navigationItem.compactScrollEdgeAppearance = appearance
-        navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+        AppAppearance.configureNavigationBar(for: self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,10 +98,23 @@ class PlayListVC: UITableViewController {
         
         if (plArray != nil)
         {
-            cell.textLabel?.text = plArray?[row].description
+            var content = cell.defaultContentConfiguration()
+            content.text = plArray?[row]
+            content.image = UIImage(systemName: "music.note.list")
+            content.imageProperties.tintColor = GlobalConstants.kColor_DarkColor
+            content.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
+            content.textProperties.color = GlobalConstants.kColor_DarkColor
+            content.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                top: 10,
+                leading: 16,
+                bottom: 10,
+                trailing: 8
+            )
+            cell.contentConfiguration = content
         }
-        
-        
+        cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = AppAppearance.cellCreamColor
+        cell.contentView.backgroundColor = AppAppearance.cellCreamColor
         
         return cell
     }
@@ -150,12 +152,9 @@ class PlayListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let row = indexPath.row
-        let cell = self.tableView.cellForRow(at: indexPath)
-        
         if editingStyle == .delete {
             // Delete the row from the data source
-            
-            PL_DBManager.shared.deletePL(playlist: (cell?.textLabel?.text)!)
+            PL_DBManager.shared.deletePL(playlist: plArray[row])
             plArray.remove(at: row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             //tableView.

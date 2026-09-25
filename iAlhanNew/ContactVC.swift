@@ -20,7 +20,29 @@ class ContactVC: UIViewController, @preconcurrency MFMailComposeViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppAppearance.configureCreamBackground(for: view)
+        AppAppearance.configureNavigationBar(for: self)
+        [nameField, emailField, messageField].forEach(AppAppearance.configureTextField)
+        nameField.textContentType = .name
+        emailField.textContentType = .emailAddress
+        emailField.keyboardType = .emailAddress
+        emailField.autocapitalizationType = .none
+        messageField.accessibilityLabel = "Message"
+        styleFormControls(in: view)
+    }
+
+    private func styleFormControls(in rootView: UIView) {
+        for subview in rootView.subviews {
+            if let label = subview as? UILabel {
+                label.font = UIFont.preferredFont(forTextStyle: .headline)
+                label.adjustsFontForContentSizeCategory = true
+                label.textColor = .label
+            } else if let button = subview as? UIButton, button.buttonType == .system {
+                AppAppearance.configurePrimaryButton(button)
+                continue
+            }
+            styleFormControls(in: subview)
+        }
     }
     
     
@@ -35,8 +57,11 @@ class ContactVC: UIViewController, @preconcurrency MFMailComposeViewControllerDe
         mc.mailComposeDelegate = self
         
         mc.setToRecipients(toRecepients)
-        mc.setSubject("iAlhan message from: \(nameField.text!)")
-        mc.setMessageBody("Name: \(nameField.text!)<br/> Message: \(messageField.text!)", isHTML: true)
+        let name = nameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let email = emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let message = messageField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        mc.setSubject("iAlhan message from: \(name)")
+        mc.setMessageBody("Name: \(name)<br/>Email: \(email)<br/>Message: \(message)", isHTML: true)
         
         self.present(mc,animated: true, completion: nil)
         }else {

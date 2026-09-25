@@ -22,6 +22,7 @@ struct HymnDetail {
 @MainActor var playlistInstructions: Bool = false
 class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnDetailView: UIView!
+    @IBOutlet var visualEffectView: UIVisualEffectView!
 
     @IBOutlet var ToolBar: UIToolbar!
     @IBOutlet var HymnTextEnglish: UITextView!
@@ -78,7 +79,11 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         if playerItem != nil {
             guard playerItem.status.rawValue == AVPlayerItem.Status.readyToPlay.rawValue else {return}
         }
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
+        view.backgroundColor = AppAppearance.cellCreamColor
+        visualEffectView.effect = nil
+        visualEffectView.backgroundColor = AppAppearance.cellCreamColor
+        visualEffectView.contentView.backgroundColor = AppAppearance.cellCreamColor
+
         
         
         if (self.canBecomeFirstResponder){
@@ -176,7 +181,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         
         print("PLAYER ITEM At view Did Load : -- \(String(describing: hymnAudioURL))")
-        ToolBar.tintColor = GlobalConstants.kColor_DarkColor
+        configurePlayerBarAppearance()
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
         saveButton = UIBarButtonItem(image: UIImage(systemName: "arrow.down.circle"), landscapeImagePhone: nil, style: .done, target: self, action: #selector(HymnDetailViewController.saveFile))
@@ -194,7 +199,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             AlhanPlayer.sharedInstance.load(
                 .init(
                     url: hymnAudioURL,
-                    title: hymnDetail?[0].hymnDescription ?? hymnDetail?[0].hymnName ?? "iAlhan"
+                    title: hymnDetail?[0].hymnName ?? hymnDetail?[0].hymnDescription ?? "iAlhan"
                 )
             )
             
@@ -231,9 +236,26 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
     }
 
+    private func configurePlayerBarAppearance() {
+        ToolBar.tintColor = GlobalConstants.kColor_DarkColor
+
+        let appearance = UIToolbarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundEffect = nil
+        appearance.backgroundColor = AppAppearance.playerSurfaceColor
+        appearance.shadowColor = AppAppearance.playerBorderColor
+
+        ToolBar.standardAppearance = appearance
+        ToolBar.compactAppearance = appearance
+        ToolBar.scrollEdgeAppearance = appearance
+        ToolBar.compactScrollEdgeAppearance = appearance
+    }
+
     private func configureHymnText() {
         HymnTextEnglish.font = UIFont.preferredFont(forTextStyle: .body)
         HymnTextEnglish.adjustsFontForContentSizeCategory = true
+        HymnTextEnglish.backgroundColor = AppAppearance.cellCreamColor
+        HymnTextEnglish.textColor = GlobalConstants.kColor_DarkColor
 
         let copticBaseFont = UIFont(name: "copt", size: 21)
             ?? UIFont.preferredFont(forTextStyle: .title3)
@@ -241,6 +263,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             for: copticBaseFont
         )
         HymnTextCoptic.adjustsFontForContentSizeCategory = true
+        HymnTextCoptic.backgroundColor = AppAppearance.cellCreamColor
+        HymnTextCoptic.textColor = GlobalConstants.kColor_DarkColor
     }
 
     private func alignHymnParagraphs() {
@@ -821,7 +845,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         alignHymnParagraphs()
     }
 
-    var originalStyle: [String: Any]!
+    private var originalStyle: [NSAttributedString.Key: Any]?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -832,18 +856,15 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         HymnTextCoptic.setContentOffset(.zero, animated: false)
         HymnTextEnglish.setContentOffset(.zero, animated: false)
 
-        originalStyle = convertFromOptionalNSAttributedStringKeyDictionary(
-            navigationController?.navigationBar.titleTextAttributes
-        )?.lazy.elements
+        originalStyle = navigationController?.navigationBar.titleTextAttributes
 
         let titleBaseFont = UIFont(name: "copt", size: 24)
             ?? UIFont.preferredFont(forTextStyle: .headline)
         let titleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBaseFont)
-        navigationController?.navigationBar.titleTextAttributes =
-            convertToOptionalNSAttributedStringKeyDictionary([
-                NSAttributedString.Key.font.rawValue: titleFont,
-                NSAttributedString.Key.foregroundColor.rawValue: UIColor.label
-            ])
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: titleFont,
+            .foregroundColor: UIColor.label
+        ]
 
         NotificationCenter.default.addObserver(
             self,
@@ -877,7 +898,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         super.viewWillDisappear(animated)
         stopPlaybackTimeObserver()
 
-        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(originalStyle)
+        navigationController?.navigationBar.titleTextAttributes = originalStyle
         NotificationCenter.default.removeObserver(self)
         
 //        if (updater != nil) {
@@ -999,21 +1020,4 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     
     
     
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-	return input.rawValue
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromOptionalNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]?) -> [String: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

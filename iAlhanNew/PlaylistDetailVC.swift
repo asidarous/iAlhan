@@ -41,6 +41,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     private let miniNextButton = UIButton(type: .system)
     private let playbackProgress = UIProgressView(progressViewStyle: .default)
     private var playbackTimeObserver: Any?
+    private var hasStartedPlaylistPlayback = false
     
     // Internet alert box
     @IBAction func showAlertButton() {
@@ -86,22 +87,17 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //
         print("HYMN URLS: \(hymnURLS)")
         
-        // handles audio when device is muted
-        do {
-            
-             if #available(iOS 10.0, *) {
-                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) , options: AVAudioSession.CategoryOptions.allowAirPlay)
-             }else{
-            
-                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)) )
+        // Configure and activate the audio session away from the main thread.
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let audioSession = AVAudioSession.sharedInstance()
+
+                try audioSession.setCategory(.playback, options: .allowAirPlay)
+
+                try audioSession.setActive(true)
+            } catch {
+                print(error)
             }
-            
-                
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-        }
-        catch {
-            print(error)
         }
         
         // Define buttons
@@ -158,24 +154,31 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     private func configurePlaylistAppearance() {
         plDetail.rowHeight = 62
         plDetail.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        plDetail.backgroundColor = .systemGroupedBackground
+        AppAppearance.configureCreamBackground(for: view)
+        AppAppearance.configureCreamBackground(for: plDetail)
         plDetail.contentInset.bottom = 108
         plDetail.verticalScrollIndicatorInsets.bottom = 108
     }
 
     private func configureMiniPlayer() {
+        miniPlayer.effect = nil
         miniPlayer.translatesAutoresizingMaskIntoConstraints = false
+        miniPlayer.backgroundColor = AppAppearance.cellCreamColor
+        miniPlayer.contentView.backgroundColor = AppAppearance.playerTintColor
         miniPlayer.layer.cornerRadius = 22
         miniPlayer.layer.cornerCurve = .continuous
         miniPlayer.clipsToBounds = true
-        miniPlayer.layer.borderWidth = 0.5
-        miniPlayer.layer.borderColor = UIColor.separator.cgColor
+        miniPlayer.layer.borderWidth = 0.8
+        miniPlayer.layer.borderColor = AppAppearance.playerBorderColor.cgColor
         view.addSubview(miniPlayer)
 
         nowPlayingLabel.text = "NOW PLAYING"
-        nowPlayingLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
+        let nowPlayingBaseFont = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        nowPlayingLabel.font = UIFontMetrics(forTextStyle: .caption2).scaledFont(
+            for: nowPlayingBaseFont
+        )
         nowPlayingLabel.adjustsFontForContentSizeCategory = true
-        nowPlayingLabel.textColor = .secondaryLabel
+        nowPlayingLabel.textColor = GlobalConstants.kColor_DarkColor
 
         trackTitleLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(
             for: UIFont(name: "COPT", size: 18) ?? UIFont.preferredFont(forTextStyle: .headline)
@@ -275,7 +278,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     private func updateMiniPlayer() {
         let player = AlhanPlayer.sharedInstance
-        trackTitleLabel.text = player.currentTrackTitle ?? "Choose a hymn"
+        if hasStartedPlaylistPlayback,
+           let currentRow = playlistHymns.indices.first(where: { isPlayingHymn(at: $0) }) {
+            trackTitleLabel.text = playlistHymns[currentRow].HymnName
+            nowPlayingLabel.isHidden = false
+        } else {
+            trackTitleLabel.text = nil
+            nowPlayingLabel.isHidden = true
+        }
         miniPlayPauseButton.isEnabled = !playlistHymns.isEmpty
         miniNextButton.isEnabled = player.queuePlayer.items().count > 1
 
@@ -357,9 +367,11 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     private func configurePlaybackAppearance(for cell: UITableViewCell, at indexPath: IndexPath) {
         let isCurrentTrack = isPlayingHymn(at: indexPath.row)
-        cell.backgroundColor = isCurrentTrack
+        let backgroundColor = isCurrentTrack
             ? GlobalConstants.kColor_GoldColor.withAlphaComponent(0.28)
-            : .clear
+            : AppAppearance.cellCreamColor
+        cell.backgroundColor = backgroundColor
+        cell.contentView.backgroundColor = backgroundColor
         cell.accessibilityTraits = isCurrentTrack
             ? [.button, .selected]
             : [.button]
@@ -577,6 +589,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
         if !playableTracks.isEmpty {
             let queuedTracks = shuffled ? playableTracks.shuffled() : playableTracks
+            hasStartedPlaylistPlayback = true
             AlhanPlayer.sharedInstance.loadQueue(queuedTracks, autoplay: true)
         }
         
@@ -659,7 +672,3 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-	return input.rawValue
-}

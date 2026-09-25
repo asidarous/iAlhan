@@ -13,14 +13,35 @@ class InfoVC: UIViewController {
     @IBOutlet var DataView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        DataView.layer.cornerRadius = 30
+        AppAppearance.configureCreamBackground(for: view)
+        AppAppearance.configureNavigationBar(for: self)
+        DataView.backgroundColor = .secondarySystemGroupedBackground
+        DataView.layer.cornerRadius = 24
+        DataView.layer.cornerCurve = .continuous
         DataView.layer.shadowColor = UIColor.black.cgColor
-        DataView.layer.shadowOpacity = 0.7
-        DataView.layer.shadowOffset = CGSize.init(width: 1, height: 1)
-        DataView.layer.shadowRadius = 2
+        DataView.layer.shadowOpacity = 0.12
+        DataView.layer.shadowOffset = CGSize(width: 0, height: 8)
+        DataView.layer.shadowRadius = 18
+        styleContent(in: DataView)
         // Do any additional setup after loading the view.
+    }
+
+    private func styleContent(in rootView: UIView) {
+        for subview in rootView.subviews {
+            if let label = subview as? UILabel {
+                label.adjustsFontForContentSizeCategory = true
+                label.textColor = .label
+            } else if let textView = subview as? UITextView {
+                textView.font = UIFont.preferredFont(forTextStyle: .body)
+                textView.adjustsFontForContentSizeCategory = true
+                textView.textColor = .label
+                textView.backgroundColor = .clear
+            } else if let button = subview as? UIButton {
+                button.tintColor = GlobalConstants.kColor_DarkColor
+                button.titleLabel?.adjustsFontForContentSizeCategory = true
+            }
+            styleContent(in: subview)
+        }
     }
 
     override func didReceiveMemoryWarning() {

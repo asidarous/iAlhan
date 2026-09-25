@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AAA097631DC6A129002384D8 /* PlaylistDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */; };
 		AAD2DD323064A6870002FD05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD313064A6870002FD05 /* SceneDelegate.swift */; };
+		AAD2DD343066E49C0002FD05 /* PlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */; };
+		AAD2DD3630672A5D0002FD05 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAD2DD3530672A5D0002FD05 /* PrivacyInfo.xcprivacy */; };
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0524DF91DB682EF0066B075 /* AVFoundation.framework */; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileReference section */
 		AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistDetailVC.swift; sourceTree = "<group>"; };
 		AAD2DD313064A6870002FD05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNavigationController.swift; sourceTree = "<group>"; };
+		AAD2DD3530672A5D0002FD05 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
 		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				F0E370501DC42E7800979B78 /* PLAddVC.swift */,
 				AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */,
 				F05E570F1E90D69200F7A5DF /* ContactVC.swift */,
+				AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 				F0E65F861DA6FC2100A96A69 /* Info.plist */,
 				F06927D81DA82E4500A94BB9 /* Model */,
 				F0E3E83D1DB03EE700174D91 /* iAlhanNew-Bridging-Header.h */,
+				AAD2DD3530672A5D0002FD05 /* PrivacyInfo.xcprivacy */,
 			);
 			name = iAlhan;
 			path = iAlhanNew;
@@ -366,6 +372,7 @@
 				F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */,
 				F0524DFE1DB837E60066B075 /* Main.storyboard in Resources */,
 				F0524DFC1DB6B43C0066B075 /* apaheet.mp3 in Resources */,
+				AAD2DD3630672A5D0002FD05 /* PrivacyInfo.xcprivacy in Resources */,
 				F08953001E906F6E00E2D6A8 /* AlhanSQL3.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +414,7 @@
 				F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */,
 				AAD2DD323064A6870002FD05 /* SceneDelegate.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
+				AAD2DD343066E49C0002FD05 /* PlayerNavigationController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
 				F09DD6C91E8F37D60097F235 /* Downloader.swift in Sources */,
 				F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */,
@@ -564,12 +572,14 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -590,12 +600,14 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

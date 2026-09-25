@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLAddVC: UIViewController {
+class PLAddVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var plText: UITextField!
    
@@ -17,6 +17,24 @@ class PLAddVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppAppearance.configureCreamBackground(for: view)
+        AppAppearance.configureNavigationBar(for: self)
+        AppAppearance.configureTextField(plText)
+        plText.accessibilityLabel = "Playlist name"
+        plText.returnKeyType = .done
+        plText.delegate = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillChangeFrame),
+            name: UIResponder.keyboardWillChangeFrameNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
         plText.becomeFirstResponder()
         // Do any additional setup after loading the view.
     }
@@ -32,17 +50,86 @@ class PLAddVC: UIViewController {
     }
     
     @IBAction func AddPL(_ sender: AnyObject) {
-        
-        if plText.text != "" {
-            PL_DBManager.shared.createPL(playlist: plText.text!)
-            self.dismiss(animated: true, completion: nil)
+        createPlaylist()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        createPlaylist()
+        return true
+    }
+
+    private func createPlaylist() {
+        guard let playlistName = plText.text, !playlistName.isEmpty else { return }
+
+        if PL_DBManager.shared.createPL(playlist: playlistName) {
+            dismiss(animated: true)
+        } else {
+            let alert = UIAlertController(
+                title: "Playlist name is already used",
+                message: "Please select a different name",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
         }
-        
-        
+    }
+
+    @objc private func keyboardWillChangeFrame(_ notification: Notification) {
+        guard let formView = plText.superview,
+              let endFrame = notification.userInfo?[
+                UIResponder.keyboardFrameEndUserInfoKey
+              ] as? CGRect else { return }
+
+        formView.transform = .identity
+        let keyboardFrame = view.convert(endFrame, from: nil)
+        let formFrame = formView.convert(formView.bounds, to: view)
+        let overlap = max(0, formFrame.maxY + 12 - keyboardFrame.minY)
+        let availableLift = max(
+            0,
+            formFrame.minY - view.safeAreaInsets.top - 12
+        )
+        updateFormTransform(
+            y: -min(overlap, availableLift),
+            notification: notification
+        )
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        updateFormTransform(y: 0, notification: notification)
+    }
+
+    private func updateFormTransform(
+        y: CGFloat,
+        notification: Notification
+    ) {
+        let duration = notification.userInfo?[
+            UIResponder.keyboardAnimationDurationUserInfoKey
+        ] as? TimeInterval ?? 0.25
+        let curveValue = notification.userInfo?[
+            UIResponder.keyboardAnimationCurveUserInfoKey
+        ] as? UInt ?? 0
+        let options = UIView.AnimationOptions(
+            rawValue: curveValue << 16
+        )
+
+        UIView.animate(
+            withDuration: duration,
+            delay: 0,
+            options: options
+        ) {
+            self.plText.superview?.transform = CGAffineTransform(
+                translationX: 0,
+                y: y
+            )
+        }
     }
 
     @IBAction func Cancel(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     /*
     // MARK: - Navigation

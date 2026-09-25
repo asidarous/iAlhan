@@ -72,10 +72,13 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck")!)
+        AppAppearance.configureCreamBackground(for: view)
         //self.navigationItem.leftBarButtonItem?.tintColor = UIColor.blue
         //UINavigationBar.appearance().tintColor = UIColor.blue
-        tableView.backgroundView?.backgroundColor = UIColor(patternImage: UIImage(named: "crossbck_sml")!)
+        backgroundImageView?.isHidden = true
+        visualEffectView?.effect = nil
+        visualEffectView?.backgroundColor = .clear
+        AppAppearance.configureTable(tableView)
        
         // MARK: Swipe controls
         let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
@@ -91,18 +94,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
 
     private func configureNavigationBarAppearance() {
-        let darkBackgroundColor = UIColor(red: 0.2745, green: 0.0, blue: 0.0, alpha: 1.0)
-        let goldColor = UIColor(red: 1.0, green: 0.8753, blue: 0.4202, alpha: 1.0)
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = darkBackgroundColor
-        appearance.titleTextAttributes = [.foregroundColor: goldColor]
-
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactAppearance = appearance
-        navigationItem.compactScrollEdgeAppearance = appearance
-        navigationController?.navigationBar.tintColor = goldColor
+        AppAppearance.configureNavigationBar(for: self)
     }
     
     
@@ -146,7 +138,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
+        return UITableView.automaticDimension
     }
     
    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -166,7 +158,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
     {
         let title = UILabel()
         
-        title.textColor = UIColor.gray//GlobalConstants.kColor_DarkColor
+        title.textColor = GlobalConstants.kColor_DarkColor
         
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor=title.textColor
@@ -202,6 +194,16 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         //cell.textLabel?.text = (objectArray[section].sectionDetails[row].hymnDescription) as String
         cell.textLabel?.text = hymnNameLabel
         cell.detailTextLabel?.text = hymnDescLabel
+        let hymnTitleFont = UIFont(name: "COPT", size: 20)
+            ?? UIFont.preferredFont(forTextStyle: .headline)
+        cell.textLabel?.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: hymnTitleFont)
+        cell.textLabel?.adjustsFontForContentSizeCategory = true
+        cell.textLabel?.textColor = GlobalConstants.kColor_DarkColor
+        cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        cell.detailTextLabel?.adjustsFontForContentSizeCategory = true
+        cell.detailTextLabel?.textColor = UIColor(red: 0.24, green: 0.20, blue: 0.16, alpha: 1)
+        cell.backgroundColor = AppAppearance.cellCreamColor
+        cell.contentView.backgroundColor = AppAppearance.cellCreamColor
         
         let localDir = getDirectory(url: hymnAudioURL)
         let localPath = documentsDirectoryURL.appendingPathComponent(localDir)

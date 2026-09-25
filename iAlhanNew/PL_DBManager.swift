@@ -122,41 +122,24 @@ class PL_DBManager: NSObject {
         
     }
     
-    func createPL(playlist: String){
-        
-        if pl_openDatabase() {
-            let findQuery = "Select listname from playlists where listname = \"\(playlist)\" "
-            let query = "INSERT INTO Playlists (\"ListName\") VALUES (\"\(playlist)\")"
-            
-            do {
-                //print(database)
-                
-                // Make sure that there is no playlist by the same name
-                let results = try database.executeQuery(findQuery, values: nil)
-                if (results.next()) {
-                    
-                    let alert = UIAlertController(title: "Playlist name is already used", message: "Please select a different name", preferredStyle: .alert)
-                    let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alert.addAction(OKAction)
-                    
-                    let alertWindow = UIWindow(frame: UIScreen.main.bounds)
-                    alertWindow.rootViewController = UIViewController()
-                    alertWindow.windowLevel = UIWindow.Level.alert + 1;
-                    alertWindow.makeKeyAndVisible()
-                    alertWindow.rootViewController?.present(alert, animated: true, completion: nil)
+    func createPL(playlist: String) -> Bool {
+        guard pl_openDatabase() else { return false }
 
-                }else {
-                    if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
-                        throw error!}
-                }
-                //print (seasons.count)
+        let findQuery = "Select listname from playlists where listname = \"\(playlist)\" "
+        let query = "INSERT INTO Playlists (\"ListName\") VALUES (\"\(playlist)\")"
+        var wasCreated = false
+
+        do {
+            let results = try database.executeQuery(findQuery, values: nil)
+            if !results.next() {
+                wasCreated = database.executeUpdate(query, withArgumentsIn: [])
             }
-            catch {
-                print(error.localizedDescription)
-            }
-            
-            database.close()
+        } catch {
+            print(error.localizedDescription)
         }
+
+        database.close()
+        return wasCreated
     }
     
     func addHymnsToPL(playlist: Int, hymnLists: [PlayHymns]){

@@ -30,6 +30,8 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var iSize: CGSize!
     var coverLayer: CALayer!
+    private let backgroundOverlayView = UIView()
+    private let backgroundGradientLayer = CAGradientLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,9 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         //    update = CheckVersion()
         //}
         
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "photo")!)
+        AppAppearance.configureNavigationBar(for: self)
+        configureBackground()
+        collectionView.backgroundColor = .clear
         coverLayer = CALayer()
         
         
@@ -66,6 +70,37 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         
+    }
+
+    private func configureBackground() {
+        view.backgroundColor = GlobalConstants.kColor_DarkColor
+
+        backgroundOverlayView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundOverlayView.isUserInteractionEnabled = false
+        backgroundOverlayView.accessibilityElementsHidden = true
+        view.insertSubview(backgroundOverlayView, belowSubview: collectionView)
+
+        backgroundGradientLayer.colors = [
+            GlobalConstants.kColor_DarkColor.cgColor,
+            GlobalConstants.kColor_DarkColor.cgColor,
+            UIColor(red: 0.12, green: 0.10, blue: 0.10, alpha: 1).cgColor
+        ]
+        backgroundGradientLayer.locations = [0, 0.16, 1]
+        backgroundGradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        backgroundGradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        backgroundOverlayView.layer.addSublayer(backgroundGradientLayer)
+
+        NSLayoutConstraint.activate([
+            backgroundOverlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundOverlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundOverlayView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundOverlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        backgroundGradientLayer.frame = backgroundOverlayView.bounds
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,20 +151,19 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         
 
         var vSize: CGSize
-        
-        
-        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact) {
-            // Compact
-            
-            vSize = CGSize(width: collectionView.frame.width * 0.28, height: (collectionView.frame.width * 0.28)+25)
-            
-        } else {
-            // Regular
 
-            vSize = CGSize(width: collectionView.frame.width * 0.22, height: (collectionView.frame.width * 0.22)+35)
+        if self.view.traitCollection.horizontalSizeClass == .compact {
+            vSize = CGSize(
+                width: collectionView.frame.width * 0.28,
+                height: (collectionView.frame.width * 0.28) + 25
+            )
+        } else {
+            vSize = CGSize(
+                width: collectionView.frame.width * 0.22,
+                height: (collectionView.frame.width * 0.22) + 35
+            )
         }
-        
-        
+
         return vSize
     }
     
@@ -138,8 +172,6 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        //cell?.addSubview(tempView)
-        
         coverLayer.frame = CGRect(origin: collectionView.frame.origin, size: iSize)
         coverLayer.backgroundColor = UIColor.black.cgColor
         coverLayer.opacity = 0.1
@@ -152,7 +184,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
     // change background color back when user releases touch
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.clear
+        cell?.backgroundColor = .clear
     }
     
     // MARK: - Navigation
