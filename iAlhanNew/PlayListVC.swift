@@ -14,6 +14,100 @@ struct PlayHymns {
     var HymnURL: String!
 }
 
+private final class DuplicateHymnsAlertViewController: UIViewController {
+    var onDismiss: (() -> Void)?
+    private let hymnNames: [String]
+
+    init(hymnNames: [String]) {
+        self.hymnNames = hymnNames
+        super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
+        modalTransitionStyle = .crossDissolve
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.45)
+        view.accessibilityViewIsModal = true
+
+        let card = UIView()
+        card.translatesAutoresizingMaskIntoConstraints = false
+        card.backgroundColor = AppAppearance.cellCreamColor
+        card.layer.cornerRadius = 16
+        card.layer.cornerCurve = .continuous
+        view.addSubview(card)
+
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        titleLabel.adjustsFontForContentSizeCategory = true
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = GlobalConstants.kColor_DarkColor
+        titleLabel.text = hymnNames.count == 1 ? "Hymn Already in Playlist" : "Hymns Already in Playlist"
+
+        let explanationLabel = UILabel()
+        explanationLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        explanationLabel.adjustsFontForContentSizeCategory = true
+        explanationLabel.numberOfLines = 0
+        explanationLabel.textAlignment = .center
+        explanationLabel.textColor = GlobalConstants.kColor_DarkColor
+        explanationLabel.text = hymnNames.count == 1
+            ? "This hymn was not added because it already exists in this playlist:"
+            : "These hymns were not added because they already exist in this playlist:"
+
+        let hymnNamesView = UITextView()
+        hymnNamesView.isEditable = false
+        hymnNamesView.isSelectable = false
+        hymnNamesView.backgroundColor = .clear
+        hymnNamesView.textAlignment = .center
+        hymnNamesView.textColor = GlobalConstants.kColor_DarkColor
+        hymnNamesView.font = UIFontMetrics(forTextStyle: .title3).scaledFont(
+            for: UIFont(name: "COPT", size: 22) ?? UIFont.preferredFont(forTextStyle: .title3)
+        )
+        hymnNamesView.adjustsFontForContentSizeCategory = true
+        hymnNamesView.text = hymnNames.joined(separator: "\n")
+        hymnNamesView.accessibilityLabel = hymnNames.joined(separator: ", ")
+        hymnNamesView.translatesAutoresizingMaskIntoConstraints = false
+        hymnNamesView.heightAnchor.constraint(
+            equalToConstant: min(max(CGFloat(hymnNames.count) * 38, 56), 220)
+        ).isActive = true
+
+        let okButton = UIButton(type: .system)
+        var configuration = UIButton.Configuration.filled()
+        configuration.title = "OK"
+        configuration.baseBackgroundColor = GlobalConstants.kColor_DarkColor
+        configuration.baseForegroundColor = .white
+        configuration.cornerStyle = .medium
+        okButton.configuration = configuration
+        okButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
+        okButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
+
+        let stack = UIStackView(arrangedSubviews: [titleLabel, explanationLabel, hymnNamesView, okButton])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.spacing = 16
+        card.addSubview(stack)
+
+        NSLayoutConstraint.activate([
+            card.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            card.trailingAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            card.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            card.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            card.widthAnchor.constraint(lessThanOrEqualToConstant: 420),
+            stack.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 24),
+            stack.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: -24),
+            stack.topAnchor.constraint(equalTo: card.topAnchor, constant: 24),
+            stack.bottomAnchor.constraint(equalTo: card.bottomAnchor, constant: -20)
+        ])
+    }
+
+    @objc private func dismissAlert() {
+        dismiss(animated: true) { [onDismiss] in onDismiss?() }
+    }
+}
+
 class PlayListVC: UITableViewController {
     @IBOutlet var PlayListItemsTable: UITableView!
     
@@ -120,24 +214,43 @@ class PlayListVC: UITableViewController {
     }
     
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if plHymnsArray.isEmpty {
-        performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
-            plHymnsArray.removeAll()
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let playlistName = plArray[indexPath.row]
+
+        guard !plHymnsArray.isEmpty else {
+            performSegue(withIdentifier: "Show Playlist Detail", sender: playlistName)
+            return
         }
-        else
-        {
-           // get playlist ID
-            let playlistID = PL_DBManager.shared.getPLID(playlist: plArray[indexPath.row])
-            
-            print("Here is the playlist ID \(playlistID)")
-            
-            // insert hymns into playlist DB (listdetails)
-            PL_DBManager.shared.addHymnsToPL(playlist: playlistID, hymnLists: plHymnsArray)
-            performSegue(withIdentifier: "Show Playlist Detail", sender: plArray[indexPath.row])
-            print (plHymnsArray)
-            plHymnsArray.removeAll()
+
+        let playlistID = PL_DBManager.shared.getPLID(playlist: playlistName)
+        let duplicateHymnNames = PL_DBManager.shared.addHymnsToPL(
+            playlist: playlistID,
+            hymnLists: plHymnsArray
+        )
+        plHymnsArray.removeAll()
+
+        if duplicateHymnNames.isEmpty {
+            performSegue(withIdentifier: "Show Playlist Detail", sender: playlistName)
+        } else {
+            showDuplicateHymnsAlert(
+                hymnNames: duplicateHymnNames,
+                playlistName: playlistName
+            )
         }
+    }
+
+    private func showDuplicateHymnsAlert(
+        hymnNames: [String],
+        playlistName: String
+    ) {
+        let alert = DuplicateHymnsAlertViewController(hymnNames: hymnNames)
+        alert.onDismiss = { [weak self] in
+            self?.performSegue(
+                withIdentifier: "Show Playlist Detail",
+                sender: playlistName
+            )
+        }
+        present(alert, animated: true)
     }
     /*
     // Override to support conditional editing of the table view.

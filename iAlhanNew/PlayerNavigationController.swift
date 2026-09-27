@@ -5,7 +5,7 @@ import UIKit
 final class PlayerNavigationController: UINavigationController, UINavigationControllerDelegate {
     private let player = AlhanPlayer.sharedInstance
     private let titleButton = UIButton(type: .system)
-    private let progressView = UIProgressView(progressViewStyle: .default)
+    private let progressView = UISlider()
     private let playPauseButton = UIButton(type: .system)
     private let nextButton = UIButton(type: .system)
     private let closeButton = UIButton(type: .system)
@@ -15,6 +15,7 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
     private var playbackTimeObserver: Any?
     private var trackChangeObserver: NSObjectProtocol?
     private var miniPlayerWidthConstraint: NSLayoutConstraint?
+    private var isScrubbing = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +57,13 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
     private func configureMiniPlayer() {
         let appearance = UIToolbarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = AppAppearance.playerSurfaceColor
-        appearance.shadowColor = AppAppearance.playerBorderColor
+        if #available(iOS 27.0, *) {
+            appearance.backgroundColor = AppAppearance.playerSurfaceColor
+            appearance.shadowColor = AppAppearance.playerBorderColor
+        } else {
+            appearance.backgroundColor = AppAppearance.cellCreamColor
+            appearance.shadowColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.55)
+        }
         toolbar.standardAppearance = appearance
         toolbar.compactAppearance = appearance
         toolbar.scrollEdgeAppearance = appearance
@@ -66,8 +72,14 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         toolbar.tintColor = GlobalConstants.kColor_DarkColor
 
         titleButton.contentHorizontalAlignment = .leading
+        let miniPlayerTitleSize: CGFloat
+        if #available(iOS 27.0, *) {
+            miniPlayerTitleSize = 16
+        } else {
+            miniPlayerTitleSize = 17
+        }
         titleButton.titleLabel?.font = UIFontMetrics(forTextStyle: .subheadline).scaledFont(
-            for: UIFont(name: "COPT", size: 16)
+            for: UIFont(name: "COPT", size: miniPlayerTitleSize)
                 ?? UIFont.preferredFont(forTextStyle: .subheadline)
         )
         titleButton.titleLabel?.adjustsFontForContentSizeCategory = true
@@ -76,8 +88,20 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         titleButton.accessibilityHint = "Returns to the full player"
         titleButton.addTarget(self, action: #selector(openPlaybackSource), for: .touchUpInside)
 
-        progressView.trackTintColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.12)
-        progressView.progressTintColor = GlobalConstants.kColor_DarkColor
+        progressView.minimumValue = 0
+        progressView.maximumValue = 1
+        progressView.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
+        progressView.maximumTrackTintColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.12)
+        progressView.thumbTintColor = GlobalConstants.kColor_DarkColor
+        progressView.accessibilityLabel = "Playback position"
+        progressView.accessibilityHint = "Swipe up or down to seek through the hymn"
+        progressView.addTarget(self, action: #selector(scrubbingDidBegin), for: .touchDown)
+        progressView.addTarget(self, action: #selector(scrubberValueChanged), for: .valueChanged)
+        progressView.addTarget(
+            self,
+            action: #selector(scrubbingDidEnd),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel]
+        )
 
         configureButton(
             playPauseButton,
@@ -99,7 +123,9 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
 
         let titleStack = UIStackView(arrangedSubviews: [titleButton, progressView])
         titleStack.axis = .vertical
-        titleStack.spacing = 3
+        titleStack.spacing = 2
+        titleButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        progressView.heightAnchor.constraint(equalToConstant: 18).isActive = true
 
         let controls = UIStackView(arrangedSubviews: [
             titleStack,
@@ -110,7 +136,23 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         controls.axis = .horizontal
         controls.alignment = .center
         controls.spacing = 10
-        controls.frame = CGRect(x: 0, y: 0, width: max(280, view.bounds.width - 32), height: 40)
+        controls.frame = CGRect(x: 0, y: 0, width: max(280, view.bounds.width - 32), height: 44)
+        controls.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+        if #unavailable(iOS 27.0) {
+            controls.backgroundColor = AppAppearance.cellCreamColor
+            controls.layer.cornerRadius = 12
+            controls.layer.cornerCurve = .continuous
+            controls.layer.borderWidth = 1.5
+            controls.layer.borderColor = GlobalConstants.kColor_DarkColor.cgColor
+            controls.isLayoutMarginsRelativeArrangement = true
+            controls.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                top: 2,
+                leading: 10,
+                bottom: 2,
+                trailing: 10
+            )
+        }
 
         titleStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -173,9 +215,12 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         titleButton.accessibilityLabel = title
 
         let duration = player.duration
-        progressView.progress = duration > 0
-            ? Float(player.currentTime / duration)
-            : 0
+        progressView.isEnabled = duration > 0
+        if !isScrubbing {
+            progressView.value = duration > 0
+                ? Float(player.currentTime / duration)
+                : 0
+        }
 
         let playSymbol = player.isPlaying ? "pause.fill" : "play.fill"
         playPauseButton.setImage(UIImage(systemName: playSymbol), for: .normal)
@@ -193,6 +238,25 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
             topViewController?.toolbarItems = miniPlayerItems
         }
         setToolbarHidden(!shouldShow, animated: animated)
+    }
+
+    @objc private func scrubbingDidBegin() {
+        isScrubbing = true
+    }
+
+    @objc private func scrubberValueChanged() {
+        guard !isScrubbing else { return }
+        seekToScrubberPosition()
+    }
+
+    @objc private func scrubbingDidEnd() {
+        seekToScrubberPosition()
+        isScrubbing = false
+    }
+
+    private func seekToScrubberPosition() {
+        guard player.duration > 0 else { return }
+        player.seek(to: Double(progressView.value) * player.duration)
     }
 
     @objc private func togglePlayback() {

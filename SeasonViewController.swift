@@ -41,6 +41,7 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         //}
         
         AppAppearance.configureNavigationBar(for: self)
+        configureInfoButton()
         configureBackground()
         collectionView.backgroundColor = .clear
         coverLayer = CALayer()
@@ -70,6 +71,20 @@ class SeasonViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         
+    }
+
+    private func configureInfoButton() {
+        guard let infoButton = navigationItem.rightBarButtonItem?.customView?.subviews
+                .compactMap({ $0 as? UIButton })
+                .first else {
+            return
+        }
+
+        AppAppearance.configureRoundNavigationButton(
+            infoButton,
+            systemImageName: "info",
+            accessibilityLabel: "Information"
+        )
     }
 
     private func configureBackground() {

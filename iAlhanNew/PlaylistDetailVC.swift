@@ -39,9 +39,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     private let trackTitleLabel = UILabel()
     private let miniPlayPauseButton = UIButton(type: .system)
     private let miniNextButton = UIButton(type: .system)
-    private let playbackProgress = UIProgressView(progressViewStyle: .default)
+    private let playbackProgress = UISlider()
     private var playbackTimeObserver: Any?
-    private var hasStartedPlaylistPlayback = false
+    private var isScrubbing = false
     
     // Internet alert box
     @IBAction func showAlertButton() {
@@ -113,17 +113,17 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             print("PLAYER IS RUNNING......")
             if samePlaylist == true {
                 
-                self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
+                self.navigationItem.setRightBarButtonItems([editButtonItem, shuffleButton], animated: true)
             } else {
                 //AlhanPlayer.sharedInstance.queuePlayer.pause()
-                self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
+                self.navigationItem.setRightBarButtonItems([editButtonItem, shuffleButton], animated: true)
             }
         }
             
         else {
             //AlhanPlayer.sharedInstance.queuePlayer.pause()
             print("PLAYER IS NOT RUNNING......")
-            self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
+            self.navigationItem.setRightBarButtonItems([editButtonItem, shuffleButton], animated: true)
             }
         
         
@@ -133,6 +133,11 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
         
         
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        plDetail.setEditing(editing, animated: animated)
     }
 
     private func configureNavigationBarAppearance() {
@@ -156,8 +161,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         plDetail.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         AppAppearance.configureCreamBackground(for: view)
         AppAppearance.configureCreamBackground(for: plDetail)
-        plDetail.contentInset.bottom = 108
-        plDetail.verticalScrollIndicatorInsets.bottom = 108
+        plDetail.contentInset.bottom = 128
+        plDetail.verticalScrollIndicatorInsets.bottom = 128
     }
 
     private func configureMiniPlayer() {
@@ -214,15 +219,27 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         miniPlayer.contentView.addSubview(controls)
 
         playbackProgress.translatesAutoresizingMaskIntoConstraints = false
-        playbackProgress.trackTintColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.12)
-        playbackProgress.progressTintColor = GlobalConstants.kColor_DarkColor
+        playbackProgress.minimumValue = 0
+        playbackProgress.maximumValue = 1
+        playbackProgress.minimumTrackTintColor = GlobalConstants.kColor_DarkColor
+        playbackProgress.maximumTrackTintColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.12)
+        playbackProgress.thumbTintColor = GlobalConstants.kColor_DarkColor
+        playbackProgress.accessibilityLabel = "Playback position"
+        playbackProgress.accessibilityHint = "Swipe up or down to seek through the hymn"
+        playbackProgress.addTarget(self, action: #selector(scrubbingDidBegin), for: .touchDown)
+        playbackProgress.addTarget(self, action: #selector(scrubberValueChanged), for: .valueChanged)
+        playbackProgress.addTarget(
+            self,
+            action: #selector(scrubbingDidEnd),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel]
+        )
         miniPlayer.contentView.addSubview(playbackProgress)
 
         NSLayoutConstraint.activate([
             miniPlayer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
             miniPlayer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
             miniPlayer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            miniPlayer.heightAnchor.constraint(equalToConstant: 82),
+            miniPlayer.heightAnchor.constraint(equalToConstant: 104),
             controls.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 16),
             controls.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -12),
             controls.topAnchor.constraint(equalTo: miniPlayer.contentView.topAnchor, constant: 10),
@@ -278,9 +295,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     private func updateMiniPlayer() {
         let player = AlhanPlayer.sharedInstance
-        if hasStartedPlaylistPlayback,
-           let currentRow = playlistHymns.indices.first(where: { isPlayingHymn(at: $0) }) {
-            trackTitleLabel.text = playlistHymns[currentRow].HymnName
+        if player.hasCurrentItem {
+            trackTitleLabel.text = player.currentTrackTitle ?? "Now Playing"
             nowPlayingLabel.isHidden = false
         } else {
             trackTitleLabel.text = nil
@@ -295,9 +311,32 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         miniPlayPauseButton.accessibilityLabel = player.isPlaying ? "Pause" : "Play"
 
         let duration = player.duration
-        playbackProgress.progress = duration > 0
-            ? Float(player.currentTime / duration)
-            : 0
+        playbackProgress.isEnabled = duration > 0
+        if !isScrubbing {
+            playbackProgress.value = duration > 0
+                ? Float(player.currentTime / duration)
+                : 0
+        }
+    }
+
+    @objc private func scrubbingDidBegin() {
+        isScrubbing = true
+    }
+
+    @objc private func scrubberValueChanged() {
+        guard !isScrubbing else { return }
+        seekToScrubberPosition()
+    }
+
+    @objc private func scrubbingDidEnd() {
+        seekToScrubberPosition()
+        isScrubbing = false
+    }
+
+    private func seekToScrubberPosition() {
+        let player = AlhanPlayer.sharedInstance
+        guard player.duration > 0 else { return }
+        player.seek(to: Double(playbackProgress.value) * player.duration)
     }
 
     @objc private func miniPlayPauseTapped() {
@@ -363,6 +402,28 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         startPlayback(shuffled: false, startingAt: indexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        let movedHymn = playlistHymns.remove(at: sourceIndexPath.row)
+        playlistHymns.insert(movedHymn, at: destinationIndexPath.row)
+        hymnURLS = playlistHymns.compactMap { URL(string: $0.HymnURL) }
+
+        guard let playlistName = title else { return }
+        let playlistID = PL_DBManager.shared.getPLID(playlist: playlistName)
+        let orderedHymnIDs = playlistHymns.compactMap(\.HymnID)
+        PL_DBManager.shared.reorderHymns(
+            in: playlistID,
+            orderedHymnIDs: orderedHymnIDs
+        )
     }
 
     private func configurePlaybackAppearance(for cell: UITableViewCell, at indexPath: IndexPath) {
@@ -462,47 +523,22 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 //        
 //    }
     
-    func checkPlayerRunning() -> Bool{
-        print ("@@@ player rate \(AlhanPlayer.sharedInstance.player.rate)")
-        print ("@@@ QUEUE player rate \(AlhanPlayer.sharedInstance.queuePlayer.rate)")
-        //print ("$$$ here is the current session mode \(AVAudioSession.sharedInstance().mode)")
-        //print ("$$$ here is the current session desc \(AVAudioSession.sharedInstance().description)$$$$$")
-        var isRunning = false
-        
-        
-        // Pause player if running
-        if (AlhanPlayer.sharedInstance.queuePlayer.rate == 1.0 ) {
-            // check to see if the hymn is part of the playlist
-//            
-            for hymnURL in playlistHymns{
-                //print("Now playing : \(AlhanPlayer.sharedInstance.player.currentItem?.description)")
-                print("DESCRIPTION: \(String(describing: AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description))")
-                print("\n")
-                print("HymnURL: \(String(describing: hymnURL.HymnURL))")
-                print("===========================")
-                if AlhanPlayer.sharedInstance.queuePlayer.currentItem?.description.range(of: String(hymnURL.HymnURL)) != nil {
-                    print ("++ Playing the same hymn, then we're in the same playlist")
-                    //print ("+++ Here is where the hymn is \(AlhanPlayer.sharedInstance.player.currentTime().seconds)")
-                    samePlaylist = true
-                    break
-                    }
-            }
-            
-            if samePlaylist == false{
-                print ("++ Not in the same playlist")
-                AlhanPlayer.sharedInstance.pauseQueue()
-                AlhanPlayer.sharedInstance.queuePlayer.removeAllItems()
-            }
-
-//        //AlhanPlayer.sharedInstance.queuePlayer.pause()
-            isRunning = true
+    func checkPlayerRunning() -> Bool {
+        let player = AlhanPlayer.sharedInstance
+        guard player.hasCurrentItem else {
+            samePlaylist = false
+            return false
         }
-        
-        
-       
-        
-       
-        return isRunning
+
+        let currentFileName = player.currentTrackURL?.lastPathComponent
+        samePlaylist = playlistHymns.contains { hymn in
+            guard let hymnURL = URL(string: hymn.HymnURL) else { return false }
+            return hymnURL.lastPathComponent == currentFileName
+        }
+
+        // Opening a playlist is navigation only. Playback changes only when the
+        // person explicitly selects a hymn or starts/shuffles the playlist.
+        return player.isPlaying
     }
     
 
@@ -532,7 +568,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         
         
        
-        self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([editButtonItem, shuffleButton], animated: true)
         
        
             // Pause individual hymn if running
@@ -589,7 +625,6 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
         if !playableTracks.isEmpty {
             let queuedTracks = shuffled ? playableTracks.shuffled() : playableTracks
-            hasStartedPlaylistPlayback = true
             AlhanPlayer.sharedInstance.loadQueue(queuedTracks, autoplay: true)
         }
         
@@ -613,7 +648,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
 
     @objc func pauseButtonTapped() {
-            self.navigationItem.setRightBarButtonItems([shuffleButton], animated: true)
+            self.navigationItem.setRightBarButtonItems([editButtonItem, shuffleButton], animated: true)
         
            AlhanPlayer.sharedInstance.pauseQueue()
             

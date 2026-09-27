@@ -91,20 +91,34 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         //print ("Label Text \(labelText)")
         title = labelText
         configureNavigationBarAppearance()
+        configureAddToPlaylistButton()
     }
 
     private func configureNavigationBarAppearance() {
         AppAppearance.configureNavigationBar(for: self)
     }
+
+    private func configureAddToPlaylistButton() {
+        let addButton = UIButton(type: .system)
+        AppAppearance.configureRoundNavigationButton(
+            addButton,
+            systemImageName: "text.badge.plus",
+            accessibilityLabel: "Add season to playlist"
+        )
+        addButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        addButton.addTarget(self, action: #selector(AddToPlayList(_:)), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+    }
     
     
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let row = tableView.indexPathForSelectedRow {
-            self.tableView.deselectRow(at: row, animated: true)
-            self.tableView.reloadData()
+            tableView.deselectRow(at: row, animated: true)
         }
-
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -178,7 +192,6 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         var hymnNameLabel: String!
         var hymnDescLabel: String!
         var hymnAudioURL: String!
-        var image: String!
         
         for (_, v) in tempDict!{
             //print ("k & V: \(k) -- > \(v) ")
@@ -208,24 +221,32 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         let localDir = getDirectory(url: hymnAudioURL)
         let localPath = documentsDirectoryURL.appendingPathComponent(localDir)
         let destinationUrl = localPath.appendingPathComponent((URL(string: hymnAudioURL)?.lastPathComponent)!)
-        if FileManager.default.fileExists(atPath: destinationUrl.path){
-            //cell.imageView?.image = UIImage(named: "green_indicator")
-            image = "green_indicator"
-            
-        }
-        else{
-            
-            //cell.imageView?.image = UIImage(named: "white_indicator")
-            image = "grey_indicator"
-        }
+        let isDownloaded = FileManager.default.fileExists(atPath: destinationUrl.path)
+        let symbolName = isDownloaded
+            ? "checkmark.circle.fill"
+            : "arrow.down.circle"
+        let symbolConfiguration = UIImage.SymbolConfiguration(
+            pointSize: 22,
+            weight: .semibold
+        )
 
-        
-        var imageView : UIImageView
-        imageView  = UIImageView(frame: CGRect(x: 40,y: 40,width: 40,height: 40))
-        imageView.image = UIImage(named: image)
-        
-        //cell.editingAccessoryView = imageView
-        cell.accessoryView = imageView
+        let downloadImageView = UIImageView(
+            image: UIImage(
+                systemName: symbolName,
+                withConfiguration: symbolConfiguration
+            )
+        )
+        downloadImageView.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
+        downloadImageView.contentMode = .scaleAspectFit
+        downloadImageView.isUserInteractionEnabled = false
+        downloadImageView.accessibilityTraits = .image
+        downloadImageView.tintColor = isDownloaded
+            ? .systemGreen
+            : GlobalConstants.kColor_DarkColor.withAlphaComponent(0.55)
+        downloadImageView.accessibilityLabel = isDownloaded
+            ? "Downloaded"
+            : "Not downloaded"
+        cell.accessoryView = downloadImageView
         
         return cell
     }

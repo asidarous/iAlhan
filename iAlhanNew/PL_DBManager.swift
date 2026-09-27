@@ -93,7 +93,8 @@ class PL_DBManager: NSObject {
         var hymnsLists: [PlaylistHymns]!
         
         if pl_openDatabase() {
-            let query = "select HymnName, HymnID, HymnURL from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)')"
+            ensureSortOrderColumn()
+            let query = "select HymnName, HymnID, HymnURL from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)') order by SortOrder, rowid"
             
             do {
                 //print(database)
@@ -142,43 +143,121 @@ class PL_DBManager: NSObject {
         return wasCreated
     }
     
-    func addHymnsToPL(playlist: Int, hymnLists: [PlayHymns]){
-            var values: String! = ""
-    
-            var i = hymnLists.makeIterator()
-            while let hymn = i.next() {
-                if values.isEmpty
-                {
-                  values = "(\(playlist), '\(hymn.HymnName!)', \(hymn.HymnID!), '\(hymn.HymnURL!)')"
-                  print("First value: \(values!)")
-                    
-                }else
-                {
-                    values = "\(values!),(\(playlist), '\(hymn.HymnName!)', \(hymn.HymnID!), '\(hymn.HymnURL!)')"
-                    
-                }
+    func addHymnsToPL(playlist: Int, hymnLists: [PlayHymns]) -> [String] {
+        guard !hymnLists.isEmpty, pl_openDatabase() else { return [] }
+        ensureSortOrderColumn()
+
+        let duplicateQuery = """
+            SELECT 1
+            FROM ListDetail
+            WHERE list_id_fk = ? AND HymnID = ?
+            LIMIT 1
+            """
+        let insertQuery = """
+            INSERT INTO ListDetail ("list_id_fk", "HymnName", "HymnID", "HymnURL", "SortOrder")
+            VALUES (
+                ?, ?, ?, ?,
+                COALESCE(
+                    (SELECT MAX(SortOrder) + 1 FROM ListDetail WHERE list_id_fk = ?),
+                    0
+                )
+            )
+            """
+        var duplicateHymnNames: [String] = []
+
+        for hymn in hymnLists {
+            guard let hymnName = hymn.HymnName,
+                  let hymnID = hymn.HymnID,
+                  let hymnURL = hymn.HymnURL else {
+                continue
             }
-    
-            print ("VAlues: \(values!)")
-        
-            if pl_openDatabase() {
-                let query = "INSERT INTO ListDetail (\"list_id_fk\",\"HymnName\",\"HymnID\",\"HymnURL\") VALUES \(values!)"
-                print("QUERY")
-                print(query)
-                do {
-                    if ( database.executeUpdate(query, withArgumentsIn: []) ) != true {
-                        throw error!}
-                    
-                    print ("Updated!!!")
+
+            do {
+                let results = try database.executeQuery(
+                    duplicateQuery,
+                    values: [playlist, hymnID]
+                )
+                let isDuplicate = results.next()
+                results.close()
+
+                if isDuplicate {
+                    duplicateHymnNames.append(hymnName)
+                    continue
                 }
-                catch {
-                    print(error.localizedDescription)
-                }
-    
-                database.close()
-    
+            } catch {
+                print(error.localizedDescription)
+                continue
+            }
+
+            let values: [Any] = [
+                playlist,
+                hymnName,
+                hymnID,
+                hymnURL,
+                playlist
+            ]
+
+            if !database.executeUpdate(insertQuery, withArgumentsIn: values) {
+                print(database.lastErrorMessage())
             }
         }
+
+        database.close()
+        return duplicateHymnNames
+    }
+
+    func reorderHymns(in playlist: Int, orderedHymnIDs: [Int]) {
+        guard pl_openDatabase() else { return }
+        ensureSortOrderColumn()
+
+        let query = """
+            UPDATE ListDetail
+            SET SortOrder = ?
+            WHERE list_id_fk = ? AND HymnID = ?
+            """
+
+        for (sortOrder, hymnID) in orderedHymnIDs.enumerated() {
+            if !database.executeUpdate(
+                query,
+                withArgumentsIn: [sortOrder, playlist, hymnID]
+            ) {
+                print(database.lastErrorMessage())
+            }
+        }
+
+        database.close()
+    }
+
+    private func ensureSortOrderColumn() {
+        var hasSortOrder = false
+
+        do {
+            let columns = try database.executeQuery("PRAGMA table_info(ListDetail)", values: nil)
+            while columns.next() {
+                if columns.string(forColumn: "name") == "SortOrder" {
+                    hasSortOrder = true
+                    break
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+            return
+        }
+
+        if !hasSortOrder {
+            if database.executeUpdate(
+                "ALTER TABLE ListDetail ADD COLUMN SortOrder INTEGER",
+                withArgumentsIn: []
+            ) {
+                _ = database.executeUpdate(
+                    "UPDATE ListDetail SET SortOrder = rowid WHERE SortOrder IS NULL",
+                    withArgumentsIn: []
+                )
+            } else {
+                print(database.lastErrorMessage())
+            }
+        }
+    }
     
     func removeHymnsFromPL(hymnID: Int){
         

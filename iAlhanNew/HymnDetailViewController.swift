@@ -494,12 +494,13 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
     private func configureAddButton() {
         let addButton = UIButton(type: .system)
-        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addButton.tintColor = .label
-        addButton.accessibilityLabel = "Add to playlist"
+        AppAppearance.configureRoundNavigationButton(
+            addButton,
+            systemImageName: "text.badge.plus",
+            accessibilityLabel: "Add to playlist"
+        )
         addButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        addButton.imageView?.isAccessibilityElement = false
         addButton.addTarget(self, action: #selector(addToPlaylistTapped), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
     }

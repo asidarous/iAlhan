@@ -49,7 +49,46 @@ enum AppAppearance {
         viewController.navigationItem.scrollEdgeAppearance = appearance
         viewController.navigationItem.compactAppearance = appearance
         viewController.navigationItem.compactScrollEdgeAppearance = appearance
-        viewController.navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+        if #available(iOS 26.0, *) {
+            viewController.navigationController?.navigationBar.tintColor = GlobalConstants.kColor_DarkColor
+        } else {
+            viewController.navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+        }
+    }
+
+    static func configureRoundNavigationButton(
+        _ button: UIButton,
+        systemImageName: String,
+        accessibilityLabel: String
+    ) {
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
+        let image = UIImage(
+            systemName: systemImageName,
+            withConfiguration: symbolConfiguration
+        )?.withRenderingMode(.alwaysTemplate)
+
+        var configuration: UIButton.Configuration
+        if #available(iOS 26.0, *) {
+            configuration = .glass()
+        } else {
+            configuration = .tinted()
+            configuration.baseBackgroundColor = cellCreamColor
+        }
+
+        configuration.image = image
+        configuration.baseForegroundColor = GlobalConstants.kColor_DarkColor
+        configuration.cornerStyle = .capsule
+        configuration.contentInsets = NSDirectionalEdgeInsets(
+            top: 10,
+            leading: 10,
+            bottom: 10,
+            trailing: 10
+        )
+
+        button.configuration = configuration
+        button.tintColor = GlobalConstants.kColor_DarkColor
+        button.accessibilityLabel = accessibilityLabel
+        button.imageView?.isAccessibilityElement = false
     }
 
     static func configureTable(_ tableView: UITableView) {
