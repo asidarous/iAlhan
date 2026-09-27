@@ -304,6 +304,33 @@ class DBManager: NSObject {
         
     }
     
+    func loadHymnDescription(withID hymnID: Int) -> String? {
+        var openedDatabase = false
+
+        if !database.goodConnection {
+            guard openDatabase() else { return nil }
+            openedDatabase = true
+        }
+
+        defer {
+            if openedDatabase {
+                database.close()
+            }
+        }
+
+        do {
+            let results = try database.executeQuery(
+                "select hymn_desc from hymn where hymn_id=? limit 1",
+                values: [hymnID]
+            )
+            defer { results.close() }
+            return results.next() ? results.string(forColumn: "hymn_desc") : nil
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
     func loadHymnsURLS (hymnIDs: [Int]) -> [URL]{
         var hymnURLS: [URL] = []
         

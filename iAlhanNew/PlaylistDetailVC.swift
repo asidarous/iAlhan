@@ -610,10 +610,18 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             }else {
             
             
+            let englishTitle: String?
+            if let hymnID = hymnURL.HymnID {
+                englishTitle = DBManager.shared.loadHymnDescription(withID: hymnID)
+            } else {
+                englishTitle = nil
+            }
+
             playableTracks.append(
                 .init(
                     url: hymnAudioURL!,
                     title: hymnURL.HymnName ?? "iAlhan",
+                    systemTitle: englishTitle,
                     albumTitle: title
                 )
             )

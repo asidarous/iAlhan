@@ -199,7 +199,8 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             AlhanPlayer.sharedInstance.load(
                 .init(
                     url: hymnAudioURL,
-                    title: hymnDetail?[0].hymnName ?? hymnDetail?[0].hymnDescription ?? "iAlhan"
+                    title: hymnDetail?[0].hymnName ?? "iAlhan",
+                    systemTitle: hymnDetail?[0].hymnDescription
                 )
             )
             

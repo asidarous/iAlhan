@@ -19,11 +19,18 @@ final class AlhanPlayer: NSObject {
     struct Track {
         let url: URL
         let title: String
+        let systemTitle: String
         let albumTitle: String?
 
-        init(url: URL, title: String = "iAlhan", albumTitle: String? = nil) {
+        init(
+            url: URL,
+            title: String = "iAlhan",
+            systemTitle: String? = nil,
+            albumTitle: String? = nil
+        ) {
             self.url = url
             self.title = title
+            self.systemTitle = systemTitle ?? title
             self.albumTitle = albumTitle
         }
     }
@@ -392,7 +399,7 @@ final class AlhanPlayer: NSObject {
         }
 
         var info = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [:]
-        info[MPMediaItemPropertyTitle] = currentTrack?.title ?? "iAlhan"
+        info[MPMediaItemPropertyTitle] = currentTrack?.systemTitle ?? "iAlhan"
         info[MPMediaItemPropertyAlbumTitle] = currentTrack?.albumTitle
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
         info[MPMediaItemPropertyPlaybackDuration] = duration
@@ -401,10 +408,7 @@ final class AlhanPlayer: NSObject {
 
         if artworkTrackURL != trackURL, let image = UIImage(named: "artworkCross") {
             artworkTrackURL = trackURL
-            info[MPMediaItemPropertyArtwork] = makeNowPlayingArtwork(
-                from: image,
-                title: currentTrack?.title ?? "iAlhan"
-            )
+            info[MPMediaItemPropertyArtwork] = makeNowPlayingArtwork(from: image)
         }
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
@@ -412,49 +416,11 @@ final class AlhanPlayer: NSObject {
     }
 }
 
-private func makeNowPlayingArtwork(from image: UIImage, title: String) -> MPMediaItemArtwork {
-    let artworkSize = CGSize(width: 1024, height: 1024)
-    let renderedImage = UIGraphicsImageRenderer(size: artworkSize).image { context in
-        let canvas = CGRect(origin: .zero, size: artworkSize)
-        UIColor(red: 70 / 255, green: 0, blue: 0, alpha: 1).setFill()
-        context.fill(canvas)
-
-        let imageScale = max(artworkSize.width / image.size.width, artworkSize.height / image.size.height)
-        let imageSize = CGSize(width: image.size.width * imageScale, height: image.size.height * imageScale)
-        let imageRect = CGRect(
-            x: (artworkSize.width - imageSize.width) / 2,
-            y: (artworkSize.height - imageSize.height) / 2,
-            width: imageSize.width,
-            height: imageSize.height
-        )
-        image.draw(in: imageRect)
-
-        let titlePanel = CGRect(x: 56, y: 706, width: 912, height: 246)
-        UIColor.black.withAlphaComponent(0.62).setFill()
-        UIBezierPath(roundedRect: titlePanel, cornerRadius: 36).fill()
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        paragraphStyle.lineBreakMode = .byWordWrapping
-        let font = UIFont(name: "COPT", size: 72) ?? UIFont.systemFont(ofSize: 64, weight: .semibold)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: UIColor(red: 1, green: 223 / 255, blue: 107 / 255, alpha: 1),
-            .paragraphStyle: paragraphStyle
-        ]
-        let textRect = titlePanel.insetBy(dx: 38, dy: 32)
-        (title as NSString).draw(
-            with: textRect,
-            options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],
-            attributes: attributes,
-            context: nil
-        )
-    }
-
-    return MPMediaItemArtwork(boundsSize: artworkSize) { requestedSize in
-        guard requestedSize.width > 0, requestedSize.height > 0 else { return renderedImage }
+private func makeNowPlayingArtwork(from image: UIImage) -> MPMediaItemArtwork {
+    MPMediaItemArtwork(boundsSize: image.size) { requestedSize in
+        guard requestedSize.width > 0, requestedSize.height > 0 else { return image }
         return UIGraphicsImageRenderer(size: requestedSize).image { _ in
-            renderedImage.draw(in: CGRect(origin: .zero, size: requestedSize))
+            image.draw(in: CGRect(origin: .zero, size: requestedSize))
         }
     }
 }
