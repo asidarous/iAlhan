@@ -15,6 +15,7 @@ class PL_DBManager: NSObject {
     
     static let shared: PL_DBManager = PL_DBManager()
     var database: FMDatabase!
+    private var didCheckCopticMigration = false
     
     var pl_databaseFileName = "AlhanPL"
     var pl_pathToDatabase: String!
@@ -50,6 +51,7 @@ class PL_DBManager: NSObject {
         
         if database != nil {
             if database.open() {
+                migrateLegacyCopticIfNeeded()
                 return true
             }
         }
@@ -59,6 +61,84 @@ class PL_DBManager: NSObject {
     
     
  
+    private func migrateLegacyCopticIfNeeded() {
+        guard !didCheckCopticMigration else { return }
+        didCheckCopticMigration = true
+
+        let migrationIdentifier = "coptic_unicode_v5"
+        let createMetadata = """
+            CREATE TABLE IF NOT EXISTS app_migration (
+                identifier TEXT PRIMARY KEY
+            )
+            """
+        guard database.executeUpdate(createMetadata, withArgumentsIn: []) else {
+            print(database.lastErrorMessage())
+            return
+        }
+
+        do {
+            let marker = try database.executeQuery(
+                "SELECT identifier FROM app_migration WHERE identifier=? LIMIT 1",
+                values: [migrationIdentifier]
+            )
+            let wasMigrated = marker.next()
+            marker.close()
+            guard !wasMigrated else { return }
+
+            var sourceDatabase = database
+            var closesSourceDatabase = false
+            let backupPath = pl_pathToDatabase + ".legacy-backup"
+            if FileManager.default.fileExists(atPath: backupPath) {
+                let backupDatabase = FMDatabase(path: backupPath)
+                if backupDatabase.open() {
+                    sourceDatabase = backupDatabase
+                    closesSourceDatabase = true
+                }
+            }
+            defer {
+                if closesSourceDatabase {
+                    sourceDatabase?.close()
+                }
+            }
+
+            let results = try sourceDatabase?.executeQuery(
+                "SELECT rowid, HymnName FROM ListDetail",
+                values: nil
+            )
+            var updates = [(Int64, String)]()
+            while results?.next() == true {
+                updates.append((
+                    results?.longLongInt(forColumn: "rowid") ?? 0,
+                    LegacyCopticConverter.convertIfNeeded(results?.string(forColumn: "HymnName") ?? "")
+                ))
+            }
+            results?.close()
+
+            guard database.beginTransaction() else { return }
+            for (rowID, hymnName) in updates {
+                guard database.executeUpdate(
+                    "UPDATE ListDetail SET HymnName=? WHERE rowid=?",
+                    withArgumentsIn: [hymnName, rowID]
+                ) else {
+                    database.rollback()
+                    print(database.lastErrorMessage())
+                    return
+                }
+            }
+            guard database.executeUpdate(
+                "INSERT INTO app_migration(identifier) VALUES (?)",
+                withArgumentsIn: [migrationIdentifier]
+            ) else {
+                database.rollback()
+                print(database.lastErrorMessage())
+                return
+            }
+            database.commit()
+        } catch {
+            print("Playlist Coptic Unicode migration failed: \(error.localizedDescription)")
+        }
+    }
+
     // MARK: Playlist calls
     
     func getPL() -> [String]!{
@@ -94,14 +174,21 @@ class PL_DBManager: NSObject {
         
         if pl_openDatabase() {
             ensureSortOrderColumn()
-            let query = "select HymnName, HymnID, HymnURL from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)') order by SortOrder, rowid"
+            let query = "select rowid AS PlaylistRowID, HymnName, HymnID, HymnURL from listdetail where list_id_fk in (select id from playlists where listname = '\(playlist)') order by SortOrder, rowid"
             
             do {
                 //print(database)
                 let results = try database.executeQuery(query, values: nil)
                 //print("Query result \(results)")
                 while results.next() {
-                    let hymnsList = PlaylistHymns(HymnName: results.string(forColumn: "HymnName"), HymnID: Int (results.int(forColumn: "HymnID")), HymnURL: results.string(forColumn: "HymnURL") )
+                    let storedName = results.string(forColumn: "HymnName") ?? ""
+                    let displayName = LegacyCopticConverter.convertIfNeeded(storedName)
+                    let hymnsList = PlaylistHymns(
+                        RowID: results.longLongInt(forColumn: "PlaylistRowID"),
+                        HymnName: displayName,
+                        HymnID: Int(results.int(forColumn: "HymnID")),
+                        HymnURL: results.string(forColumn: "HymnURL")
+                    )
                     
                     //print ("+++ Here is the season \(season)")
                     if hymnsLists == nil {
@@ -206,25 +293,34 @@ class PL_DBManager: NSObject {
         return duplicateHymnNames
     }
 
-    func reorderHymns(in playlist: Int, orderedHymnIDs: [Int]) {
+    func reorderHymns(orderedRowIDs: [Int64]) {
         guard pl_openDatabase() else { return }
         ensureSortOrderColumn()
 
         let query = """
             UPDATE ListDetail
             SET SortOrder = ?
-            WHERE list_id_fk = ? AND HymnID = ?
+            WHERE rowid = ?
             """
 
-        for (sortOrder, hymnID) in orderedHymnIDs.enumerated() {
-            if !database.executeUpdate(
+        guard database.beginTransaction() else {
+            database.close()
+            return
+        }
+
+        for (sortOrder, rowID) in orderedRowIDs.enumerated() {
+            guard database.executeUpdate(
                 query,
-                withArgumentsIn: [sortOrder, playlist, hymnID]
-            ) {
+                withArgumentsIn: [sortOrder, rowID]
+            ) else {
                 print(database.lastErrorMessage())
+                database.rollback()
+                database.close()
+                return
             }
         }
 
+        database.commit()
         database.close()
     }
 

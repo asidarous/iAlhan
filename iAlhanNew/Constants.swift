@@ -35,11 +35,86 @@ enum AppAppearance {
 
     static func copticBaseFont(ofSize size: CGFloat) -> UIFont {
         UIFont(name: "FreeSerifAvvaShenouda", size: size)
+            ?? UIFont(name: "COPT", size: size)
             ?? UIFont.systemFont(ofSize: size)
     }
 
     static func copticFont(ofSize size: CGFloat, relativeTo textStyle: UIFont.TextStyle) -> UIFont {
         UIFontMetrics(forTextStyle: textStyle).scaledFont(for: copticBaseFont(ofSize: size))
+    }
+
+    // MARK: Arabic-in-Coptic-font handling
+    //
+    // Some hymn text (hymn_name and hymn_coptic both) has Arabic phrases mixed in,
+    // occasionally whole hymns' worth. The Coptic display font has glyphs mapped to
+    // Arabic characters, but lacks the contextual joining a properly-shaped Arabic font
+    // provides, so those letters render disconnected/isolated instead of Arabic's
+    // required connected cursive forms. Anywhere Coptic-font text is shown, route it
+    // through `attributedStringHandlingArabic` instead of setting `.text` directly, so
+    // Arabic runs get re-fonted to a font that shapes them correctly.
+
+    /// Arabic-script Unicode ranges: the main block, its supplement and extended-A
+    /// block, and the two presentation-forms blocks some text sources still use for
+    /// pre-composed contextual letter forms.
+    private static let arabicCodeUnitRanges: [ClosedRange<UInt16>] = [
+        0x0600...0x06FF,
+        0x0750...0x077F,
+        0x08A0...0x08FF,
+        0xFB50...0xFDFF,
+        0xFE70...0xFEFF
+    ]
+
+    private static func isArabicCodeUnit(_ codeUnit: UInt16) -> Bool {
+        arabicCodeUnitRanges.contains { $0.contains(codeUnit) }
+    }
+
+    /// Re-fonts the Arabic runs within `range` to a system font that shapes Arabic
+    /// correctly (GeezaPro), leaving every other character's existing font attribute
+    /// untouched. Text direction and alignment need no separate handling: as long as
+    /// the paragraph style involved uses the default `.natural` alignment/writing
+    /// direction (true everywhere in this app), TextKit's own Unicode Bidi Algorithm
+    /// lays out an Arabic run, or a whole Arabic line, correctly on its own.
+    static func applyArabicFontOverride(
+        to attributedString: NSMutableAttributedString,
+        in range: NSRange,
+        pointSize: CGFloat
+    ) {
+        guard range.length > 0 else { return }
+        let arabicFont = UIFont(name: "GeezaPro", size: pointSize) ?? UIFont.systemFont(ofSize: pointSize)
+        let nsString = attributedString.string as NSString
+
+        var runStart: Int?
+        let end = range.location + range.length
+        for index in range.location..<end {
+            if isArabicCodeUnit(nsString.character(at: index)) {
+                if runStart == nil { runStart = index }
+            } else if let start = runStart {
+                attributedString.addAttribute(.font, value: arabicFont, range: NSRange(location: start, length: index - start))
+                runStart = nil
+            }
+        }
+        if let start = runStart {
+            attributedString.addAttribute(.font, value: arabicFont, range: NSRange(location: start, length: end - start))
+        }
+    }
+
+    /// Builds a `text`-in-`baseFont` attributed string with any Arabic runs re-fonted so
+    /// they render correctly. Convenience for the common case of a single label showing
+    /// Coptic-font text that might be entirely or partly Arabic (e.g. a hymn's title).
+    static func attributedStringHandlingArabic(
+        _ text: String,
+        baseFont: UIFont,
+        extraAttributes: [NSAttributedString.Key: Any] = [:]
+    ) -> NSAttributedString {
+        var attributes = extraAttributes
+        attributes[.font] = baseFont
+        let result = NSMutableAttributedString(string: text, attributes: attributes)
+        applyArabicFontOverride(
+            to: result,
+            in: NSRange(location: 0, length: (text as NSString).length),
+            pointSize: baseFont.pointSize
+        )
+        return result
     }
 
     static func configureCreamBackground(for view: UIView) {

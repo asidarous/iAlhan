@@ -16,6 +16,11 @@ extension Notification.Name {
 
 @MainActor
 final class AlhanPlayer: NSObject {
+    enum PlaybackContext {
+        case singleHymn
+        case playlist
+    }
+
     struct Track {
         let url: URL
         let title: String
@@ -49,7 +54,9 @@ final class AlhanPlayer: NSObject {
     var currentTrackURL: URL? { currentTrack?.url }
     var currentTrackTitle: String? { currentTrack?.title }
     var hasCurrentItem: Bool { queuePlayer.currentItem != nil }
-    var canAdvance: Bool { queuePlayer.items().count > 1 }
+    var canAdvance: Bool { currentQueueIndex + 1 < queuedTracks.count }
+    var canGoBack: Bool { playbackContext == .playlist && currentQueueIndex > 0 }
+    private(set) var playbackContext: PlaybackContext = .singleHymn
     var playbackRate: Float = 1 {
         didSet {
             guard playbackRate > 0 else {
@@ -64,6 +71,9 @@ final class AlhanPlayer: NSObject {
     }
 
     private var tracksByItem = [ObjectIdentifier: Track]()
+    private var indicesByItem = [ObjectIdentifier: Int]()
+    private var queuedTracks = [Track]()
+    private var currentQueueIndex = 0
     private var lastNotifiedTrackURL: URL?
     private var artworkTrackURL: URL?
     private var timeObserver: Any?
@@ -80,17 +90,40 @@ final class AlhanPlayer: NSObject {
     }
 
     func load(_ track: Track, autoplay: Bool = false) {
-        loadQueue([track], autoplay: autoplay)
+        playbackContext = .singleHymn
+        queuedTracks = [track]
+        replaceQueue(startingAt: 0, autoplay: autoplay)
     }
 
-    func loadQueue(_ tracks: [Track], autoplay: Bool = false) {
+    func loadQueue(
+        _ tracks: [Track],
+        startingAt index: Int = 0,
+        autoplay: Bool = false
+    ) {
+        playbackContext = .playlist
+        queuedTracks = tracks
+        replaceQueue(startingAt: index, autoplay: autoplay)
+    }
+
+    private func replaceQueue(startingAt index: Int, autoplay: Bool) {
         queuePlayer.pause()
         queuePlayer.removeAllItems()
         tracksByItem.removeAll()
+        indicesByItem.removeAll()
+        currentQueueIndex = index
 
-        for track in tracks {
+        guard queuedTracks.indices.contains(index) else {
+            updateNowPlayingInfo()
+            updateRemoteCommandAvailability()
+            return
+        }
+
+        for trackIndex in index..<queuedTracks.count {
+            let track = queuedTracks[trackIndex]
             let item = AVPlayerItem(url: track.url)
-            tracksByItem[ObjectIdentifier(item)] = track
+            let identifier = ObjectIdentifier(item)
+            tracksByItem[identifier] = track
+            indicesByItem[identifier] = trackIndex
             queuePlayer.insert(item, after: nil)
         }
 
@@ -132,6 +165,10 @@ final class AlhanPlayer: NSObject {
         queuePlayer.pause()
         queuePlayer.removeAllItems()
         tracksByItem.removeAll()
+        indicesByItem.removeAll()
+        queuedTracks.removeAll()
+        currentQueueIndex = 0
+        playbackContext = .singleHymn
         updateNowPlayingInfo()
         updateRemoteCommandAvailability()
         deactivateSession()
@@ -153,12 +190,17 @@ final class AlhanPlayer: NSObject {
     }
 
     func advanceToNextItem() {
-        guard queuePlayer.items().count > 1 else { return }
+        guard canAdvance else { return }
         queuePlayer.advanceToNextItem()
         updateNowPlayingInfo()
         if !isPlaying {
             play()
         }
+    }
+
+    func returnToPreviousItem() {
+        guard canGoBack else { return }
+        replaceQueue(startingAt: currentQueueIndex - 1, autoplay: intendsToPlay)
     }
 
     // MARK: - Compatibility API
@@ -386,6 +428,10 @@ final class AlhanPlayer: NSObject {
     }
 
     private func updateNowPlayingInfo() {
+        if let item = queuePlayer.currentItem,
+           let index = indicesByItem[ObjectIdentifier(item)] {
+            currentQueueIndex = index
+        }
         let trackURL = currentTrack?.url
         if trackURL != lastNotifiedTrackURL {
             lastNotifiedTrackURL = trackURL

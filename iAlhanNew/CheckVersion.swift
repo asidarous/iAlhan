@@ -12,34 +12,39 @@ import Foundation
 @MainActor
 func CheckVersion () -> Bool {
     
-    var internetContent: String!
-    
     // local version
     let localDBVersion = DBManager.shared.getDBVersion()
     print("Local DB Version: \(localDBVersion)")
-    
-    // internet version
-    let url = URL(string: "http://www.alhan.org/ialhan/version3/dbversion3.txt")
-    
-    do {
-        // Get the contents
-        internetContent = try String(contentsOf: url!)
-        print("Here is the version from the web: \(String(describing: internetContent))")
-    }
-    catch let error as NSError {
-        print("Ooops! Something went wrong: \(error)")
-    }
-    
-    // if version is different update local
 
-    if localDBVersion != Double(internetContent)
-    {
-        print ("They are not equal")
-        downloadDBFile()
-        return true
-        
-    }else{
-        print ("Version is current")
+    // internet version
+    guard let url = URL(string: "http://www.alhan.org/ialhan/version3/dbversion3.txt") else {
         return false
     }
+
+    let internetContent: String
+    do {
+        internetContent = try String(contentsOf: url, encoding: .utf8)
+        print("Here is the version from the web: \(internetContent)")
+    } catch {
+        print("Unable to check the remote DB version: \(error.localizedDescription)")
+        return false
+    }
+    
+    // Only download when the server is newer. A bundled development database
+    // can legitimately be ahead of production and must never be downgraded.
+    guard let remoteVersion = Double(
+        internetContent.trimmingCharacters(in: .whitespacesAndNewlines)
+    ) else {
+        print("Unable to parse remote DB version")
+        return false
+    }
+
+    if remoteVersion > localDBVersion {
+        print("A newer database is available")
+        downloadDBFile()
+        return true
+    }
+
+    print("Version is current")
+    return false
 }

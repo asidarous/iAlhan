@@ -11,6 +11,10 @@
 		AAD2DD323064A6870002FD05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD313064A6870002FD05 /* SceneDelegate.swift */; };
 		AAD2DD343066E49C0002FD05 /* PlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */; };
 		AAD2DD3630672A5D0002FD05 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAD2DD3530672A5D0002FD05 /* PrivacyInfo.xcprivacy */; };
+		AAD2DD383069BC270002FD05 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD373069BC270002FD05 /* MainTabBarController.swift */; };
+		AAD2DD3A3069BC270002FD05 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD393069BC270002FD05 /* SettingsViewController.swift */; };
+		AAD2DD3C3069BC270002FD05 /* ReadingPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD3B3069BC270002FD05 /* ReadingPreferences.swift */; };
+		AAD2DD3E306C72900002FD05 /* CopticLiturgicalCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD2DD3D306C72900002FD05 /* CopticLiturgicalCalendar.swift */; };
 		F0485A291DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0485A2A1DB1353900DBCFE2 /* copt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0485A281DB1353900DBCFE2 /* copt.ttf */; };
 		F0524DFA1DB682EF0066B075 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0524DF91DB682EF0066B075 /* AVFoundation.framework */; };
@@ -31,7 +35,6 @@
 		F0D656AF1DCAF6650083416A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656AE1DCAF6650083416A /* MediaPlayer.framework */; };
 		F0D656B21DCB02780083416A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D656B11DCB02780083416A /* AudioToolbox.framework */; };
 		F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D656B71DCD38980083416A /* AudioPLayer.swift */; };
-		F0E370471DC301E900979B78 /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370461DC301E900979B78 /* InfoVC.swift */; };
 		F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3704E1DC425D700979B78 /* PlayListVC.swift */; };
 		F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370501DC42E7800979B78 /* PLAddVC.swift */; };
 		F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E370541DC50F2A00979B78 /* PL_DBManager.swift */; };
@@ -65,6 +68,10 @@
 		AAD2DD313064A6870002FD05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNavigationController.swift; sourceTree = "<group>"; };
 		AAD2DD3530672A5D0002FD05 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		AAD2DD373069BC270002FD05 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		AAD2DD393069BC270002FD05 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		AAD2DD3B3069BC270002FD05 /* ReadingPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPreferences.swift; sourceTree = "<group>"; };
+		AAD2DD3D306C72900002FD05 /* CopticLiturgicalCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopticLiturgicalCalendar.swift; sourceTree = "<group>"; };
 		F0485A281DB1353900DBCFE2 /* copt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = copt.ttf; path = ../copt.ttf; sourceTree = "<group>"; };
 		F0524DF91DB682EF0066B075 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F0524DFB1DB6B43C0066B075 /* apaheet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = apaheet.mp3; sourceTree = "<group>"; };
@@ -85,7 +92,6 @@
 		F0D656B01DCB02780083416A /* iAlhan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlhan.entitlements; sourceTree = SOURCE_ROOT; };
 		F0D656B11DCB02780083416A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F0D656B71DCD38980083416A /* AudioPLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPLayer.swift; sourceTree = "<group>"; };
-		F0E370461DC301E900979B78 /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		F0E3704E1DC425D700979B78 /* PlayListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		F0E370501DC42E7800979B78 /* PLAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddVC.swift; sourceTree = "<group>"; };
 		F0E370541DC50F2A00979B78 /* PL_DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PL_DBManager.swift; sourceTree = "<group>"; };
@@ -155,6 +161,8 @@
 				F0604DBA1E8DC32B006DB46F /* Reachability.swift */,
 				F09DD6C41E8F25450097F235 /* CheckVersion.swift */,
 				F09DD6C81E8F37D60097F235 /* Downloader.swift */,
+				AAD2DD3B3069BC270002FD05 /* ReadingPreferences.swift */,
+				AAD2DD3D306C72900002FD05 /* CopticLiturgicalCalendar.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -166,12 +174,13 @@
 				F0E65FAA1DA810D100A96A69 /* SeasonViewController.swift */,
 				F06927DB1DA86AD000A94BB9 /* SeasonDetailViewController.swift */,
 				F062EE421DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift */,
-				F0E370461DC301E900979B78 /* InfoVC.swift */,
 				F0E3704E1DC425D700979B78 /* PlayListVC.swift */,
 				F0E370501DC42E7800979B78 /* PLAddVC.swift */,
 				AAA097621DC6A129002384D8 /* PlaylistDetailVC.swift */,
 				F05E570F1E90D69200F7A5DF /* ContactVC.swift */,
 				AAD2DD333066E49C0002FD05 /* PlayerNavigationController.swift */,
+				AAD2DD373069BC270002FD05 /* MainTabBarController.swift */,
+				AAD2DD393069BC270002FD05 /* SettingsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -398,7 +407,6 @@
 				F0D656B81DCD38980083416A /* AudioPLayer.swift in Sources */,
 				F067AC3F1DB96A01005BDAD0 /* FileUtils.swift in Sources */,
 				F0E370511DC42E7800979B78 /* PLAddVC.swift in Sources */,
-				F0E370471DC301E900979B78 /* InfoVC.swift in Sources */,
 				F0E3E83B1DB03E5400174D91 /* FMDatabaseAdditions.m in Sources */,
 				F0E3704F1DC425D700979B78 /* PlayListVC.swift in Sources */,
 				F0E65FAB1DA810D100A96A69 /* SeasonViewController.swift in Sources */,
@@ -409,15 +417,19 @@
 				F0E3E8391DB03E5400174D91 /* FMResultSet.m in Sources */,
 				F05E57101E90D69200F7A5DF /* ContactVC.swift in Sources */,
 				F09DD6C51E8F25450097F235 /* CheckVersion.swift in Sources */,
+				AAD2DD3C3069BC270002FD05 /* ReadingPreferences.swift in Sources */,
 				F0E3E8381DB03E5400174D91 /* FMDatabaseQueue.m in Sources */,
 				F062EE431DC0312D00B0E9C9 /* SeasonCollectionViewCell.swift in Sources */,
 				F0E370551DC50F2A00979B78 /* PL_DBManager.swift in Sources */,
+				AAD2DD383069BC270002FD05 /* MainTabBarController.swift in Sources */,
 				AAD2DD323064A6870002FD05 /* SceneDelegate.swift in Sources */,
 				F0E3E80C1DADDFFD00174D91 /* HymnDetailViewController.swift in Sources */,
+				AAD2DD3A3069BC270002FD05 /* SettingsViewController.swift in Sources */,
 				AAD2DD343066E49C0002FD05 /* PlayerNavigationController.swift in Sources */,
 				F0E3E82A1DB008EC00174D91 /* DBManager.swift in Sources */,
 				F09DD6C91E8F37D60097F235 /* Downloader.swift in Sources */,
 				F0604DBB1E8DC32B006DB46F /* Reachability.swift in Sources */,
+				AAD2DD3E306C72900002FD05 /* CopticLiturgicalCalendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,14 +584,14 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -600,14 +612,14 @@
 				CODE_SIGN_ENTITLEMENTS = iAlhan.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = iAlhanNew/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alhan.ialhan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -28,11 +28,11 @@ import Foundation
 ///   the Gregorian calendar with the standard Julian/Gregorian day offset for the
 ///   century in question.
 ///
-/// The three short, single-day fixed feasts (Nairouz, the Cross, Epiphany) are
-/// deliberately given just their feast day rather than a padded-out "season" window,
-/// since this file doesn't assert confidence about exactly how many afterfeast days the
-/// app intends for those. Advent, Nativity, and the Pascha-relative ranges are the
-/// well-established canonical spans and are used as such. All of this is easy to adjust
+/// Nairouz (1 Thout) runs through the eve of the Feast of the Cross; the Feast of the
+/// Cross itself (17 Thout, the one that falls in September — not the separate, minor
+/// March commemoration) is a 3-day feast (17-19 Thout); Epiphany/Theophany (11 Toubah)
+/// is also a 3-day feast (11-13 Toubah). Advent, Nativity, and the Pascha-relative
+/// ranges are the other well-established canonical spans. All of this is easy to adjust
 /// in `fixedFeastWindows` / `movableFeastWindows` below if the app's own conventions
 /// differ from what's encoded here.
 @MainActor
@@ -44,18 +44,19 @@ enum CopticLiturgicalCalendar {
         let range: ClosedRange<Date>
     }
 
-    /// Returns the title of the season that contains `date` — matching a `SeasonData.title`
-    /// from the database — or, if `date` falls in a gap between named seasons (which is
-    /// most of the year; the Coptic calendar has real "ordinary time" between feasts),
-    /// the title of whichever named season starts soonest afterward.
+    /// Returns the named season that actually contains `date`, or `nil` during
+    /// annual/ordinary time between the modeled seasons.
     static func currentSeasonTitle(on date: Date = Date()) -> String? {
         let today = gregorian.startOfDay(for: date)
-        let windows = seasonWindows(around: today)
+        return seasonWindows(around: today)
+            .first(where: { $0.range.contains(today) })?
+            .title
+    }
 
-        if let containing = windows.first(where: { $0.range.contains(today) }) {
-            return containing.title
-        }
-        return windows
+    /// Returns the named season whose start date follows `date` most closely.
+    static func upcomingSeasonTitle(on date: Date = Date()) -> String? {
+        let today = gregorian.startOfDay(for: date)
+        return seasonWindows(around: today)
             .filter { $0.range.lowerBound > today }
             .min { $0.range.lowerBound < $1.range.lowerBound }?
             .title
@@ -93,13 +94,17 @@ enum CopticLiturgicalCalendar {
 
     private static func windowsForFixedFeasts(copticYear: Int) -> [SeasonWindow] {
         [
-            window("Nairouz", copticYear: copticYear, startMonth: 1, startDay: 1),
-            window("Feast of the Cross", copticYear: copticYear, startMonth: 1, startDay: 17),
+            // Nairouz (Coptic New Year, 1 Thout) runs through the eve of the Feast of
+            // the Cross, 16 Thout.
+            window("Nairouz", copticYear: copticYear, startMonth: 1, startDay: 1, endMonth: 1, endDay: 16),
+            // Feast of the Cross (the September one, 17 Thout): a 3-day feast, 17-19 Thout.
+            window("Feast of the Cross", copticYear: copticYear, startMonth: 1, startDay: 17, endMonth: 1, endDay: 19),
             // Advent (the Nativity Fast): 16 Hathor through the eve of Nativity, 28 Koiak.
             window("Advent", copticYear: copticYear, startMonth: 3, startDay: 16, endMonth: 4, endDay: 28),
             // Nativity (Christmastide): 29 Koiak (Coptic Christmas) through the eve of Epiphany, 10 Toubah.
             window("Nativity", copticYear: copticYear, startMonth: 4, startDay: 29, endMonth: 5, endDay: 10),
-            window("Epiphany", copticYear: copticYear, startMonth: 5, startDay: 11)
+            // Epiphany (Theophany): a 3-day feast, 11-13 Toubah.
+            window("Epiphany", copticYear: copticYear, startMonth: 5, startDay: 11, endMonth: 5, endDay: 13)
         ].compactMap { $0 }
     }
 

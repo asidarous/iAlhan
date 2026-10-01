@@ -20,6 +20,7 @@ class ContactVC: UIViewController, @preconcurrency MFMailComposeViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Contact Us"
         AppAppearance.configureCreamBackground(for: view)
         AppAppearance.configureNavigationBar(for: self)
         [nameField, emailField, messageField].forEach(AppAppearance.configureTextField)
@@ -36,9 +37,13 @@ class ContactVC: UIViewController, @preconcurrency MFMailComposeViewControllerDe
             if let label = subview as? UILabel {
                 label.font = UIFont.preferredFont(forTextStyle: .headline)
                 label.adjustsFontForContentSizeCategory = true
-                label.textColor = .label
+                label.textColor = GlobalConstants.kColor_DarkColor
             } else if let button = subview as? UIButton, button.buttonType == .system {
-                AppAppearance.configurePrimaryButton(button)
+                if button.title(for: .normal) == "Cancel" {
+                    AppAppearance.configureSecondaryButton(button)
+                } else {
+                    AppAppearance.configurePrimaryButton(button)
+                }
                 continue
             }
             styleFormControls(in: subview)

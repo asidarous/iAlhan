@@ -80,16 +80,11 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
         visualEffectView?.backgroundColor = .clear
         AppAppearance.configureTable(tableView)
        
-        // MARK: Swipe controls
-        let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
-        recognizer.direction = .left
-        self.view .addGestureRecognizer(recognizer)
-        
-        
         updateUI()
         
         //print ("Label Text \(labelText)")
         title = labelText
+        navigationItem.hidesBackButton = true
         configureNavigationBarAppearance()
         configureAddToPlaylistButton()
     }
@@ -115,6 +110,7 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         if let row = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: row, animated: true)
         }
@@ -205,13 +201,19 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
             //print(hymnDetailTemp[row].hymnName)
         }
         //cell.textLabel?.text = (objectArray[section].sectionDetails[row].hymnDescription) as String
-        cell.textLabel?.text = hymnNameLabel
-        cell.detailTextLabel?.text = hymnDescLabel
-        let hymnTitleFont = UIFont(name: "COPT", size: 20)
-            ?? UIFont.preferredFont(forTextStyle: .headline)
-        cell.textLabel?.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: hymnTitleFont)
+        let hymnNameFont = AppAppearance.copticFont(ofSize: 20, relativeTo: .headline)
         cell.textLabel?.adjustsFontForContentSizeCategory = true
-        cell.textLabel?.textColor = GlobalConstants.kColor_DarkColor
+        // Some hymn names are Arabic rather than Coptic text; route through the shared
+        // helper so those render with correctly joined Arabic letterforms instead of
+        // the Coptic font's disconnected glyphs. This must be the *last* thing set on
+        // textLabel: UILabel overwrites attributedText's per-run attributes if `.font`
+        // or `.textColor` is assigned afterward, so both are folded in here instead.
+        cell.textLabel?.attributedText = AppAppearance.attributedStringHandlingArabic(
+            hymnNameLabel,
+            baseFont: hymnNameFont,
+            extraAttributes: [.foregroundColor: GlobalConstants.kColor_DarkColor]
+        )
+        cell.detailTextLabel?.text = hymnDescLabel
         cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         cell.detailTextLabel?.adjustsFontForContentSizeCategory = true
         cell.detailTextLabel?.textColor = UIColor(red: 0.24, green: 0.20, blue: 0.16, alpha: 1)
@@ -349,10 +351,5 @@ class SeasonDetailViewController: UIViewController, UITableViewDataSource, UITab
             
             self.tableView.reloadData()
         }
-    }
-    
-    
-    @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
-        self.performSegue(withIdentifier: "Season Detail to Playlist", sender: self)
     }
 }

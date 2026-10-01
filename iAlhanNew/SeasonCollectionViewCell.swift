@@ -25,7 +25,12 @@ class SeasonCollectionViewCell: UICollectionViewCell {
     private let medallionContainer = UIView()
     private let medallionImageView = UIImageView()
     private let captionLabel = UILabel()
-    private var medallionWidthConstraint: NSLayoutConstraint!
+    private static let medallionDiameter: CGFloat = 80
+    private static let wideCropSeasonTitles: Set<String> = [
+        "Nairouz",
+        "Resurrection",
+        "Feast of the Cross"
+    ]
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -98,15 +103,12 @@ class SeasonCollectionViewCell: UICollectionViewCell {
             medallionImageView.bottomAnchor.constraint(equalTo: medallionContainer.bottomAnchor)
         ])
 
-        // Sized in `layoutSubviews` as a fraction of the card's *shorter* dimension, so
-        // it stays proportionate whether the cell is a short, wide hero card or a
-        // roughly square grid card.
-        medallionWidthConstraint = medallionContainer.widthAnchor.constraint(equalToConstant: 80)
+        // Use one fixed diameter so the featured season and grid seasons match.
         NSLayoutConstraint.activate([
             medallionContainer.centerXAnchor.constraint(equalTo: itemImageView.centerXAnchor),
             medallionContainer.centerYAnchor.constraint(equalTo: itemImageView.centerYAnchor, constant: -8),
-            medallionWidthConstraint,
-            medallionContainer.heightAnchor.constraint(equalTo: medallionContainer.widthAnchor)
+            medallionContainer.widthAnchor.constraint(equalToConstant: Self.medallionDiameter),
+            medallionContainer.heightAnchor.constraint(equalToConstant: Self.medallionDiameter)
         ])
     }
 
@@ -137,8 +139,7 @@ class SeasonCollectionViewCell: UICollectionViewCell {
             cornerRadius: itemImageView.layer.cornerRadius
         ).cgPath
 
-        let shorterSide = min(itemImageView.bounds.width, itemImageView.bounds.height)
-        medallionWidthConstraint.constant = max(56, shorterSide * 0.48)
+        medallionContainer.layoutIfNeeded()
         medallionContainer.layer.cornerRadius = medallionContainer.bounds.width / 2
         medallionImageView.layer.cornerRadius = medallionImageView.bounds.width / 2
         scrimLayer.frame = blurOverlayView.bounds
@@ -146,11 +147,44 @@ class SeasonCollectionViewCell: UICollectionViewCell {
 
     func setSeasonItem(item: SeasonData) {
         let image = UIImage(named: item.seasonImage)
+        // The blurred backdrop can use the source image as-is — it's out of focus, so
+        // its exact framing doesn't matter. The medallion gets a pre-cropped, evenly
+        // zoomed copy instead, so every season reads at roughly the same visual scale
+        // regardless of how much empty margin or which aspect ratio its own source
+        // asset happens to have.
         itemImageView.image = image
         itemImageView.clipsToBounds = true
-        medallionImageView.image = image
+        let zoomFactor: CGFloat = Self.wideCropSeasonTitles.contains(item.title ?? "") ? 1 : 0.8
+        medallionImageView.image = image.map { Self.medallionCrop(of: $0, zoomFactor: zoomFactor) }
         captionLabel.text = item.title
         itemLabel.text = item.title
         accessibilityLabel = item.title
+    }
+
+    /// Crops `image` to a centered square that's noticeably tighter than a plain
+    /// aspect-fill crop would give, so source art with generous built-in margins (the
+    /// Jonah icon, drawn small within its own square canvas) reads at close to the same
+    /// scale as art that already fills its own canvas edge to edge. For portrait
+    /// (taller-than-wide) source art, the crop is also nudged toward the top rather than
+    /// centered vertically, since these icon paintings conventionally place their
+    /// figures there — confirmed by eye against every season asset currently in the
+    /// app, including ones (Great Lent, Pascha) that already looked fine uncropped, to
+    /// make sure the same values didn't cut off anything important for those.
+    private static func medallionCrop(of image: UIImage, zoomFactor: CGFloat) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let pixelWidth = CGFloat(cgImage.width)
+        let pixelHeight = CGFloat(cgImage.height)
+        guard pixelWidth > 0, pixelHeight > 0 else { return image }
+
+        let cropSide = min(pixelWidth, pixelHeight) * zoomFactor
+        let originX = (pixelWidth - cropSide) / 2
+
+        let isPortrait = pixelWidth / pixelHeight < 0.95
+        let verticalBias: CGFloat = isPortrait ? 0.35 : 0.5
+        let originY = (pixelHeight - cropSide) * verticalBias
+
+        let cropRect = CGRect(x: originX, y: originY, width: cropSide, height: cropSide)
+        guard let cropped = cgImage.cropping(to: cropRect) else { return image }
+        return UIImage(cgImage: cropped, scale: image.scale, orientation: image.imageOrientation)
     }
 }

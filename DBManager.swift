@@ -29,6 +29,7 @@ class DBManager: NSObject {
     var pathToDatabase: String!
     var database: FMDatabase!
     var pl_database: FMDatabase!
+    private var didCheckCopticMigration = false
     
     var pl_databaseFileName = "AlhanPL"
     var pl_pathToDatabase: String!
@@ -65,6 +66,7 @@ class DBManager: NSObject {
         
         if database != nil {
             if database.open() {
+                migrateLegacyCopticIfNeeded()
                 return true
             }
         }
@@ -72,6 +74,77 @@ class DBManager: NSObject {
         return false
     }
     
+    private func migrateLegacyCopticIfNeeded() {
+        guard !didCheckCopticMigration else { return }
+        didCheckCopticMigration = true
+
+        let migrationIdentifier = "coptic_unicode_v5"
+        let createMetadata = """
+            create table if not exists app_migration (
+                identifier text primary key
+            )
+            """
+        guard database.executeUpdate(createMetadata, withArgumentsIn: []) else {
+            print(database.lastErrorMessage())
+            return
+        }
+
+        do {
+            let marker = try database.executeQuery(
+                "select identifier from app_migration where identifier=? limit 1",
+                values: [migrationIdentifier]
+            )
+            let wasMigrated = marker.next()
+            marker.close()
+            guard !wasMigrated else { return }
+
+            // Always migrate the database that is currently installed. A legacy
+            // backup may belong to an older bundled version and must not overwrite newer data.
+            let results = try database.executeQuery(
+                "select hymn_id, hymn_name, hymn_coptic from hymn",
+                values: nil
+            )
+            var updates = [(Int, String, String)]()
+            while results.next() {
+                let hymnID = Int(results.int(forColumn: "hymn_id"))
+                updates.append((
+                    hymnID,
+                    LegacyCopticConverter.convertIfNeeded(results.string(forColumn: "hymn_name") ?? ""),
+                    LegacyCopticConverter.convertIfNeeded(
+                        LegacyCopticConverter.repairKnownOmissions(
+                            results.string(forColumn: "hymn_coptic") ?? "",
+                            hymnID: hymnID
+                        )
+                    )
+                ))
+            }
+            results.close()
+
+            guard database.beginTransaction() else { return }
+            for (hymnID, name, copticText) in updates {
+                guard database.executeUpdate(
+                    "update hymn set hymn_name=?, hymn_coptic=? where hymn_id=?",
+                    withArgumentsIn: [name, copticText, hymnID]
+                ) else {
+                    database.rollback()
+                    print(database.lastErrorMessage())
+                    return
+                }
+            }
+            guard database.executeUpdate(
+                "insert into app_migration(identifier) values (?)",
+                withArgumentsIn: [migrationIdentifier]
+            ) else {
+                database.rollback()
+                print(database.lastErrorMessage())
+                return
+            }
+            database.commit()
+        } catch {
+            print("Coptic Unicode migration failed: \(error.localizedDescription)")
+        }
+    }
+
     // Open DB Funtion
     func pl_openDatabase() -> Bool {
         if pl_database == nil {
@@ -304,6 +377,77 @@ class DBManager: NSObject {
         
     }
     
+    /// Which column a hymn search should match against. The on-screen keyboard that was
+    /// used to type the query determines this: the Coptic keyboard only ever produces
+    /// Coptic letters, and the system keyboard is only ever used to type English.
+    enum HymnSearchField {
+        case copticName
+        case englishDescription
+    }
+
+    func searchHymns(matching searchText: String, field: HymnSearchField) -> [EventHymns] {
+        let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedText.isEmpty, openDatabase() else { return [] }
+        // Deliberately left open (unlike the other methods below): search fires once per
+        // explicit "Search" tap rather than per keystroke, but reopening the sqlite file
+        // on every search is still avoidable latency. `openDatabase()` is a cheap no-op
+        // when the connection is already open, and any other call that still closes it
+        // afterward is harmless — the next search just reopens it.
+
+        // SQLite's built-in `COLLATE NOCASE` only case-folds ASCII A-Z, so a Coptic
+        // hymn name that starts with a capital letter (the normal typographic
+        // convention) never matched the on-screen keyboard's lowercase-only letters.
+        // The stored names also carry combining accent marks (e.g. "Ⲧⲉⲛⲟ̀ⲩⲱ̀ϣⲧ") that
+        // aren't available on that keyboard at all. Doing the match in Swift with
+        // Unicode case- and diacritic-folding fixes both: it folds Coptic capitals to
+        // lowercase correctly and strips the accents from both sides of the comparison.
+        let normalizedQuery = normalizedForSearch(trimmedText)
+        guard !normalizedQuery.isEmpty else { return [] }
+
+        var hymns = [EventHymns]()
+        do {
+            // No WHERE clause here on purpose: the filtering happens below in Swift
+            // since SQLite can't do Unicode-aware folding on its own. The hymn table
+            // is small (a hymnal's worth of entries), so scanning it all is still fast.
+            let results = try database.executeQuery(
+                "select * from hymn order by hymn_name asc",
+                values: nil
+            )
+            defer { results.close() }
+
+            while results.next(), hymns.count < 50 {
+                let name = results.string(forColumn: "hymn_name") ?? ""
+                let description = results.string(forColumn: "hymn_desc") ?? ""
+                // Which column to match against follows which keyboard was used to type
+                // the query: the Coptic keyboard can only ever produce Coptic letters,
+                // so it only makes sense to compare against the Coptic hymn name, and
+                // likewise English input is only ever compared against the short
+                // English description.
+                let candidate = field == .copticName ? name : description
+                guard normalizedForSearch(candidate).contains(normalizedQuery) else { continue }
+
+                hymns.append(EventHymns(
+                    hymnName: name,
+                    hymnID: Int(results.int(forColumn: "hymn_id")),
+                    hymnDescription: description,
+                    hymnCoptic: results.string(forColumn: "hymn_coptic"),
+                    hymnEnglish: results.string(forColumn: "hymn_english"),
+                    hymnAudio: results.string(forColumn: "hymn_audio")
+                ))
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return hymns
+    }
+
+    /// Folds a string for accent- and case-insensitive matching. Unlike SQLite's
+    /// ASCII-only `NOCASE`, Foundation's Unicode folding correctly lowercases Coptic
+    /// capital letters and strips combining accent marks from Coptic vowels.
+    private func normalizedForSearch(_ text: String) -> String {
+        text.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
+    }
+
     func loadHymnDescription(withID hymnID: Int) -> String? {
         var openedDatabase = false
 
@@ -365,3 +509,110 @@ class DBManager: NSObject {
     }
 
 } // EOF
+
+enum LegacyCopticConverter {
+    private static let characterMap: [Character: String] = [
+        "A": "Ⲁ", "a": "ⲁ", "B": "Ⲃ", "b": "ⲃ",
+        "G": "Ⲅ", "g": "ⲅ", "D": "Ⲇ", "d": "ⲇ",
+        "E": "Ⲉ", "e": "ⲉ", "Z": "Ⲍ", "z": "ⲍ",
+        "?": "Ⲏ", "/": "ⲏ", "Y": "Ⲑ", "y": "ⲑ",
+        "I": "Ⲓ", "i": "ⲓ", "K": "Ⲕ", "k": "ⲕ",
+        "L": "Ⲗ", "l": "ⲗ", "M": "Ⲙ", "m": "ⲙ",
+        "N": "Ⲛ", "n": "ⲛ", "X": "Ⲝ", "x": "ⲝ",
+        "O": "Ⲟ", "o": "ⲟ", "P": "Ⲡ", "p": "ⲡ",
+        "R": "Ⲣ", "r": "ⲣ", "C": "Ⲥ", "c": "ⲥ",
+        "T": "Ⲧ", "t": "ⲧ", "U": "Ⲩ", "u": "ⲩ",
+        "V": "Ⲫ", "v": "ⲫ", "J": "Ϫ", "j": "ϫ", "<": "Ⲭ",
+        "\"": "Ⲯ", "'": "ⲯ", "W": "Ⲱ", "w": "ⲱ",
+        "S": "Ϣ", "s": "ϣ", "F": "Ϥ", "f": "ϥ",
+        "Q": "Ϧ", "q": "ϧ", "H": "Ϩ", "h": "ϩ", "{": "Ϭ", "[": "ϭ",
+        "}": "Ϯ", "]": "ϯ", ",": "ⲭ"
+    ]
+
+    private static let abbreviationMap: [Character: String] = [
+        "0": "ⲉ̅ⲑ̅ⲩ̅",
+        "5": "⳪",
+        "7": "\u{0305}ⲏ̅ⲥ̅",
+        "8": "ⲭ̅ⲥ̅",
+        "9": "ⲡ̅ⲛ̅ⲁ̅",
+        "*": "ⲁ̅ⲗ̅"
+    ]
+
+    private static let punctuationMap: [Character: String] = [
+        "&": ";",
+        "~": ".",
+        "@": ":",
+        ">": ",",
+        "|": "ⳉ",
+        "¡": "⳪",
+        "¢": "⳥",
+        "¤": "⳨",
+        "¥": "⳩",
+        "½": "⳧",
+        "¾": "⳧"
+    ]
+
+    static func repairKnownOmissions(_ legacyText: String, hymnID: Int) -> String {
+        guard hymnID == 2, !legacyText.contains("Ari`precbeuin") else { return legacyText }
+
+        let missingParagraphs = """
+
+
+        Ari`precbeuin `e`hr/i `ejwn nahren P8 v/`etare`jvof hopwc `ntefer`hmot nan `mpi,w `ebol `nte nennobi.
+
+        <ere ne `w ]Paryenoc ]ourw `mm/i `n`al/yin/ ,ere `psousou `nte pengenoc are`jvo nan `nEmmanou/l.
+
+        Ten]ho `arepenmeu`i `w ]`proctat/c `etenhot nahren pen5 I7 P8 `ntef,a nennobi nan `ebol.
+        """
+        return legacyText + missingParagraphs
+    }
+
+    static func convertIfNeeded(_ text: String) -> String {
+        let alreadyUsesUnicodeCoptic = text.unicodeScalars.contains { scalar in
+            (0x2C80...0x2CFF).contains(scalar.value)
+                || (0x03E2...0x03EF).contains(scalar.value)
+        }
+        return alreadyUsesUnicodeCoptic ? text : convert(text)
+    }
+
+    static func convert(_ legacyText: String) -> String {
+        var converted = ""
+        var pendingDiacritic: String?
+
+        for character in legacyText {
+            if character == "`" {
+                pendingDiacritic = "\u{0300}"
+                continue
+            }
+            if character == "=" {
+                pendingDiacritic = "\u{0305}"
+                continue
+            }
+
+            let mapped: String
+            if character == "\\" {
+                mapped = "ⲟⲩ"
+            } else if let coptic = characterMap[character] {
+                mapped = coptic
+            } else if let abbreviation = abbreviationMap[character] {
+                mapped = abbreviation
+            } else if let punctuation = punctuationMap[character] {
+                mapped = punctuation
+            } else {
+                mapped = String(character)
+            }
+
+            converted += mapped
+            if let diacritic = pendingDiacritic {
+                converted += diacritic
+                pendingDiacritic = nil
+            }
+        }
+
+        if let pendingDiacritic {
+            converted += pendingDiacritic
+        }
+        return converted.precomposedStringWithCanonicalMapping
+    }
+
+}

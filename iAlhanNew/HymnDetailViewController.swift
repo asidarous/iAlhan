@@ -19,6 +19,15 @@ struct HymnDetail {
     var hymnAudio: String!
 }
 
+/// A full-width shading band drawn behind a stanza row, positioned by tracking the
+/// scroll offset of whichever text view supplied its vertical measurements.
+private struct StanzaBand {
+    let view: UIView
+    let referenceTextView: UITextView
+    let contentY: CGFloat
+    let height: CGFloat
+}
+
 @MainActor var playlistInstructions: Bool = false
 class HymnDetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var HymnDetailView: UIView!
@@ -41,6 +50,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     private var stackedColumnConstraints = [NSLayoutConstraint]()
     private var sideBySideDividerConstraints = [NSLayoutConstraint]()
     private var stackedDividerConstraints = [NSLayoutConstraint]()
+    private var stanzaBands = [StanzaBand]()
 
     var pauseButton = UIBarButtonItem()
     var playButton = UIBarButtonItem()
@@ -89,13 +99,6 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         if (self.canBecomeFirstResponder){
             self.becomeFirstResponder()
         }
-        // MARK: Swipe controls
-        let recognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (swipeLeft(recognizer:)))
-        recognizer.direction = .left
-        self.view .addGestureRecognizer(recognizer)
-        
-        
-        
         // Initialize the shared playback service. It owns the audio session,
         // interruption handling, and lock-screen controls for the whole app.
         _ = AlhanPlayer.sharedInstance
@@ -121,8 +124,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         configureColumnLayout()
         configureAddButton()
         
-        title = hymn.hymnName
-        configureNavigationBarAppearance()
+        configureNavigationBarAppearance(title: hymn.hymnName)
         hymnAudioURL = audioURL
         
         // check to see if the file is local and thus play from local
@@ -181,6 +183,9 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
         
         print("PLAYER ITEM At view Did Load : -- \(String(describing: hymnAudioURL))")
+        ToolBar.isHidden = false
+        ToolBar.accessibilityElementsHidden = false
+        ToolBar.isAccessibilityElement = false
         configurePlayerBarAppearance()
         pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.pause, target: self, action: #selector(HymnDetailViewController.pauseButtonTapped))
         playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(HymnDetailViewController.playButtonTapped))
@@ -219,22 +224,46 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         
     }
 
-    private func configureNavigationBarAppearance() {
+    private func configureNavigationBarAppearance(title: String) {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = GlobalConstants.kColor_DarkColor
-        let titleFont = UIFont(name: "COPT", size: 22)
-            ?? UIFont.preferredFont(forTextStyle: .headline)
-        appearance.titleTextAttributes = [
-            .foregroundColor: GlobalConstants.kColor_GoldColor,
-            .font: titleFont
-        ]
 
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.title = nil
+        navigationItem.hidesBackButton = true
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactAppearance = appearance
         navigationItem.compactScrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = GlobalConstants.kColor_GoldColor
+
+        let titleLabel = UILabel()
+        let titleFont = AppAppearance.copticFont(ofSize: 22, relativeTo: .title2)
+        titleLabel.font = titleFont
+        titleLabel.adjustsFontForContentSizeCategory = true
+        titleLabel.textAlignment = .center
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.accessibilityTraits = .header
+        // Some hymn titles are Arabic rather than Coptic text; route through the shared
+        // helper so those render with correctly joined Arabic letterforms instead of
+        // the Coptic font's disconnected glyphs. This must be the last property set
+        // here that touches text/font/color: UILabel overwrites attributedText's
+        // per-run attributes if `.font` or `.textColor` is assigned afterward, so both
+        // are folded into the attributed string instead (alignment is embedded too, as
+        // a paragraph style, since it's authoritative over the `.textAlignment` set
+        // above regardless of ordering).
+        let centeredStyle = NSMutableParagraphStyle()
+        centeredStyle.alignment = .center
+        titleLabel.attributedText = AppAppearance.attributedStringHandlingArabic(
+            title,
+            baseFont: titleFont,
+            extraAttributes: [
+                .foregroundColor: GlobalConstants.kColor_GoldColor,
+                .paragraphStyle: centeredStyle
+            ]
+        )
+        navigationItem.titleView = titleLabel
     }
 
     private func configurePlayerBarAppearance() {
@@ -253,19 +282,33 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     }
 
     private func configureHymnText() {
-        HymnTextEnglish.font = UIFont.preferredFont(forTextStyle: .body)
+        let englishBaseFont = UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        HymnTextEnglish.font = ReadingPreferences.scaledFont(
+            baseFont: englishBaseFont,
+            relativeTo: .body,
+            compatibleWith: traitCollection
+        )
         HymnTextEnglish.adjustsFontForContentSizeCategory = true
-        HymnTextEnglish.backgroundColor = AppAppearance.cellCreamColor
+        // Left transparent so the full-width stanza shading behind the text (added to the
+        // parent view, which is already the cream color) can show through edge to edge.
+        HymnTextEnglish.backgroundColor = .clear
         HymnTextEnglish.textColor = GlobalConstants.kColor_DarkColor
+        // The two columns scroll together (see scrollViewDidScroll), so a scroll
+        // indicator on each is redundant and just adds visual clutter.
+        HymnTextEnglish.showsVerticalScrollIndicator = false
+        HymnTextEnglish.showsHorizontalScrollIndicator = false
 
-        let copticBaseFont = UIFont(name: "copt", size: 21)
-            ?? UIFont.preferredFont(forTextStyle: .title3)
-        HymnTextCoptic.font = UIFontMetrics(forTextStyle: .body).scaledFont(
-            for: copticBaseFont
+        let copticBaseFont = AppAppearance.copticBaseFont(ofSize: 21)
+        HymnTextCoptic.font = ReadingPreferences.scaledFont(
+            baseFont: copticBaseFont,
+            relativeTo: .body,
+            compatibleWith: traitCollection
         )
         HymnTextCoptic.adjustsFontForContentSizeCategory = true
-        HymnTextCoptic.backgroundColor = AppAppearance.cellCreamColor
+        HymnTextCoptic.backgroundColor = .clear
         HymnTextCoptic.textColor = GlobalConstants.kColor_DarkColor
+        HymnTextCoptic.showsVerticalScrollIndicator = false
+        HymnTextCoptic.showsHorizontalScrollIndicator = false
     }
 
     private func alignHymnParagraphs() {
@@ -302,6 +345,14 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         )
         let copticResult = NSMutableAttributedString()
         let englishResult = NSMutableAttributedString()
+        // A small fixed gap inserted between stanzas (never inside one), scaled with the
+        // line height so it grows with Dynamic Type instead of staying a fixed point size.
+        let rowSpacing = sharedLineHeight * 0.4
+        // Both columns consume exactly `rowAdvance` of vertical space per stanza (that's
+        // what the paragraphSpacing padding above guarantees), so a single cumulative
+        // offset describes the top of every stanza in both text views' content coordinates.
+        var shadedRows = [(contentY: CGFloat, height: CGFloat)]()
+        var cumulativeY: CGFloat = 0
 
         for index in 0..<paragraphCount {
             let copticParagraph = index < copticParagraphs.count ? copticParagraphs[index] : ""
@@ -309,13 +360,23 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             let copticAdvance = index < copticAdvances.count ? copticAdvances[index] : sharedLineHeight
             let englishAdvance = index < englishAdvances.count ? englishAdvances[index] : sharedLineHeight
             let rowAdvance = max(copticAdvance, englishAdvance)
+            let isLastRow = index == paragraphCount - 1
+            // The gap is added on top of the row's own height, after the shaded band's
+            // rect is recorded, so both languages still start flush at the top of the row
+            // and the extra breathing room shows the plain background between rows.
+            let trailingGap = isLastRow ? 0 : rowSpacing
+
+            if index % 2 == 1 {
+                shadedRows.append((contentY: cumulativeY, height: rowAdvance))
+            }
+            cumulativeY += rowAdvance + trailingGap
 
             appendParagraph(
                 copticParagraph,
                 to: copticResult,
                 font: copticFont,
                 lineHeight: sharedLineHeight,
-                paragraphSpacing: rowAdvance - copticAdvance,
+                paragraphSpacing: rowAdvance - copticAdvance + trailingGap,
                 includesSeparator: index < paragraphCount - 1
             )
             appendParagraph(
@@ -323,13 +384,68 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
                 to: englishResult,
                 font: englishFont,
                 lineHeight: sharedLineHeight,
-                paragraphSpacing: rowAdvance - englishAdvance,
+                paragraphSpacing: rowAdvance - englishAdvance + trailingGap,
                 includesSeparator: index < paragraphCount - 1
             )
         }
 
         HymnTextCoptic.attributedText = copticResult
         HymnTextEnglish.attributedText = englishResult
+
+        rebuildStanzaBands(shadedRows: shadedRows)
+    }
+
+    /// Rebuilds the full-width shading bands behind the shaded stanzas. Each band is a
+    /// sibling of the (now transparent) text views, sitting behind them so the tint
+    /// reaches both screen edges and continues under the divider between the columns,
+    /// while the parent view's cream background shows through everywhere else.
+    private func rebuildStanzaBands(shadedRows: [(contentY: CGFloat, height: CGFloat)]) {
+        stanzaBands.forEach { $0.view.removeFromSuperview() }
+        stanzaBands.removeAll()
+        guard !shadedRows.isEmpty else { return }
+
+        let usesStackedLayout = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        var newBands = [StanzaBand]()
+        for row in shadedRows {
+            // In the side-by-side layout, Coptic and English share the same top edge, so
+            // Coptic's own scroll position is enough to place one band spanning both
+            // columns. In the stacked (accessibility) layout the columns scroll as two
+            // separate blocks, so each needs its own band tracking its own text view.
+            newBands.append(makeStanzaBand(referenceTextView: HymnTextCoptic, contentY: row.contentY, height: row.height))
+            if usesStackedLayout {
+                newBands.append(makeStanzaBand(referenceTextView: HymnTextEnglish, contentY: row.contentY, height: row.height))
+            }
+        }
+        stanzaBands = newBands
+
+        // Keep the text and the column divider readable above the shading.
+        view.bringSubviewToFront(columnDivider)
+        view.bringSubviewToFront(HymnTextCoptic)
+        view.bringSubviewToFront(HymnTextEnglish)
+        view.bringSubviewToFront(ToolBar)
+
+        updateStanzaBandPositions()
+    }
+
+    private func makeStanzaBand(referenceTextView: UITextView, contentY: CGFloat, height: CGFloat) -> StanzaBand {
+        let band = UIView()
+        band.backgroundColor = AppAppearance.stanzaShadeColor
+        band.isUserInteractionEnabled = false
+        view.addSubview(band)
+        return StanzaBand(view: band, referenceTextView: referenceTextView, contentY: contentY, height: height)
+    }
+
+    /// Repositions the shading bands to follow their reference text view's current scroll
+    /// offset, so the shading scrolls in lockstep with the stanza it belongs to.
+    private func updateStanzaBandPositions() {
+        for band in stanzaBands {
+            let textView = band.referenceTextView
+            let y = textView.frame.minY
+                + textView.textContainerInset.top
+                + band.contentY
+                - textView.contentOffset.y
+            band.view.frame = CGRect(x: 0, y: y, width: view.bounds.width, height: band.height)
+        }
     }
 
     private func lines(in text: String) -> [String] {
@@ -355,11 +471,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
-        paragraphStyle.maximumLineHeight = lineHeight
         let joinedText = lines.joined(separator: "\n")
         let textStorage = NSTextStorage(
             string: joinedText,
             attributes: [.font: font, .paragraphStyle: paragraphStyle]
+        )
+        // Match the font substitution applied in `appendParagraph` below, so a line
+        // whose wrapping changes once its Arabic runs switch to an Arabic-shaping font
+        // is measured the same way it will actually render. Otherwise the Coptic and
+        // English row heights could drift apart for any stanza containing Arabic text.
+        AppAppearance.applyArabicFontOverride(
+            to: textStorage,
+            in: NSRange(location: 0, length: textStorage.length),
+            pointSize: font.pointSize
         )
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(
@@ -401,9 +525,10 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     ) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
-        paragraphStyle.maximumLineHeight = lineHeight
         paragraphStyle.paragraphSpacing = includesSeparator ? paragraphSpacing : 0
         let value = text + (includesSeparator ? "\n" : "")
+
+        let appendedRange = NSRange(location: result.length, length: (value as NSString).length)
         result.append(NSAttributedString(
             string: value,
             attributes: [
@@ -412,6 +537,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
                 .paragraphStyle: paragraphStyle
             ]
         ))
+        AppAppearance.applyArabicFontOverride(to: result, in: appendedRange, pointSize: font.pointSize)
     }
 
     private func configureColumnLayout() {
@@ -631,6 +757,7 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         }else{
             HymnTextCoptic.contentOffset = HymnTextEnglish.contentOffset
         }
+        updateStanzaBandPositions()
     }
 
     @objc func pauseCommandHandler(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
@@ -845,28 +972,19 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         alignHymnParagraphs()
+        updateStanzaBandPositions()
     }
 
-    private var originalStyle: [NSAttributedString.Key: Any]?
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         startPlaybackTimeObserver()
 
         alignedTextWidth = 0
         alignHymnParagraphs()
         HymnTextCoptic.setContentOffset(.zero, animated: false)
         HymnTextEnglish.setContentOffset(.zero, animated: false)
-
-        originalStyle = navigationController?.navigationBar.titleTextAttributes
-
-        let titleBaseFont = UIFont(name: "copt", size: 24)
-            ?? UIFont.preferredFont(forTextStyle: .headline)
-        let titleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBaseFont)
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: titleFont,
-            .foregroundColor: UIColor.label
-        ]
+        updateStanzaBandPositions()
 
         NotificationCenter.default.addObserver(
             self,
@@ -878,6 +996,12 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
             self,
             selector: #selector(handlePreferredContentSizeChange),
             name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handlePreferredContentSizeChange),
+            name: .hymnTextSizeDidChange,
             object: nil
         )
     }
@@ -900,7 +1024,6 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
         super.viewWillDisappear(animated)
         stopPlaybackTimeObserver()
 
-        navigationController?.navigationBar.titleTextAttributes = originalStyle
         NotificationCenter.default.removeObserver(self)
         
 //        if (updater != nil) {
@@ -948,11 +1071,6 @@ class HymnDetailViewController: UIViewController, UITextViewDelegate{
        
     }
     
-    
-    
-    @objc func swipeLeft(recognizer : UISwipeGestureRecognizer) {
-        self.performSegue(withIdentifier: "Hymn Detail to Playlist", sender: self)
-    }
     
     
     // Info center

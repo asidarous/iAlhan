@@ -11,14 +11,18 @@ import UIKit
 class PLAddVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var plText: UITextField!
-   
+
+    private let headingLabel = UILabel()
+
     //
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "New Playlist"
         AppAppearance.configureCreamBackground(for: view)
         AppAppearance.configureNavigationBar(for: self)
+        configureHeading()
         AppAppearance.configureTextField(plText)
         plText.accessibilityLabel = "Playlist name"
         plText.returnKeyType = .done
@@ -37,6 +41,26 @@ class PLAddVC: UIViewController, UITextFieldDelegate {
         )
         plText.becomeFirstResponder()
         // Do any additional setup after loading the view.
+    }
+
+    private func configureHeading() {
+        guard let formView = plText.superview else { return }
+
+        headingLabel.text = "New Playlist"
+        headingLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        headingLabel.adjustsFontForContentSizeCategory = true
+        headingLabel.textColor = GlobalConstants.kColor_DarkColor
+        headingLabel.textAlignment = .center
+        headingLabel.accessibilityTraits = .header
+        headingLabel.translatesAutoresizingMaskIntoConstraints = false
+        formView.addSubview(headingLabel)
+
+        NSLayoutConstraint.activate([
+            headingLabel.topAnchor.constraint(equalTo: formView.topAnchor, constant: 20),
+            headingLabel.leadingAnchor.constraint(equalTo: formView.leadingAnchor, constant: 12),
+            headingLabel.trailingAnchor.constraint(equalTo: formView.trailingAnchor, constant: -12),
+            headingLabel.bottomAnchor.constraint(lessThanOrEqualTo: plText.topAnchor, constant: -12)
+        ])
     }
 
     override func didReceiveMemoryWarning() {

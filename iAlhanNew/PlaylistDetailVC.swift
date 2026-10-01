@@ -12,6 +12,7 @@ import MediaPlayer
 
 struct PlaylistHymns{
     
+    var RowID: Int64
     var HymnName: String!
     var HymnID: Int!
     var HymnURL: String!
@@ -37,11 +38,19 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     private let miniPlayer = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
     private let nowPlayingLabel = UILabel()
     private let trackTitleLabel = UILabel()
+    private let miniPreviousButton = UIButton(type: .system)
     private let miniPlayPauseButton = UIButton(type: .system)
     private let miniNextButton = UIButton(type: .system)
+    private let elapsedTimeLabel = UILabel()
     private let playbackProgress = UISlider()
+    private let durationTimeLabel = UILabel()
     private var playbackTimeObserver: Any?
     private var isScrubbing = false
+
+    private let headerView = UIView()
+    private let headerTitleLabel = UILabel()
+    private let shuffleHeaderButton = UIButton(type: .system)
+    private let editHeaderButton = UIButton(type: .system)
     
     // Internet alert box
     @IBAction func showAlertButton() {
@@ -55,6 +64,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         super.viewDidLoad()
         configureNavigationBarAppearance()
         configurePlaylistAppearance()
+        configureHeader()
         plDetail.delegate = self
         plDetail.dataSource = self
         NotificationCenter.default.addObserver(
@@ -138,6 +148,101 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         plDetail.setEditing(editing, animated: animated)
+        plDetail.reloadData()
+        AppAppearance.configureRoundNavigationButton(
+            editHeaderButton,
+            systemImageName: editing ? "checkmark" : "pencil",
+            accessibilityLabel: editing ? "Done editing playlist" : "Edit playlist"
+        )
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+
+        // Keep the system edge-swipe navigation available while this screen's
+        // navigation bar is hidden.
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let targetWidth = plDetail.bounds.width
+        if headerView.frame.width != targetWidth {
+            headerView.frame = CGRect(x: 0, y: 0, width: targetWidth, height: 60)
+            plDetail.tableHeaderView = headerView
+        }
+    }
+
+    private func configureHeader() {
+        headerView.backgroundColor = GlobalConstants.kColor_DarkColor
+
+        headerTitleLabel.text = title
+        headerTitleLabel.textColor = GlobalConstants.kColor_GoldColor
+        // Matches the compact, centered inline title used by Season Detail and Hymn
+        // Detail (this screen draws its own header instead of a real UINavigationBar,
+        // so it needs to match that style explicitly rather than inheriting it).
+        headerTitleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        headerTitleLabel.adjustsFontForContentSizeCategory = true
+        headerTitleLabel.textAlignment = .center
+        headerTitleLabel.lineBreakMode = .byTruncatingTail
+        headerTitleLabel.accessibilityTraits = .header
+        headerTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        AppAppearance.configureRoundNavigationButton(
+            editHeaderButton,
+            systemImageName: "pencil",
+            accessibilityLabel: "Edit playlist"
+        )
+        editHeaderButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        editHeaderButton.translatesAutoresizingMaskIntoConstraints = false
+
+        AppAppearance.configureRoundNavigationButton(
+            shuffleHeaderButton,
+            systemImageName: "shuffle",
+            accessibilityLabel: "Shuffle playlist"
+        )
+        shuffleHeaderButton.addTarget(self, action: #selector(shuffleButtonTapped), for: .touchUpInside)
+        shuffleHeaderButton.translatesAutoresizingMaskIntoConstraints = false
+
+        headerView.addSubview(headerTitleLabel)
+        headerView.addSubview(shuffleHeaderButton)
+        headerView.addSubview(editHeaderButton)
+
+        // Centered like a real navigation bar's inline title, but allowed to yield that
+        // centering (lower priority) rather than collide with the leading edge or the
+        // shuffle/edit buttons if the playlist name ever needs more room than that leaves.
+        let centeredTitle = headerTitleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor)
+        centeredTitle.priority = .defaultHigh
+
+        NSLayoutConstraint.activate([
+            centeredTitle,
+            headerTitleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.leadingAnchor, constant: 20),
+            headerTitleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            headerTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: shuffleHeaderButton.leadingAnchor, constant: -12),
+
+            editHeaderButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -12),
+            editHeaderButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            editHeaderButton.widthAnchor.constraint(equalToConstant: 44),
+            editHeaderButton.heightAnchor.constraint(equalToConstant: 44),
+
+            shuffleHeaderButton.trailingAnchor.constraint(equalTo: editHeaderButton.leadingAnchor, constant: -8),
+            shuffleHeaderButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            shuffleHeaderButton.widthAnchor.constraint(equalToConstant: 44),
+            shuffleHeaderButton.heightAnchor.constraint(equalToConstant: 44)
+        ])
+
+        headerView.frame = CGRect(x: 0, y: 0, width: plDetail.bounds.width, height: 60)
+        plDetail.tableHeaderView = headerView
+    }
+
+    @objc private func editButtonTapped() {
+        setEditing(!isEditing, animated: true)
     }
 
     private func configureNavigationBarAppearance() {
@@ -158,6 +263,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     private func configurePlaylistAppearance() {
         plDetail.rowHeight = 62
+        plDetail.separatorStyle = .singleLine
+        plDetail.separatorColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.22)
         plDetail.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         AppAppearance.configureCreamBackground(for: view)
         AppAppearance.configureCreamBackground(for: plDetail)
@@ -185,9 +292,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         nowPlayingLabel.adjustsFontForContentSizeCategory = true
         nowPlayingLabel.textColor = GlobalConstants.kColor_DarkColor
 
-        trackTitleLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(
-            for: UIFont(name: "COPT", size: 18) ?? UIFont.preferredFont(forTextStyle: .headline)
-        )
+        trackTitleLabel.font = AppAppearance.copticFont(ofSize: 18, relativeTo: .headline)
         trackTitleLabel.adjustsFontForContentSizeCategory = true
         trackTitleLabel.textColor = GlobalConstants.kColor_DarkColor
         trackTitleLabel.lineBreakMode = .byTruncatingTail
@@ -196,6 +301,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         labels.axis = .vertical
         labels.spacing = 2
 
+        configureMiniPlayerButton(
+            miniPreviousButton,
+            symbolName: "backward.end.fill",
+            accessibilityLabel: "Previous hymn",
+            prominent: false,
+            action: #selector(miniPreviousTapped)
+        )
         configureMiniPlayerButton(
             miniPlayPauseButton,
             symbolName: "play.fill",
@@ -211,7 +323,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             action: #selector(miniNextTapped)
         )
 
-        let controls = UIStackView(arrangedSubviews: [labels, miniNextButton, miniPlayPauseButton])
+        let controls = UIStackView(arrangedSubviews: [labels, miniPreviousButton, miniPlayPauseButton, miniNextButton])
         controls.translatesAutoresizingMaskIntoConstraints = false
         controls.axis = .horizontal
         controls.alignment = .center
@@ -233,7 +345,14 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             action: #selector(scrubbingDidEnd),
             for: [.touchUpInside, .touchUpOutside, .touchCancel]
         )
-        miniPlayer.contentView.addSubview(playbackProgress)
+        configureTimeLabel(elapsedTimeLabel, alignment: .right)
+        configureTimeLabel(durationTimeLabel, alignment: .left)
+        let timeline = UIStackView(arrangedSubviews: [elapsedTimeLabel, playbackProgress, durationTimeLabel])
+        timeline.translatesAutoresizingMaskIntoConstraints = false
+        timeline.axis = .horizontal
+        timeline.alignment = .center
+        timeline.spacing = 8
+        miniPlayer.contentView.addSubview(timeline)
 
         NSLayoutConstraint.activate([
             miniPlayer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
@@ -243,9 +362,13 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             controls.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 16),
             controls.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -12),
             controls.topAnchor.constraint(equalTo: miniPlayer.contentView.topAnchor, constant: 10),
-            playbackProgress.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 16),
-            playbackProgress.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -16),
-            playbackProgress.bottomAnchor.constraint(equalTo: miniPlayer.contentView.bottomAnchor, constant: -10),
+            timeline.leadingAnchor.constraint(equalTo: miniPlayer.contentView.leadingAnchor, constant: 12),
+            timeline.trailingAnchor.constraint(equalTo: miniPlayer.contentView.trailingAnchor, constant: -12),
+            timeline.bottomAnchor.constraint(equalTo: miniPlayer.contentView.bottomAnchor, constant: -10),
+            elapsedTimeLabel.widthAnchor.constraint(equalToConstant: 42),
+            durationTimeLabel.widthAnchor.constraint(equalToConstant: 42),
+            miniPreviousButton.widthAnchor.constraint(equalToConstant: 38),
+            miniPreviousButton.heightAnchor.constraint(equalToConstant: 38),
             miniPlayPauseButton.widthAnchor.constraint(equalToConstant: 46),
             miniPlayPauseButton.heightAnchor.constraint(equalToConstant: 46),
             miniNextButton.widthAnchor.constraint(equalToConstant: 38),
@@ -293,6 +416,25 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         button.addTarget(self, action: action, for: .touchUpInside)
     }
 
+    private func configureTimeLabel(_ label: UILabel, alignment: NSTextAlignment) {
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 11, weight: .regular)
+        label.text = "0:00"
+        label.textAlignment = alignment
+        label.textColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.78)
+        label.isAccessibilityElement = false
+    }
+
+    private func formattedTime(_ time: TimeInterval) -> String {
+        guard time.isFinite, time >= 0 else { return "0:00" }
+        let totalSeconds = Int(time.rounded(.down))
+        let hours = totalSeconds / 3_600
+        let minutes = (totalSeconds % 3_600) / 60
+        let seconds = totalSeconds % 60
+        return hours > 0
+            ? String(format: "%d:%02d:%02d", hours, minutes, seconds)
+            : String(format: "%d:%02d", minutes, seconds)
+    }
+
     private func updateMiniPlayer() {
         let player = AlhanPlayer.sharedInstance
         if player.hasCurrentItem {
@@ -303,7 +445,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             nowPlayingLabel.isHidden = true
         }
         miniPlayPauseButton.isEnabled = !playlistHymns.isEmpty
-        miniNextButton.isEnabled = player.queuePlayer.items().count > 1
+        miniPreviousButton.isEnabled = player.canGoBack
+        miniNextButton.isEnabled = player.canAdvance
 
         var configuration = miniPlayPauseButton.configuration
         configuration?.image = UIImage(systemName: player.isPlaying ? "pause.fill" : "play.fill")
@@ -316,7 +459,10 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             playbackProgress.value = duration > 0
                 ? Float(player.currentTime / duration)
                 : 0
+            elapsedTimeLabel.text = formattedTime(player.currentTime)
         }
+        durationTimeLabel.text = formattedTime(duration)
+        playbackProgress.accessibilityValue = "\(elapsedTimeLabel.text ?? "0:00") of \(durationTimeLabel.text ?? "0:00")"
     }
 
     @objc private func scrubbingDidBegin() {
@@ -324,8 +470,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
 
     @objc private func scrubberValueChanged() {
-        guard !isScrubbing else { return }
-        seekToScrubberPosition()
+        let previewTime = Double(playbackProgress.value) * AlhanPlayer.sharedInstance.duration
+        elapsedTimeLabel.text = formattedTime(previewTime)
+        playbackProgress.accessibilityValue = "\(formattedTime(previewTime)) of \(formattedTime(AlhanPlayer.sharedInstance.duration))"
     }
 
     @objc private func scrubbingDidEnd() {
@@ -349,6 +496,11 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
 
+    @objc private func miniPreviousTapped() {
+        AlhanPlayer.sharedInstance.returnToPreviousItem()
+        updateMiniPlayer()
+    }
+
     @objc private func miniNextTapped() {
         nextButtonTapped()
         updateMiniPlayer()
@@ -370,6 +522,18 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
     }
 
     
+    /// Playlist hymns are persisted as text, so legacy rows receive Ava Shenouda
+    /// whenever they are displayed after an app update.
+    private func applyAvaShenoudaFont(to content: inout UIListContentConfiguration) {
+        let avaShenoudaFont = UIFont(name: "FreeSerifAvvaShenouda", size: 21)
+            ?? AppAppearance.copticBaseFont(ofSize: 21)
+        content.textProperties.font = ReadingPreferences.scaledFont(
+            baseFont: avaShenoudaFont,
+            relativeTo: .body,
+            compatibleWith: traitCollection
+        )
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "hymnCell", for: indexPath) 
@@ -382,10 +546,15 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             //print("Got in")
             var content = cell.defaultContentConfiguration()
             content.text = playlistHymns[row].HymnName
-            content.textProperties.font = UIFontMetrics(forTextStyle: .headline).scaledFont(
-                for: UIFont(name: "COPT", size: 19) ?? UIFont.preferredFont(forTextStyle: .headline)
-            )
+            applyAvaShenoudaFont(to: &content)
             content.textProperties.color = GlobalConstants.kColor_DarkColor
+
+            if tableView.isEditing {
+                content.secondaryText = "Drag to reorder"
+                content.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
+                content.secondaryTextProperties.color = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.65)
+            }
+
             content.directionalLayoutMargins = NSDirectionalEdgeInsets(
                 top: 10,
                 leading: 20,
@@ -394,6 +563,7 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             )
             cell.contentConfiguration = content
             cell.selectionStyle = .none
+            cell.showsReorderControl = true
             configurePlaybackAppearance(for: cell, at: indexPath)
         }
         
@@ -402,6 +572,37 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         startPlayback(shuffled: false, startingAt: indexPath.row)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
+        guard tableView.isEditing else { return }
+
+        // UIKit installs its reorder control after configuring the cell, so tint the
+        // visible trailing control on the next layout pass.
+        DispatchQueue.main.async { [weak cell] in
+            guard let cell else { return }
+            self.tintTrailingReorderControl(in: cell, rootView: cell)
+        }
+    }
+
+    private func tintTrailingReorderControl(in view: UIView, rootView cell: UITableViewCell) {
+        let frameInCell = view.convert(view.bounds, to: cell)
+        let isTrailingControl = frameInCell.midX > cell.bounds.width * 0.75
+
+        if isTrailingControl {
+            view.tintColor = GlobalConstants.kColor_DarkColor
+            if let imageView = view as? UIImageView, let image = imageView.image {
+                imageView.image = image.withRenderingMode(.alwaysTemplate)
+            }
+        }
+
+        for subview in view.subviews {
+            tintTrailingReorderControl(in: subview, rootView: cell)
+        }
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -417,13 +618,18 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
         playlistHymns.insert(movedHymn, at: destinationIndexPath.row)
         hymnURLS = playlistHymns.compactMap { URL(string: $0.HymnURL) }
 
-        guard let playlistName = title else { return }
-        let playlistID = PL_DBManager.shared.getPLID(playlist: playlistName)
-        let orderedHymnIDs = playlistHymns.compactMap(\.HymnID)
-        PL_DBManager.shared.reorderHymns(
-            in: playlistID,
-            orderedHymnIDs: orderedHymnIDs
-        )
+        let orderedRowIDs = playlistHymns.map(\.RowID)
+        PL_DBManager.shared.reorderHymns(orderedRowIDs: orderedRowIDs)
+
+        // UIKit recreates every visible reorder control after the drop. Refresh the
+        // table together so all burgundy handles and separators remain consistent.
+        DispatchQueue.main.async { [weak tableView] in
+            guard let tableView, tableView.isEditing else { return }
+            UIView.performWithoutAnimation {
+                tableView.reloadData()
+                tableView.layoutIfNeeded()
+            }
+        }
     }
 
     private func configurePlaybackAppearance(for cell: UITableViewCell, at indexPath: IndexPath) {
@@ -432,12 +638,22 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             ? GlobalConstants.kColor_GoldColor.withAlphaComponent(0.28)
             : AppAppearance.cellCreamColor
         cell.backgroundColor = backgroundColor
-        cell.contentView.backgroundColor = backgroundColor
+        cell.contentView.backgroundColor = .clear
         cell.accessibilityTraits = isCurrentTrack
             ? [.button, .selected]
             : [.button]
 
-        if isCurrentTrack {
+        if plDetail.isEditing {
+            let grabber = UIImageView(
+                image: UIImage(
+                    systemName: "line.3.horizontal",
+                    withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .semibold)
+                )
+            )
+            grabber.tintColor = GlobalConstants.kColor_DarkColor
+            grabber.accessibilityLabel = "Drag to reorder"
+            cell.accessoryView = grabber
+        } else if isCurrentTrack {
             let imageView = UIImageView(image: UIImage(systemName: "speaker.wave.2.fill"))
             imageView.tintColor = GlobalConstants.kColor_DarkColor
             imageView.isAccessibilityElement = false
@@ -579,13 +795,8 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
 
         
         var playableTracks = [AlhanPlayer.Track]()
-        let hymnsToPlay: [PlaylistHymns]
-        if let startIndex, playlistHymns.indices.contains(startIndex) {
-            hymnsToPlay = Array(playlistHymns[startIndex...])
-        } else {
-            hymnsToPlay = playlistHymns
-        }
-        for hymnURL in hymnsToPlay {
+        var playableStartIndex: Int? = startIndex == nil ? 0 : nil
+        for (playlistIndex, hymnURL) in playlistHymns.enumerated() {
             
             //print("HYMN URL TO PLAY: \(hymnURL)")
             var fileIsLocal = false
@@ -617,6 +828,9 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
                 englishTitle = nil
             }
 
+            if playlistIndex == startIndex {
+                playableStartIndex = playableTracks.count
+            }
             playableTracks.append(
                 .init(
                     url: hymnAudioURL!,
@@ -633,7 +847,12 @@ class PlaylistDetailVC:  UIViewController, UITableViewDataSource, UITableViewDel
             
         if !playableTracks.isEmpty {
             let queuedTracks = shuffled ? playableTracks.shuffled() : playableTracks
-            AlhanPlayer.sharedInstance.loadQueue(queuedTracks, autoplay: true)
+            let queueStartIndex = shuffled ? 0 : (playableStartIndex ?? 0)
+            AlhanPlayer.sharedInstance.loadQueue(
+                queuedTracks,
+                startingAt: queueStartIndex,
+                autoplay: true
+            )
         }
         
         //let test = AlhanPlayer.sharedInstance.queuePlayer.currentItem

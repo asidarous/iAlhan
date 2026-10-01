@@ -2,9 +2,23 @@ import AVFoundation
 import UIKit
 
 @MainActor
-final class PlayerNavigationController: UINavigationController, UINavigationControllerDelegate {
+final class PlayerNavigationController: UINavigationController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     private let player = AlhanPlayer.sharedInstance
     private let titleButton = UIButton(type: .system)
+    // Kept separately from `titleButton.titleLabel?.font` because once
+    // `titleButton.setAttributedTitle` is used (below), reading that back reflects
+    // whatever font the *last* title happened to use (Coptic, or GeezaPro for an
+    // Arabic title) rather than this button's intended base font — and the title is
+    // refreshed repeatedly on a playback timer.
+    private let titleFont: UIFont = {
+        let size: CGFloat
+        if #available(iOS 27.0, *) {
+            size = 16
+        } else {
+            size = 17
+        }
+        return AppAppearance.copticFont(ofSize: size, relativeTo: .subheadline)
+    }()
     private let progressView = UISlider()
     private let playPauseButton = UIButton(type: .system)
     private let nextButton = UIButton(type: .system)
@@ -20,6 +34,7 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        interactivePopGestureRecognizer?.delegate = self
         configureMiniPlayer()
         observePlayer()
         updateMiniPlayer()
@@ -31,6 +46,23 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
             280,
             view.safeAreaLayoutGuide.layoutFrame.width - 32
         )
+
+        positionMiniPlayerAboveTabBar()
+    }
+
+    private func positionMiniPlayerAboveTabBar() {
+        // UINavigationController lays its toolbar out against the bottom of
+        // its full view. In a tab controller that position is underneath the
+        // tab bar, so explicitly reserve the strip immediately above it.
+        guard let tabBar = tabBarController?.tabBar,
+              !tabBar.isHidden else {
+            return
+        }
+
+        let tabBarFrame = view.convert(tabBar.bounds, from: tabBar)
+        toolbar.transform = .identity
+        let verticalOffset = tabBarFrame.minY - toolbar.frame.maxY
+        toolbar.transform = CGAffineTransform(translationX: 0, y: verticalOffset)
     }
 
     override func popViewController(animated: Bool) -> UIViewController? {
@@ -72,16 +104,7 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         toolbar.tintColor = GlobalConstants.kColor_DarkColor
 
         titleButton.contentHorizontalAlignment = .leading
-        let miniPlayerTitleSize: CGFloat
-        if #available(iOS 27.0, *) {
-            miniPlayerTitleSize = 16
-        } else {
-            miniPlayerTitleSize = 17
-        }
-        titleButton.titleLabel?.font = UIFontMetrics(forTextStyle: .subheadline).scaledFont(
-            for: UIFont(name: "COPT", size: miniPlayerTitleSize)
-                ?? UIFont.preferredFont(forTextStyle: .subheadline)
-        )
+        titleButton.titleLabel?.font = titleFont
         titleButton.titleLabel?.adjustsFontForContentSizeCategory = true
         titleButton.titleLabel?.lineBreakMode = .byTruncatingTail
         titleButton.setTitleColor(GlobalConstants.kColor_DarkColor, for: .normal)
@@ -211,7 +234,17 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
 
     private func updateMiniPlayer() {
         let title = player.currentTrackTitle ?? "Now Playing"
-        titleButton.setTitle(title, for: .normal)
+        // Some hymn titles are Arabic rather than Coptic text; route through the shared
+        // helper so those render with correctly joined Arabic letterforms instead of
+        // the Coptic font's disconnected glyphs.
+        titleButton.setAttributedTitle(
+            AppAppearance.attributedStringHandlingArabic(
+                title,
+                baseFont: titleFont,
+                extraAttributes: [.foregroundColor: GlobalConstants.kColor_DarkColor]
+            ),
+            for: .normal
+        )
         titleButton.accessibilityLabel = title
 
         let duration = player.duration
@@ -230,14 +263,9 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
     }
 
     private func updateMiniPlayerVisibility(animated: Bool) {
-        let isFullPlayerVisible =
-            topViewController is HymnDetailViewController
-            || topViewController is PlaylistDetailVC
-        let shouldShow = player.hasCurrentItem && !isFullPlayerVisible
-        if shouldShow {
-            topViewController?.toolbarItems = miniPlayerItems
-        }
-        setToolbarHidden(!shouldShow, animated: animated)
+        // The shared mini-player belongs to MainTabBarController so it can
+        // remain above the tabs across every navigation stack.
+        setToolbarHidden(true, animated: false)
     }
 
     @objc private func scrubbingDidBegin() {
@@ -284,6 +312,10 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         pushViewController(playbackSourceViewController, animated: true)
     }
 
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        viewControllers.count > 1
+    }
+
     func navigationController(
         _ navigationController: UINavigationController,
         willShow viewController: UIViewController,
@@ -303,5 +335,6 @@ final class PlayerNavigationController: UINavigationController, UINavigationCont
         animated: Bool
     ) {
         updateMiniPlayerVisibility(animated: true)
+        (tabBarController as? MainTabBarController)?.updateMiniPlayer()
     }
 }
