@@ -28,6 +28,19 @@ enum AppAppearance {
         alpha: 1
     )
     static let playerBorderColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.30)
+    static let seasonCaptionColor = UIColor(red: 0.55, green: 0.08, blue: 0.1, alpha: 0.85)
+    /// Subtle warm tint used to shade every other stanza in the hymn detail reading view,
+    /// so the eye can track which Coptic/English lines belong to the same stanza.
+    static let stanzaShadeColor = GlobalConstants.kColor_DarkColor.withAlphaComponent(0.06)
+
+    static func copticBaseFont(ofSize size: CGFloat) -> UIFont {
+        UIFont(name: "FreeSerifAvvaShenouda", size: size)
+            ?? UIFont.systemFont(ofSize: size)
+    }
+
+    static func copticFont(ofSize size: CGFloat, relativeTo textStyle: UIFont.TextStyle) -> UIFont {
+        UIFontMetrics(forTextStyle: textStyle).scaledFont(for: copticBaseFont(ofSize: size))
+    }
 
     static func configureCreamBackground(for view: UIView) {
         view.backgroundColor = creamColor
@@ -128,6 +141,20 @@ enum AppAppearance {
         button.configuration = configuration
         button.setTitleColor(GlobalConstants.kColor_GoldColor, for: .normal)
         button.setTitleColor(GlobalConstants.kColor_GoldColor.withAlphaComponent(0.72), for: .highlighted)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+    }
+
+    static func configureSecondaryButton(_ button: UIButton) {
+        let title = button.title(for: .normal)
+        var configuration = UIButton.Configuration.tinted()
+        configuration.title = title
+        configuration.cornerStyle = .large
+        configuration.baseForegroundColor = GlobalConstants.kColor_DarkColor
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16)
+        button.configuration = configuration
+        button.setTitleColor(GlobalConstants.kColor_DarkColor, for: .normal)
+        button.setTitleColor(GlobalConstants.kColor_DarkColor.withAlphaComponent(0.72), for: .highlighted)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
     }
